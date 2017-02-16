@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-param" content="_csrf-backend">
+    <meta name="csrf-token" content="R1Z1azc2dkQkZg0lYV4bDBc7DARZRkAUDxtDIlROBhAVZEUnQVxFIg==">
+    <title>Редактирование меню</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/selectize.bootstrap3.css" rel="stylesheet">
+    <link href="css/site.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet"></head>
+<body>
+
+<div class="wrap">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target=".navbar-responsive-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="img/logo.svg" alt=""/>
+                </a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul id="w0" class="nav navbar-nav"><li><a href="/report">Отчеты</a></li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Предприятие <b class="caret"></b></a><ul id="w1" class="dropdown-menu"><li><a href="/organization" tabindex="-1">Организации</a></li>
+                        <li><a href="/warehouses" tabindex="-1">Склады</a></li>
+                        <li><a href="/sale-point" tabindex="-1">Торговые точки</a></li>
+                        <li><a href="/terminal" tabindex="-1">Терминалы</a></li></ul></li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="/nomenclature/menu/nomenclature" data-toggle="dropdown">Номенклатура <b class="caret"></b></a><ul id="w2" class="dropdown-menu"><li><a href="/category" tabindex="-1">Товары</a></li>
+                        <li><a href="/menu" tabindex="-1">Меню</a></li>
+                        <li><a href="/specification" tabindex="-1">Спецификации</a></li></ul></li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Персонал <b class="caret"></b></a><ul id="w3" class="dropdown-menu"><li><a href="/hr/employee" tabindex="-1">Сотрудники</a></li>
+                        <li><a href="/hr/vacancy" tabindex="-1">Вакансии</a></li>
+                        <li><a href="/hr/applicant" tabindex="-1">Кандидаты</a></li>
+                        <li><a href="/hr/dictionary" tabindex="-1">Справочники</a></li></ul></li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Маркетинг <b class="caret"></b></a><ul id="w4" class="dropdown-menu"><li><a href="/loyalty/card" tabindex="-1">Карты</a></li>
+                        <li><a href="/loyalty/buyer" tabindex="-1">Покупатели</a></li>
+                        <li><a href="/loyalty/card-transaction" tabindex="-1">Транзакции</a></li>
+                        <li><a href="/planning/document" tabindex="-1">План продаж</a></li></ul></li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Справочники <b class="caret"></b></a><ul id="w5" class="dropdown-menu"><li><a href="/payment-type" tabindex="-1">Типы оплат</a></li>
+                        <li><a href="/cooking-type" tabindex="-1">Типы готовки</a></li>
+                        <li><a href="/measure" tabindex="-1">Единицы измерения</a></li></ul></li>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Склад <b class="caret"></b></a><ul id="w6" class="dropdown-menu"><li><a href="/warehouse/document" tabindex="-1">Журнал документов</a></li>
+                        <li><a href="/warehouse/contractor" tabindex="-1">Контрагенты</a></li></ul></li></ul>                <ul id="w7" class="nav navbar-nav navbar-right"><li><a href="/logout">Выйти</a></li></ul>            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="main-content">
+            <h1>Редактирование меню</h1>
+            <script type="text/javascript">
+                var ProductCategory = [{"id":"c03cb760-1575-4858-ab41-52da066b9cd5","name":"\u041a\u043e\u0440\u043d\u0435\u0432\u0430\u044f \u043a\u0430\u0442\u0435\u0433\u043e\u0440\u0438\u044f","lft":1,"rgt":6,"depth":0,"status":"enabled","created_at":1487241831,"updated_at":1487242171,"tree":0,"nomenclature_id":"ae55c2f6-fd84-421e-b1bc-8ddafd8ab2d9","tenant_id":"797314dd-913b-47ee-ae2e-b7ec5e433279","products":[]},{"id":"831804ec-d8f6-437c-98fb-d12d665e94df","name":"\u0421\u043f\u0438\u0440\u0442\u043d\u044b\u0435 \u043d\u0430\u043f\u0438\u0442\u043a\u0438","lft":2,"rgt":3,"depth":1,"status":"enabled","created_at":1487241831,"updated_at":1487242064,"tree":0,"nomenclature_id":"ae55c2f6-fd84-421e-b1bc-8ddafd8ab2d9","tenant_id":"797314dd-913b-47ee-ae2e-b7ec5e433279","products":[{"id":"fef36b6d-5ba3-452c-8f39-22a75912b674","product_category_id":"831804ec-d8f6-437c-98fb-d12d665e94df","name":"\u0417\u043b\u043e\u0439 Google","description":"\u0417\u043b\u043e\u0439 Google (\u0442\u0435\u043c\u043d\u043e\u0435, 5.6%)","price":"100.00","status":"enabled","created_at":1487241831,"updated_at":1487241831,"nomenclature_id":"ae55c2f6-fd84-421e-b1bc-8ddafd8ab2d9","cost_price":"100.00","code":null,"type":"product","measure_id":"4bd7ac55-7581-4116-b298-8439fbcbad72","cooking_type_id":null,"output":null,"tenant_id":"797314dd-913b-47ee-ae2e-b7ec5e433279"},{"id":"fef36b6d-5ba3-450c-8f39-22a75912b574","product_category_id":"831804ec-d8f6-437c-98fb-d12d665e94df","name":"\u0412\u043e\u0434\u043a\u0430 Google (1\u043b)","description":"\u0412\u043e\u0434\u043a\u0430 Google (\u041d\u0438\u0436\u043d\u0438\u0439 \u041d\u043e\u0432\u0433\u043e\u0440\u043e\u0434)","price":"200.00","status":"enabled","created_at":1487241831,"updated_at":1487241831,"nomenclature_id":"ae55c2f6-fd84-421e-b1bc-8ddafd8ab2d9","cost_price":"200.00","code":null,"type":"product","measure_id":"4bd7ac55-7581-4116-b298-8439fbcbad72","cooking_type_id":null,"output":null,"tenant_id":"797314dd-913b-47ee-ae2e-b7ec5e433279"},{"id":"fef36b6d-5ba3-451c-8f39-22a75912b674","product_category_id":"831804ec-d8f6-437c-98fb-d12d665e94df","name":"\u0412\u0438\u0441\u043a\u0438 Blue Google","description":"\u0412\u0438\u0441\u043a\u0438 Blue Google (1 \u043b.)","price":"1200.00","status":"enabled","created_at":1487241831,"updated_at":1487241831,"nomenclature_id":"ae55c2f6-fd84-421e-b1bc-8ddafd8ab2d9","cost_price":"1000.00","code":null,"type":"product","measure_id":"4bd7ac55-7581-4116-b298-8439fbcbad72","cooking_type_id":null,"output":null,"tenant_id":"797314dd-913b-47ee-ae2e-b7ec5e433279"},{"id":"a2bfd096-c690-4ce4-a8a4-48d4ab5916db","product_category_id":"831804ec-d8f6-437c-98fb-d12d665e94df","name":"\u041e\u0433\u043d\u0435\u043d\u043d\u0430\u044f \u0432\u043e\u0434\u0430 Google","description":"\u041e\u0433\u043d\u0435\u043d\u043d\u0430\u044f \u0432\u043e\u0434\u0430 Google (1 \u043b.)","price":"1000.00","status":"enabled","created_at":1487241831,"updated_at":1487241831,"nomenclature_id":"ae55c2f6-fd84-421e-b1bc-8ddafd8ab2d9","cost_price":"1000.00","code":null,"type":"product","measure_id":"4bd7ac55-7581-4116-b298-8439fbcbad72","cooking_type_id":null,"output":null,"tenant_id":"797314dd-913b-47ee-ae2e-b7ec5e433279"}]},{"id":"5e055c98-ec0e-4c82-9923-625a14cbd40c","name":"\u0424\u0440\u0443\u043a\u0442\u044b","lft":4,"rgt":5,"depth":1,"status":"enabled","created_at":1487242035,"updated_at":1487242055,"tree":0,"nomenclature_id":"ae55c2f6-fd84-421e-b1bc-8ddafd8ab2d9","tenant_id":"797314dd-913b-47ee-ae2e-b7ec5e433279","products":[{"id":"75bcb838-11ee-4b37-8111-103af9e2e77b","product_category_id":"5e055c98-ec0e-4c82-9923-625a14cbd40c","name":"\u042f\u0431\u043b\u043e\u043a\u0438","description":null,"price":"15.00","status":"enabled","created_at":1487242232,"updated_at":1487242232,"nomenclature_id":"ae55c2f6-fd84-421e-b1bc-8ddafd8ab2d9","cost_price":"0.00","code":"123","type":"product","measure_id":"ed9999e4-27bb-4886-9b1d-71e0e937f677","cooking_type_id":null,"output":null,"tenant_id":"797314dd-913b-47ee-ae2e-b7ec5e433279"},{"id":"91a88967-589c-41a5-b579-a02097a8b96b","product_category_id":"5e055c98-ec0e-4c82-9923-625a14cbd40c","name":"\u0413\u0440\u0443\u0448\u0438","description":null,"price":"150.00","status":"enabled","created_at":1487242251,"updated_at":1487242251,"nomenclature_id":"ae55c2f6-fd84-421e-b1bc-8ddafd8ab2d9","cost_price":"0.00","code":"","type":"product","measure_id":"ed9999e4-27bb-4886-9b1d-71e0e937f677","cooking_type_id":null,"output":null,"tenant_id":"797314dd-913b-47ee-ae2e-b7ec5e433279"}]}];
+                var Menu = [{"id":"66da9cf0-0aa3-40ab-a598-923ad82f9aec","name":"\u041f\u0435\u0440\u0432\u044b\u0439 \u0440\u0430\u0437\u0434\u0435\u043b Google","color":"white","tenant_id":"797314dd-913b-47ee-ae2e-b7ec5e433279","status":"enabled","created_at":1487241830,"updated_at":1487241830,"lft":2,"rgt":3,"depth":1,"tree":647,"icon":null,"type":"category"},{"id":"66da9cf0-0aa3-40ab-a598-923ad82f9111","name":"\u0412\u0442\u043e\u0440\u043e\u0439 \u0440\u0430\u0437\u0434\u0435\u043b Google","color":"#ccc","tenant_id":"797314dd-913b-47ee-ae2e-b7ec5e433279","status":"enabled","created_at":1487241830,"updated_at":1487241830,"lft":4,"rgt":5,"depth":1,"tree":647,"icon":null,"type":"category"}];
+            </script>
+        </div>
+
+    </div>
+</div>
+
+</script><script src="js/jquery.js"></script>
+<script src="js/yii.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/selectize.js"></script>
+<script src="js/Selectize.remove_button.js"></script>
+<script src="js/Selectize.no-delete.js"></script>
+<script src="js/main.js"></script>
+<script src="js/menu.js"></script>
+<script src="js/dynamic-form.js"></script></body>
+</html>

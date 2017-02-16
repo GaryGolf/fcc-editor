@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 modules/menu/node_modules
 modules/menu/typings
 modules/menu/static
 modules/menu/dist
+=======
+.idea
+
+>>>>>>> 5574031d0a064ead98e18035bbaee6c4abd40276
