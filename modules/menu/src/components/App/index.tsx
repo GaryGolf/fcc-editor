@@ -1,5 +1,7 @@
 import * as React from 'react'
-import Menu from '../Menu'
+import Category from '../Category'
+// import Menu from '../Menu'
+
 
 export default class App extends React.Component<{}, null> {
     constructor(props: {}){
@@ -9,7 +11,7 @@ export default class App extends React.Component<{}, null> {
     render(){
         return (
             <section className={''}>
-                <Menu/>
+                <Category/>
             </section>
         )
     }
