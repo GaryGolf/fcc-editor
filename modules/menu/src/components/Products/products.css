@@ -1,0 +1,15 @@
+@import '../../constants.css';
+.container{
+    flex: 1;
+    height: 100%;
+    max-width: 200px;
+    overflow: hidden;
+}
+.product{
+
+    padding: 5px 20px;
+    cursor: pointer;
+    &:hover {
+        background-color: var(--lightgray-color);
+    }
+}

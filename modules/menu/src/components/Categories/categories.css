@@ -1,0 +1,17 @@
+@import '../../constants.css';
+.container{
+    flex: 1;
+    height: 100%;
+    max-width: 200px;
+    background: silver;
+    user-select: none;
+    color: var(--primary-color);
+    background-color: var(--gray-color);
+}
+.catigories{
+    padding: 5px 20px;
+    cursor: pointer;
+    &:hover{
+        background-color: var(--lightgray-color);
+    }    
+}

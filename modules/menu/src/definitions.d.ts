@@ -1,11 +1,19 @@
-declare interface TodoItemData {
-  id?: TodoItemId
-  text?: string
-  completed?: boolean
+declare interface Product {
+    id: string
+    product_category_id: string
+    description: string
+    price: number
+    measure: string
 }
 
-declare type TodoItemId = number
-
-declare type TodoFilterType = 'SHOW_ALL' | 'SHOW_ACTIVE' | 'SHOW_COMPLETED'
-
-declare type TodoStoreState = TodoItemData[]
+declare interface ProductCategory {
+    id: string
+    icon: string
+    color: string
+    name: string
+    lft: number
+    rgt: number
+    depth: number
+    child_menus?: ProductCategory[]
+    products?: Product[]
+}

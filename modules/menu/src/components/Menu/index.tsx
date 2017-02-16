@@ -84,7 +84,7 @@ export default class Menu extends React.Component<Props, State> {
 
         return (
             <section className={style.container}>
-                {menu}
+                menu
             </section>
         )
     }
