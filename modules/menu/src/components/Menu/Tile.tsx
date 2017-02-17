@@ -1,7 +1,9 @@
 import * as React from 'react'
 const style = require('./tile.css')
 
-interface Props {}
+interface Props { 
+    onClick: () => void
+}
 interface State {}
 
 export default class Tile extends React.Component<Props, State>{
@@ -18,7 +20,7 @@ export default class Tile extends React.Component<Props, State>{
         ].join(' ')
 
         return (
-            <div className={tileStyle}>
+            <div className={tileStyle} onClick={this.props.onClick.bind(this)}>
                 <span className='glyphicon glyphicon-plus'/>
             </div>
         )
