@@ -14,14 +14,21 @@ export default class NewMenuModal extends React.Component<Props, State>{
    
     render(){
         if(!this.props.show) return null
+        
+        const options = ["apple", "mango", "grapes", "melon", "strawberry"]
+            .map(fruit =>({label: fruit, value: fruit}))
+
         return (
             <div className={style.container}>
-                <div className={style.overlay} />
-                <div className="modal fade in"  role="dialog" style={{display:'block'}} onClick={this.props.close.bind(this)}>
+                <div className={style.overlay} onClick={this.props.close.bind(this)}/>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                     <div className="modal-header">
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" 
+                                onClick={this.props.close.bind(this)}
+                                className="close" 
+                                data-dismiss="modal" 
+                                aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 className="modal-title">Новый элемент меню</h4>
@@ -41,7 +48,6 @@ export default class NewMenuModal extends React.Component<Props, State>{
                     </div>
                     </div>
                 </div>
-                 </div>
             </div>
         )
     }
