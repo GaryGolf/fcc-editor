@@ -1,0 +1,12 @@
+@import '../../constants.css';
+.container{
+    flex: 1 0 20%;
+    position: relative;
+    margin: 8px;
+    overflow: hidden;
+    color: var(--gray-color);
+    text-align: center;
+}
+.container span{
+    font-size: 40px;
+}

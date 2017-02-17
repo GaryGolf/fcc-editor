@@ -17,3 +17,5 @@ declare interface ProductCategory {
     child_menus?: ProductCategory[]
     products?: Product[]
 }
+
+declare type CategoryState = Array<ProductCategory>

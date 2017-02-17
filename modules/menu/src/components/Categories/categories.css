@@ -1,12 +1,15 @@
 @import '../../constants.css';
 .container{
-    flex: 1;
-    height: 100%;
-    max-width: 200px;
+    flex: 1 2 15%;
     background: silver;
     user-select: none;
     color: var(--primary-color);
     background-color: var(--gray-color);
+    padding-top: 12px; 
+}
+.scrollable{
+    @apply --scrollable;
+    
 }
 .catigories{
     padding: 5px 20px;

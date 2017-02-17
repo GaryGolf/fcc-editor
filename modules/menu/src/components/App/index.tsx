@@ -1,8 +1,9 @@
 import * as React from 'react'
 import Categories from '../Categories'
 import Products from '../Products'
+import Menu from '../Menu'
 import * as CONST from '../../constants'
-// import Menu from '../Menu'
+
 const style = require('./app.css')
 
 interface State {
@@ -53,6 +54,7 @@ export default class App extends React.Component<{}, State> {
                     nomenclature={nomenclature}
                     showProducts={this.showProducts.bind(this)}/>
                 <Products products={products}/>
+                <Menu/>
             </section>
         )
     }

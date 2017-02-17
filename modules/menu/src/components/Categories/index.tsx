@@ -29,7 +29,9 @@ export default class Categories extends React.Component<Props, null> {
       
         return (
             <section className={style.container}>
-                {catigories}
+                <div className={style.scrollable}>
+                    {catigories}
+                </div>
             </section>
         )
     }

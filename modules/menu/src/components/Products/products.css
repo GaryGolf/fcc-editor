@@ -1,12 +1,15 @@
 @import '../../constants.css';
 .container{
-    flex: 1;
-    height: 100%;
-    max-width: 200px;
-    overflow: hidden;
+    flex: 1 0 20%;
+    user-select: none;
+    color: var(--primary-color);
+    padding-top: 12px; 
+}
+.scrollable {
+    @apply --scrollable;
 }
 .product{
-
+    @apply: --list-item;
     padding: 5px 20px;
     cursor: pointer;
     &:hover {
