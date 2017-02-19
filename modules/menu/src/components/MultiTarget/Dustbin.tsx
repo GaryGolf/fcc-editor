@@ -1,5 +1,5 @@
 import * as React from 'react'
-const { DropTarget } = require('react-dnd')
+import DropTarget from 'react-dnd/lib/DropTarget'
 
 const style = {
   height: '12rem',
@@ -15,9 +15,7 @@ const style = {
 };
 
 const dustbinTarget = {
-  drop(props, monitor) {
-    props.onDrop(monitor.getItem());
-  },
+  drop(props, monitor) {props.onDrop(monitor.getItem())}
 }
 
 interface Props {
@@ -58,14 +56,9 @@ export default class Dustbin extends React.Component<Props, State> {
 
     return connectDropTarget(
       <div style={{ ...style, backgroundColor }}>
-        {isActive ?
-          'Release to drop' :
-          `This dustbin accepts: ${accepts.join(', ')}`
-        }
+        {isActive ? 'Release to drop' : `This dustbin accepts: ${accepts.join(', ')}`}
 
-        {lastDroppedItem &&
-          <p>Last dropped: {JSON.stringify(lastDroppedItem)}</p>
-        }
+        {lastDroppedItem && <p>Last dropped: {JSON.stringify(lastDroppedItem)}</p> }
       </div>,
     )
   }

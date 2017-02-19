@@ -1,6 +1,6 @@
 import * as React from 'react'
-// import ProductItem from './ProductItem'
-import Box from '../SingleTarget/Box'
+import ProductItem from './ProductItem'
+// import Box from '../SingleTarget/Box'
 const style = require('./products.css')
 
 interface Props {
@@ -14,18 +14,16 @@ export default class Products extends React.Component<Props, null>{
     render(){
         const {products} = this.props
         if(!products) return null
-        /*const items = products.map((item, idx) => (
+        const items = products.map((item, idx) => (
             <ProductItem key={`${item.description} ${idx}`}
                          name={item.description}>
             </ProductItem>
-        ))*/
+        ))
 
-        const fruits = ['bababa', 'apple', 'mango', 'qiwi', 'carrot']
-            .map(name => (<Box name={name}/>))
         return (
             <section className={style.container}>
                 <div className={style.scrollable}>
-                     {fruits}
+                     {items}
                 </div>
             </section>
         )

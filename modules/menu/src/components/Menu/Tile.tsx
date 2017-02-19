@@ -28,17 +28,16 @@ export default class Tile extends React.Component<Props, State>{
     render(){
 
         const { canDrop, isOver, connectDropTarget } = this.props;
-        const isActive = canDrop && isOver;
 
         const tileStyle =[
-            style.container,
-            isActive ? null : 'well',
+            style.container, 'well',
+            canDrop && isOver ? style.active : null
         ].join(' ')
 
 
-        return (
+        return connectDropTarget(
             <div className={tileStyle} onClick={this.props.onClick.bind(this)}>
-                <span className='glyphicon glyphicon-plus'/>
+                <div>+</div>
             </div>
         )
     }

@@ -5,8 +5,19 @@
     margin: 8px;
     overflow: hidden;
     color: var(--gray-color);
-    text-align: center;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
 }
-.container span{
-    font-size: 40px;
+.container div{
+    font-size: 48px;
+    align-self: center;
+}
+
+.active{
+    color: red;
+}
+.over {
+    color: navy;
 }

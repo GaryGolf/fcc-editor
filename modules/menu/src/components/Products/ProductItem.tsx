@@ -1,5 +1,5 @@
 import * as React from 'react'
-const { DragSource } = require('react-dnd')
+import  DragSource  from 'react-dnd/lib/DragSource'
 
 const style = require('./product-item.css')
 
@@ -23,6 +23,7 @@ const boxSource = {
     
   }
 }
+
 @DragSource('PRODUCT', boxSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
@@ -30,11 +31,10 @@ const boxSource = {
 export default class ProductItem extends React.Component<Props,State>{
 
     render(){
-        console.log('============')
         const { name, isDragging, connectDragSource } = this.props;
         const opacity = isDragging ? 0.4 : 1;
 
-        return (
+        return connectDragSource(
             <div className={style.container} style={{opacity}}>
                 {name}
             </div>
