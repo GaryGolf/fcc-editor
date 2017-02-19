@@ -1,10 +1,14 @@
 import * as React from 'react';
-import update from 'react/lib/update'
-const { DragDropContext } = require('react-dnd')
-const  { HTML5Backend,  NativeTypes } = require('react-dnd-html5-backend')
+import * as update from 'react/lib/update'
+import DragDropContext from 'react-dnd/lib/DragDropContext'
+import  {default as HTML5Backend, NativeTypes} from 'react-dnd-html5-backend'
 import Dustbin from './Dustbin';
 import Box from './Box';
 import ItemTypes from './ItemTypes';
+
+
+
+
 
 interface iDustbin {
     accepts: Array<string>
@@ -66,6 +70,7 @@ export default class Container extends React.Component<Props, State> {
     const { boxes, dustbins } = this.state;
 
     return (
+
       <div>
         <div style={{ overflow: 'hidden', clear: 'both' }}>
           {dustbins.map(({ accepts, lastDroppedItem }, index) =>

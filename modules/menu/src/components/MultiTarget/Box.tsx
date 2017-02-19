@@ -1,5 +1,5 @@
 import * as React from 'react'
-const { DragSource } = require('react-dnd')
+import DragSource from 'react-dnd/lib/DragSource'
 
 const style = {
   border: '1px dashed gray',
@@ -47,11 +47,8 @@ export default class Box extends React.Component<Props, State> {
 
     return connectDragSource(
       <div style={{ ...style, opacity }}>
-        {isDropped ?
-          <s>{name}</s> :
-          name
-        }
-      </div>,
+        {isDropped ?  <s>{name}</s> : name }
+      </div>
     )
   }
 }

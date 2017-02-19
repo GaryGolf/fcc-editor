@@ -1,5 +1,5 @@
 import * as React from 'react'
-const update = require('react/lib/update')
+import * as update from 'react/lib/update'
 const { DragDropContext } = require('react-dnd')
 const  HTML5Backend = require('react-dnd-html5-backend')
 import Card from './Card';

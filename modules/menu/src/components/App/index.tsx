@@ -2,9 +2,9 @@ import * as React from 'react'
 // const {DragDropContextProvider} = require('react-dnd')
 // const HTML5Backend = require('react-dnd-html5-backend')
 // import * as HTML5Backend from 'react-dnd-html5-backend'
-import Categories from '../Categories'
-import Products from '../Products'
-import Menu from '../Menu'
+// import Categories from '../Categories'
+// import Products from '../Products'
+// import Menu from '../Menu'
 import * as CONST from '../../constants'
 
 // import DnD from '../DnD'
