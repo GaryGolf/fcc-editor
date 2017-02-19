@@ -1,0 +1,21 @@
+:root{
+    /*colors*/
+    --primary-color: #333333;
+    --gray-color: rgba(215, 215, 215, 1);
+    --lightgray-color: rgba(228, 228, 228, 1);
+
+    --list-item: {
+        width: 100%;
+        height: 36px;
+        line-height: 36px;
+        overflow: hidden;
+    }
+    --scrollable: {
+        height: 100%;
+        display: block;
+        position: relative;
+        overflow-y: auto;
+    }
+
+}
+
