@@ -35,7 +35,6 @@ export default class NewMenuModal extends React.Component<Props, State>{
                     </div>
                    <div className="modal-body">
                         <p>One fine body&hellip;</p>
-                        
                     </div>
                     <div className="modal-footer">
                         <button type="button" 

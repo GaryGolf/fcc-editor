@@ -8,11 +8,3 @@
 .scrollable {
     @apply --scrollable;
 }
-.product{
-    @apply: --list-item;
-    padding: 5px 20px;
-    cursor: pointer;
-    &:hover {
-        background-color: var(--lightgray-color);
-    }
-}

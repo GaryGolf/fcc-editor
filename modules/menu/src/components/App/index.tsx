@@ -1,10 +1,15 @@
 import * as React from 'react'
+// const {DragDropContextProvider} = require('react-dnd')
+// const HTML5Backend = require('react-dnd-html5-backend')
+// import * as HTML5Backend from 'react-dnd-html5-backend'
 import Categories from '../Categories'
 import Products from '../Products'
 import Menu from '../Menu'
 import * as CONST from '../../constants'
 
-import DnD from '../DnD'
+// import DnD from '../DnD'
+// import SingleTarget from '../SingleTarget'
+import MultiTarget from '../MultiTarget'
 
 const style = require('./app.css')
 
@@ -51,14 +56,18 @@ export default class App extends React.Component<{}, State> {
         if(!nomenclature) return null
         const products = category ? category.products : null
         return (
+        // <DragDropContextProvider backend={HTML5Backend}>
             <section className={style.container}>
                 {/*<Categories 
                     nomenclature={nomenclature}
                     showProducts={this.showProducts.bind(this)}/>
                 <Products products={products}/>
                 <Menu/>*/}
-                <DnD/>
+                {/*<DnD/>*/}
+                {/*<SingleTarget/>*/}
+                <MultiTarget/>
             </section>
+        //  </DragDropContextProvider>
         )
     }
 }
