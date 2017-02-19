@@ -1,23 +1,17 @@
 import * as React from 'react'
-// const {DragDropContextProvider} = require('react-dnd')
 import DragDropContext from 'react-dnd/lib/DragDropContext'
 import {default as HTML5Backend} from 'react-dnd-html5-backend'
-// const HTML5Backend = require('react-dnd-html5-backend')
-// import * as HTML5Backend from 'react-dnd-html5-backend'
 import Categories from '../Categories'
 import Products from '../Products'
 import Menu from '../Menu'
 import * as CONST from '../../constants'
-
-// import DnD from '../DnD'
-// import SingleTarget from '../SingleTarget'
-// import MultiTarget from '../MultiTarget'
 
 const style = require('./app.css')
 
 interface State {
     nomenclature: ProductCategory
     category: ProductCategory  // current (selected) category
+    menu: MenuState
 }
 @DragDropContext(HTML5Backend)
 export default class App extends React.Component<{}, State> {
@@ -25,7 +19,8 @@ export default class App extends React.Component<{}, State> {
         super(props) 
         this.state = {
             nomenclature: null,
-            category: null
+            category: null,
+            menu: null
         }
     }
 
@@ -47,6 +42,13 @@ export default class App extends React.Component<{}, State> {
             .then(response => response.json())
             .then((nomenclature: ProductCategory) => this.setState({nomenclature}))
             .catch(console.error)
+
+        const menu = Array(24).fill({
+            id: '',
+            description: '',
+            price: 0
+        })
+        this.setState({menu})
     }
 
     showProducts(category: ProductCategory){
@@ -54,7 +56,7 @@ export default class App extends React.Component<{}, State> {
     }
 
     render(){
-        const {category, nomenclature} = this.state
+        const {category, nomenclature, menu} = this.state
         if(!nomenclature) return null
         const products = category ? category.products : null
         return (
@@ -63,10 +65,7 @@ export default class App extends React.Component<{}, State> {
                     nomenclature={nomenclature}
                     showProducts={this.showProducts.bind(this)}/>
                 <Products products={products}/>
-                <Menu/>
-                {/*<DnD/>*/}
-                {/*<SingleTarget/>*/}
-                {/*<MultiTarget/>*/}
+                <Menu menu={menu}/>
             </section>
         )
     }

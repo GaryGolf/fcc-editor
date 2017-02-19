@@ -1,3 +1,9 @@
+declare interface MenuItem {
+    id: string
+    description: string
+    price: number
+}
+
 declare interface Product {
     id: string
     product_category_id: string
@@ -19,3 +25,4 @@ declare interface ProductCategory {
 }
 
 declare type CategoryState = Array<ProductCategory>
+declare type MenuState = Array<MenuItem>

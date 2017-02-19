@@ -1,8 +1,10 @@
 import * as React from 'react'
-const { DropTarget } = require('react-dnd')
+import DropTarget from 'react-dnd/lib/DropTarget'
 const style = require('./tile.css')
 
 interface Props { 
+    cell: number
+    menuItem: MenuItem
     onClick: () => void
     canDrop?: boolean
     isOver?: boolean
@@ -11,7 +13,7 @@ interface Props {
 interface State {}
 
 const boxTarget = {
-  drop() {return { name: 'Dustbin' }}
+  drop(props) {return { cell: props.cell }}
 }
 
 @DropTarget('PRODUCT', boxTarget, (connect, monitor) => ({
@@ -27,17 +29,18 @@ export default class Tile extends React.Component<Props, State>{
 
     render(){
 
-        const { canDrop, isOver, connectDropTarget } = this.props;
+        const { menuItem, canDrop, isOver, connectDropTarget } = this.props;
 
         const tileStyle =[
             style.container, 'well',
             canDrop && isOver ? style.active : null
         ].join(' ')
 
+        const text = menuItem.id ? menuItem.description : '+'
 
         return connectDropTarget(
             <div className={tileStyle} onClick={this.props.onClick.bind(this)}>
-                <div>+</div>
+                <div>{text}</div>
             </div>
         )
     }
