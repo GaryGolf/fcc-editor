@@ -1,9 +1,3 @@
-declare interface MenuItem {
-    id: string
-    description: string
-    price: number
-}
-
 declare interface Product {
     id: string
     product_category_id: string
@@ -24,5 +18,14 @@ declare interface ProductCategory {
     products?: Product[]
 }
 
-declare type MenuState = Array<MenuItem>
+declare interface MenuItem {
+    id: string
+    icon: string
+    name: string
+    color: string
+    cell: number
+    products: Array<Product>
+    product_categories: Array<ProductCategory>
+}
 
+declare type MenuState = Array<MenuItem>

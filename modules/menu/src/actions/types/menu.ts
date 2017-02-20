@@ -1,0 +1,1 @@
+export const DROP_CATEGORY = 'DROP_CATEGORY'

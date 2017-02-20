@@ -10,7 +10,6 @@ interface Props {
     isOver?: boolean
     connectDropTarget?: (Element: any) => any
 }
-interface State {}
 
 const boxTarget = {
   drop(props) {return { cell: props.cell }}
@@ -21,7 +20,7 @@ const boxTarget = {
   isOver: monitor.isOver(),
   canDrop: monitor.canDrop(),
 }))
-export default class Tile extends React.Component<Props, State>{
+export default class Tile extends React.Component<Props, null>{
 
     constructor(props: Props){
         super(props)
@@ -29,18 +28,23 @@ export default class Tile extends React.Component<Props, State>{
 
     render(){
 
-        const { menuItem, canDrop, isOver, connectDropTarget } = this.props;
+        const { menuItem, canDrop, isOver, connectDropTarget } = this.props
+        const isBusy = !!menuItem.id
 
         const tileStyle =[
             style.container, 'well',
             canDrop && isOver ? style.active : null
         ].join(' ')
 
-        const text = menuItem.id ? menuItem.description : '+'
+        const text = isBusy ? menuItem.name : '+'
+
+        const textStyle = [
+            isBusy ? style.category : style.plus
+        ].join(' ')
 
         return connectDropTarget(
             <div className={tileStyle} onClick={this.props.onClick.bind(this)}>
-                <div>{text}</div>
+                <div className={textStyle}>{text}</div>
             </div>
         )
     }

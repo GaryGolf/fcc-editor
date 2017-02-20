@@ -4,24 +4,32 @@ import  DragSource  from 'react-dnd/lib/DragSource'
 const style = require('./category-item.css')
 
 interface Props {
-    name: string
-    onClick: any
+    category: ProductCategory
+    actions: any
     isDragging?: boolean
-    connectDragSource?: (Element: any) => any
+    connectDragSource?: (element: any) => any
 }
 
 const boxSource = {
   beginDrag(props) {
-    return {name: props.name}
+    return {category: props.category as ProductCategory}
   },
 
   endDrag(props, monitor) {
-    const item = monitor.getItem();
-    const dropResult = monitor.getDropResult();
+    const item = monitor.getItem()
+    const dropResult = monitor.getDropResult()
 
-    if (dropResult) {
-        console.log(`You dropped ${item.name} into cell #${dropResult.cell}!`)
-    }  
+    if (!dropResult) return
+
+    console.log(`dropped ${item.category.name} into cell # ${dropResult.cell}`)
+    
+    // TODO if call is occupied add item.category.id to product_categories only
+    const {id, color, icon, name, products} = item.category
+    const cell = dropResult.cell
+    const product_categories = [item.category.id]
+    const category: MenuItem = { id, color, icon, name, cell, products, product_categories }
+    props.actions.dropCategory(category)
+
   }
 }
 
@@ -32,12 +40,12 @@ const boxSource = {
 export default class CategoryItem extends React.Component<Props, null>{
 
     render(){
-        const {name, onClick, isDragging, connectDragSource} = this.props
+        const {category, actions, isDragging, connectDragSource} = this.props
         
         return connectDragSource(
             <div className={style.container}
-                onClick={onClick}>
-                {name}
+                onClick={()=>actions.select(category)}>
+                {category.name}
             </div>
         )
     }

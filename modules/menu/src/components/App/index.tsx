@@ -16,6 +16,7 @@ const style = require('./app.css')
 interface Props {
     nomenclature: ProductCategory
     category: ProductCategory
+    menu: MenuState
     actions: {
         fetch:( )=> void,
         select:(category: ProductCategory) => void
@@ -25,7 +26,8 @@ interface Props {
 @connect(
     state => ({
         nomenclature: state.nomenclature as ProductCategory,
-        category: state.category.current as ProductCategory
+        category: state.category.current as ProductCategory,
+        menu: state.menu as MenuState
     }),
     dispatch => ({ 
         actions: bindActionCreators(ActionCreator as any, dispatch) 
@@ -40,7 +42,7 @@ export default class App extends React.Component<Props, null> {
 
     render(){
 
-        const {nomenclature, category, actions} = this.props
+        const {nomenclature, category, menu, actions} = this.props
         if(!nomenclature) return null
         const products = category ? category.products : null
         return (
@@ -48,7 +50,7 @@ export default class App extends React.Component<Props, null> {
                 <Categories actions={actions}
                     nomenclature={nomenclature}/>
                 <Products products={products}/>
-                <Menu menu={null}/>
+                <Menu menu={menu}/>
             </section>
         )
     }

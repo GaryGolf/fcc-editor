@@ -10,9 +10,14 @@
     flex-flow: column nowrap;
     justify-content: center;
 }
-.container div{
+.plus{
     font-size: 48px;
     align-self: center;
+}
+.category{
+    font-size: 18px;
+    align-self: left;
+    color: var(--primary-color);
 }
 
 .active{
