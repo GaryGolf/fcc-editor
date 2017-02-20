@@ -24,5 +24,5 @@ declare interface ProductCategory {
     products?: Product[]
 }
 
-declare type CategoryState = Array<ProductCategory>
 declare type MenuState = Array<MenuItem>
+

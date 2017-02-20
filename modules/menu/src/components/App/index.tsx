@@ -5,58 +5,46 @@ import Categories from '../Categories'
 import Products from '../Products'
 import Menu from '../Menu'
 import * as CONST from '../../constants'
+import { bindActionCreators } from 'redux'
+import { RootState } from '../../reducers'
+import ActionCreator from '../../actions'
 
+const {connect} = require('react-redux')
 const style = require('./app.css')
 
-interface State {
+interface State {}
+interface Props {
     nomenclature: ProductCategory
-    category: ProductCategory  // current (selected) category
-    menu: MenuState
-}
-@DragDropContext(HTML5Backend)
-export default class App extends React.Component<{}, State> {
-    constructor(props: {}){
-        super(props) 
-        this.state = {
-            nomenclature: null,
-            category: null,
-            menu: null
-        }
+    category: ProductCategory
+    actions: {
+        fetch:( )=> void,
+        select:(category: ProductCategory) => void
     }
+}
 
-    componentDidMount(){
-
-        const root =    'c03cb760-1575-4858-ab41-52da066b9cd5'
-        const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'
-        const url = CONST.menu_view_url + menu_id
-        const options = {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-                'Tenant-Domain': 'google',
-                'Access-Token': 'infinity_access_token_google'
-            }
-        }
-        window['fetch'](url,options)
-            .then(response => response.json())
-            .then((nomenclature: ProductCategory) => this.setState({nomenclature}))
-            .catch(console.error)
-
-        const menu = Array(24).fill({
-            id: '',
-            description: '',
-            price: 0
-        })
-        this.setState({menu})
+@connect(
+    state => ({
+        nomenclature: state.nomenclature as ProductCategory,
+        category: state.category.current as ProductCategory
+    }),
+    dispatch => ({ 
+        actions: bindActionCreators(ActionCreator as any, dispatch) 
+    })
+)
+@DragDropContext(HTML5Backend)
+export default class App extends React.Component<Props, State> {
+    
+    componentWillMount(){
+        this.props.actions.fetch()
     }
 
     showProducts(category: ProductCategory){
-        this.setState({category})
+        this.props.actions.select(category)
     }
 
     render(){
-        const {category, nomenclature, menu} = this.state
+
+        const {nomenclature, category} = this.props
         if(!nomenclature) return null
         const products = category ? category.products : null
         return (
@@ -65,7 +53,7 @@ export default class App extends React.Component<{}, State> {
                     nomenclature={nomenclature}
                     showProducts={this.showProducts.bind(this)}/>
                 <Products products={products}/>
-                <Menu menu={menu}/>
+                <Menu menu={null}/>
             </section>
         )
     }

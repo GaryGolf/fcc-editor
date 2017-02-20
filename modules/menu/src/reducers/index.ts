@@ -1,13 +1,17 @@
-import { routerReducer as routing, RouteActions } from 'react-router-redux';
-import { combineReducers, Reducer } from 'redux';
-// import todos from './todos';
+import { combineReducers, Reducer } from 'redux'
+import { routerReducer as routing, RouteActions } from 'react-router-redux'
+
+import nomenclature from './nomenclature'
+import category, {CurrentCategory} from './category'
 
 export interface RootState {
   routing: RouteActions
-//   todos: TodoStoreState;
+  nomenclature: ProductCategory
+  category: CurrentCategory
 }
 
 export default combineReducers<RootState>({
   routing,
-//   todos
+  nomenclature,
+  category
 })
