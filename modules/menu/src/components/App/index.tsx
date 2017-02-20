@@ -50,7 +50,7 @@ export default class App extends React.Component<Props, null> {
                 <Categories actions={actions}
                     nomenclature={nomenclature}/>
                 <Products products={products}/>
-                <Menu menu={menu}/>
+                <Menu menu={menu} actions={actions}/>
             </section>
         )
     }

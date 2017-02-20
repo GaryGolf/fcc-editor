@@ -11,6 +11,7 @@ const style = require('./menu.css')
 
 interface Props {
     menu: MenuState
+    actions: any
 }
 interface State {
     showModal: boolean
@@ -44,11 +45,11 @@ export default class Menu extends React.Component<Props, State> {
 
     render(){
         
-        const {menu} = this.props
+        const {menu, actions} = this.props
 
         const items = this.menu.map((item, idx) =>{
             const menuItem = menu.find(item => item.cell == idx) || item
-            return <Tile key={idx} cell={idx} menuItem={menuItem} onClick={this.showModal.bind(this)}/>
+            return <Tile key={idx} cell={idx} menuItem={menuItem} actions={actions} onClick={this.showModal.bind(this)}/>
         })
 
         return (

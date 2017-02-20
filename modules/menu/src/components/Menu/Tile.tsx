@@ -5,6 +5,7 @@ const style = require('./tile.css')
 interface Props { 
     cell: number
     menuItem: MenuItem
+    actions: any
     onClick: () => void
     canDrop?: boolean
     isOver?: boolean
