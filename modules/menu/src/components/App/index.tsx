@@ -12,7 +12,7 @@ import ActionCreator from '../../actions'
 const {connect} = require('react-redux')
 const style = require('./app.css')
 
-interface State {}
+
 interface Props {
     nomenclature: ProductCategory
     category: ProductCategory
@@ -32,26 +32,21 @@ interface Props {
     })
 )
 @DragDropContext(HTML5Backend)
-export default class App extends React.Component<Props, State> {
+export default class App extends React.Component<Props, null> {
     
     componentWillMount(){
         this.props.actions.fetch()
     }
 
-    showProducts(category: ProductCategory){
-        this.props.actions.select(category)
-    }
-
     render(){
 
-        const {nomenclature, category} = this.props
+        const {nomenclature, category, actions} = this.props
         if(!nomenclature) return null
         const products = category ? category.products : null
         return (
             <section className={style.container}>
-                <Categories 
-                    nomenclature={nomenclature}
-                    showProducts={this.showProducts.bind(this)}/>
+                <Categories actions={actions}
+                    nomenclature={nomenclature}/>
                 <Products products={products}/>
                 <Menu menu={null}/>
             </section>

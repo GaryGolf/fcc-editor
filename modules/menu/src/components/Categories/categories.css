@@ -11,10 +11,3 @@
     @apply --scrollable;
     
 }
-.catigories{
-    padding: 5px 20px;
-    cursor: pointer;
-    &:hover{
-        background-color: var(--lightgray-color);
-    }    
-}

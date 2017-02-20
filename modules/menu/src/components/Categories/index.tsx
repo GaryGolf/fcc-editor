@@ -1,11 +1,13 @@
 import * as React from 'react'
 import * as constants from '../../constants'
+import CategoryItem from './CategoryItem'
+
 const style = require('./categories.css')
 
 
 interface Props {
     nomenclature: ProductCategory
-    showProducts: (ProductCategory) => void
+    actions: any
 }
 
 export default class Categories extends React.Component<Props, null> {
@@ -17,21 +19,19 @@ export default class Categories extends React.Component<Props, null> {
 
     render(){
 
-        const {nomenclature} = this.props
+        const {nomenclature, actions} = this.props
         
-        const catigories = nomenclature.child_menus.map((item, idx) => (
-            <div className={style.catigories}
-                key={`${item.name} ${idx}`} 
-                onClick={() => this.props.showProducts(item)}>
-                {item.name}
-            </div>
+        const items = nomenclature.child_menus.map((item, idx) => (
+            <CategoryItem key={item.id}
+                name={item.name}
+                onClick={() => actions.select(item)} />
         ))
       
         return (
             <section className={style.container}>
-                <div className={style.scrollable}>
-                    {catigories}
-                </div>
+               <div className={style.scrollable}>
+                   {items}
+               </div>
             </section>
         )
     }
