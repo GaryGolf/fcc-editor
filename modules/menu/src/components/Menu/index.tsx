@@ -35,6 +35,8 @@ export default class Menu extends React.Component<Props, null> {
         
         const {menu, actions} = this.props
 
+        console.table(menu)
+
         const items = this.menu.map((item, idx) =>{
             const menuItem = menu.find(item => item.cell == idx) || item
             return <Tile key={idx} cell={idx} menuItem={menuItem} />

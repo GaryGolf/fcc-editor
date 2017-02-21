@@ -1,19 +1,6 @@
 import * as Actions from './types/menu'
+import { createAction } from 'redux-actions'
 
-
-
-export function load(){
-    // load menu
-}
-
-interface ProductCategoryAction {
-    type: string
-    payload: MenuItem
-}
-
-export function dropCategory(category: MenuItem):ProductCategoryAction {
-    return {
-        type: Actions.DROP_CATEGORY,
-        payload: category
-    }
-}
+export const dropProduct = createAction<MenuItem>(Actions.DROP_PRODUCT)
+export const dropCategory = createAction<MenuItem>(Actions.DROP_CATEGORY)
+export const dropAdditionalCategory = createAction<MenuItem>(Actions.DROP_ADDITIONAL_CATEGORY)

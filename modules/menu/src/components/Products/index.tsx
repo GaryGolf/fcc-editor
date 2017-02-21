@@ -15,8 +15,8 @@ export default class Products extends React.Component<Props, null>{
         const {products} = this.props
         if(!products) return null
         const items = products.map((item, idx) => (
-            <ProductItem key={`${item.description} ${idx}`}
-                         name={item.description}>
+            <ProductItem key={item.id}
+                         product={item}>
             </ProductItem>
         ))
 

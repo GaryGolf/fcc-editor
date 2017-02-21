@@ -4,14 +4,16 @@ import  DragSource  from 'react-dnd/lib/DragSource'
 const style = require('./product-item.css')
 
 interface Props {
+    product: Product
     connectDragSource?: (Element: any) => any
     isDragging?: boolean
-    name: string
 }
 
 const boxSource = {
   beginDrag(props) {
-    return {name: props.name}
+    return { 
+        product: props.product
+    }
   },
 
   endDrag(props, monitor) {
@@ -31,12 +33,12 @@ const boxSource = {
 export default class ProductItem extends React.Component<Props, null>{
 
     render(){
-        const { name, isDragging, connectDragSource } = this.props;
+        const { product, isDragging, connectDragSource } = this.props;
         const opacity = isDragging ? 0.4 : 1;
 
         return connectDragSource(
             <div className={style.container} style={{opacity}}>
-                {name}
+                {product.description}
             </div>
         )
     }
