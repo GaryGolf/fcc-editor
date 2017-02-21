@@ -19,10 +19,28 @@
     align-self: left;
     color: var(--primary-color);
 }
+.button-group{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    & button {
+        margin: 4px 5px 4px 0;
+        visibility: hidden;
+    }
+
+    &:hover button{
+        visibility: visible;
+    }
+}
+
 
 .active{
     border-color: var(--active-cell-color);
 }
 .over {
     color: navy;
+}
+.none{
+    display: none;
 }

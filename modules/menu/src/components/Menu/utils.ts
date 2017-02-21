@@ -2,7 +2,6 @@ const uuid = require('uuid')
 
 export function checkout(props, monitor): void{
 
-    console.log()
     switch(monitor.getItemType()){
         case 'CATEGORY' :
             checkCategory(props, monitor.getItem().category)
@@ -13,22 +12,6 @@ export function checkout(props, monitor): void{
         default :
     }
 }
-// declare interface Product {
-//     id: string
-//     product_category_id: string
-//     description: string
-//     price: number
-//     measure: string
-// }
-// declare interface MenuItem {
-//     id: string
-//     icon: string
-//     name: string
-//     color: string
-//     cell: number
-//     products: Array<Product>
-//     product_categories: Array<ProductCategory>
-// }
 
 function checkProduct(props, product: Product): void{
 
@@ -61,3 +44,23 @@ function checkCategory(props, category: ProductCategory): void {
         actions.dropAdditionalCategory({...menuItem, product_categories})  
     }
 }
+
+
+/*
+declare interface Product {
+    id: string
+    product_category_id: string
+    description: string
+    price: number
+    measure: string
+}
+declare interface MenuItem {
+    id: string
+    icon: string
+    name: string
+    color: string
+    cell: number
+    products: Array<Product>
+    product_categories: Array<ProductCategory>
+}
+*/

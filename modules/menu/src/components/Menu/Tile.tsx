@@ -21,8 +21,6 @@ interface Props {
     connectDropTarget?: (Element: any) => any
 }
 
-
-
 const boxTarget = {
     drop(props, monitor) {
 
@@ -64,9 +62,22 @@ export default class Tile extends React.Component<Props, null>{
             isBusy ? style.category : style.plus
         ].join(' ')
 
+        const btnGrpStyle = [
+            isBusy ? style['button-group'] : style.none
+        ].join(' ')
+        console.log(btnGrpStyle)
         return connectDropTarget(
             <div className={tileStyle} onClick={()=>console.log('show modal')}>
                 <div className={textStyle}>{text}</div>
+                <div className={btnGrpStyle}>
+                     <button className="btn btn-info btn-sm">
+                        <span className="glyphicon glyphicon-pencil"/>
+                    </button>
+                    <button className="btn btn-danger btn-sm" 
+                            onClick={()=>this.props.actions.removeMenuItem(menuItem)}>
+                        <span className="glyphicon glyphicon-trash"/>
+                    </button>
+                </div>
             </div>
         )
     }

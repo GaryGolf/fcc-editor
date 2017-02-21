@@ -22,6 +22,8 @@ export default function menu(state:MenuState=initialState, action):MenuState{
                 if(action.payload.id == item.id) return action.payload
                 return item
             })
+        case Actions.REMOVE_MENU_ITEM :
+            return state.filter(item => action.payload.id != item.id)
 
         default :
             break
