@@ -2,8 +2,9 @@ import * as React from 'react'
 import DropTarget from 'react-dnd/lib/DropTarget'
 import { bindActionCreators } from 'redux'
 import { RootState } from '../../reducers'
-import ActionCreator from '../../actions'
+// import ActionCreator from '../../actions'
 import * as MenuActions from '../../actions/menu'
+import * as ViewActions from '../../actions/view'
 import {checkout} from './utils'
 
 const {connect} = require('react-redux')
@@ -14,7 +15,8 @@ interface Props {
     menuItem: MenuItem
     menu?: MenuState
     nomenclature?: ProductCategory
-    actions?: any
+    actions?: MenuActions.Interface
+    navigate?: ViewActions.Interface
     canDrop?: boolean
     isOver?: boolean
     itemType?: string
@@ -35,7 +37,8 @@ const boxTarget = {
         menu: state.menu,
         nomenclature: state.nomenclature        
     }), dispatch => ({
-        actions: bindActionCreators(MenuActions as any, dispatch) 
+        actions: bindActionCreators(MenuActions as any, dispatch),
+        navigate: bindActionCreators(ViewActions as any, dispatch)
     })
 )
 @DropTarget(['PRODUCT','CATEGORY'], boxTarget, (connect, monitor) => ({
@@ -46,9 +49,10 @@ const boxTarget = {
 }))
 export default class Tile extends React.Component<Props, null>{
 
+
     render(){
 
-        const { menuItem, canDrop, isOver, connectDropTarget } = this.props
+        const { menuItem, canDrop, isOver, connectDropTarget, actions, navigate } = this.props
         const isBusy = !!menuItem.id
 
         const tileStyle = [
@@ -67,14 +71,15 @@ export default class Tile extends React.Component<Props, null>{
         ].join(' ')
         console.log(btnGrpStyle)
         return connectDropTarget(
-            <div className={tileStyle} onClick={()=>console.log('show modal')}>
+            <div className={tileStyle}>
                 <div className={textStyle}>{text}</div>
                 <div className={btnGrpStyle}>
-                     <button className="btn btn-info btn-sm">
+                     <button className="btn btn-info btn-sm"
+                            onClick={()=>navigate.showMenuEditModal(menuItem)}>
                         <span className="glyphicon glyphicon-pencil"/>
                     </button>
                     <button className="btn btn-danger btn-sm" 
-                            onClick={()=>this.props.actions.removeMenuItem(menuItem)}>
+                            onClick={()=>actions.removeMenuItem(menuItem)}>
                         <span className="glyphicon glyphicon-trash"/>
                     </button>
                 </div>

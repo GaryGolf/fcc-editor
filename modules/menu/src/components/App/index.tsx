@@ -8,6 +8,8 @@ import * as CONST from '../../constants'
 import { bindActionCreators } from 'redux'
 import { RootState } from '../../reducers'
 import ActionCreator from '../../actions'
+import * as ViewActions from '../../actions/view'
+import MenuEditModal from '../Modals/MenuEditModal'
 
 const {connect} = require('react-redux')
 const style = require('./app.css')
@@ -17,6 +19,8 @@ interface Props {
     nomenclature: ProductCategory
     category: ProductCategory
     menu: MenuState
+    menuItem: MenuItem
+    navigate: ViewActions.Interface
     actions: {
         fetch:( )=> void,
         select:(category: ProductCategory) => void
@@ -27,10 +31,12 @@ interface Props {
     state => ({
         nomenclature: state.nomenclature as ProductCategory,
         category: state.category.current as ProductCategory,
-        menu: state.menu as MenuState
+        menu: state.menu as MenuState,
+        menuItem: state.view.menuItem as MenuItem
     }),
     dispatch => ({ 
-        actions: bindActionCreators(ActionCreator as any, dispatch) 
+        actions: bindActionCreators(ActionCreator as any, dispatch) ,
+        navigate: bindActionCreators(ViewActions as any, dispatch)
     })
 )
 @DragDropContext(HTML5Backend)
@@ -42,7 +48,7 @@ export default class App extends React.Component<Props, null> {
 
     render(){
 
-        const {nomenclature, category, menu, actions} = this.props
+        const {nomenclature, category, menu, menuItem, actions, navigate} = this.props
         if(!nomenclature) return null
         const products = category ? category.products : null
         return (
@@ -51,6 +57,7 @@ export default class App extends React.Component<Props, null> {
                     nomenclature={nomenclature}/>
                 <Products products={products}/>
                 <Menu menu={menu} actions={actions}/>
+                <MenuEditModal show={!!menuItem} close={()=>navigate.hideMenuEditModal()} />
             </section>
         )
     }

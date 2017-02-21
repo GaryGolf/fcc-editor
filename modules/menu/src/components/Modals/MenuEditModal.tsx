@@ -1,13 +1,13 @@
 import * as React from 'react'
 
-const style = require('./new-menu.css')
+const style = require('./menu-modal.css')
 
 interface Props {
     show: boolean
     close: ()=>void
 }
 interface State {}
-export default class NewMenuModal extends React.Component<Props, State>{
+export default class MenuEditModal extends React.Component<Props, State>{
     constructor(props: Props){
         super(props)
     }
