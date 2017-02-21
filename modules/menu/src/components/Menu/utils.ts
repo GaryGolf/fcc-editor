@@ -39,6 +39,8 @@ function checkProduct(props, product: Product): void{
         actions.dropProduct(item)  
     } else if(menuItem.product_categories.length > 0) { // its not single product
         if(menuItem.products.some(item => item.id == product.id)) return // already exist
+        if(menuItem.product_categories.some(item => (
+            item.id == product.product_category_id))) return  //parent category is in the list already
         const products = [...menuItem.products, product]
         actions.dropAdditionalProduct({...menuItem, products})  
     }
