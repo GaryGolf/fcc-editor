@@ -12,7 +12,10 @@ interface Props {
 
 const boxSource = {
   beginDrag(props) {
-    return {category: props.category as ProductCategory}
+    return {
+        type: 'CATEGORY',
+        category: props.category as ProductCategory
+    }
   },
 
   endDrag(props, monitor) {
@@ -23,12 +26,23 @@ const boxSource = {
 
     console.log(`dropped ${item.category.name} into cell # ${dropResult.cell}`)
     
-    // TODO if call is occupied add item.category.id to product_categories only
-    const {id, color, icon, name, products} = item.category
-    const cell = dropResult.cell
-    const product_categories = [item.category.id]
-    const category: MenuItem = { id, color, icon, name, cell, products, product_categories }
-    props.actions.dropCategory(category)
+    
+
+    // const {cell, menuItem } = dropResult
+    // console.log(menuItem)
+    // const {id, color, icon, name, products} = item.category
+    // if(!!menuItem.id){
+    //     console.log(menuItem.name)
+    //     const { product_categories }  = menuItem 
+    //     if(product_categories.indexOf(id) >= 0) return // already exist
+    //     const category = {...menuItem, product_categories: [...product_categories, id] }
+    //     props.actions.dropCategory(category)
+    //     return
+    // } 
+
+    // const product_categories = [item.category.id]
+    // const category: MenuItem = { id, color, icon, name, cell, products, product_categories }
+    // props.actions.dropCategory(category)
 
   }
 }

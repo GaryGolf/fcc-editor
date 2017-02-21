@@ -1,5 +1,4 @@
 import * as React from 'react'
-import NewMenuModal from './NewMenuModal'
 import Tile from './Tile'
 
 import * as CONST from '../../constants'
@@ -13,11 +12,8 @@ interface Props {
     menu: MenuState
     actions: any
 }
-interface State {
-    showModal: boolean
-}
 
-export default class Menu extends React.Component<Props, State> {
+export default class Menu extends React.Component<Props, null> {
     
     private menu: MenuState
     private menuPrototype:MenuItem = {
@@ -32,15 +28,7 @@ export default class Menu extends React.Component<Props, State> {
 
     constructor(props: Props){
         super(props)
-        this.state={ showModal: false}
         this.menu  = Array(CONST.MENU_LENGTH).fill(this.menuPrototype)
-    }
-
-    showModal(){
-        this.setState({showModal:true})
-    }
-    closeModal(){
-        this.setState({showModal:false})
     }
 
     render(){
@@ -49,14 +37,12 @@ export default class Menu extends React.Component<Props, State> {
 
         const items = this.menu.map((item, idx) =>{
             const menuItem = menu.find(item => item.cell == idx) || item
-            return <Tile key={idx} cell={idx} menuItem={menuItem} actions={actions} onClick={this.showModal.bind(this)}/>
+            return <Tile key={idx} cell={idx} menuItem={menuItem} />
         })
 
         return (
-
             <section className={style.container}>
                 {items}
-                <NewMenuModal show={this.state.showModal} close={this.closeModal.bind(this)}/>
             </section>
         )
     }

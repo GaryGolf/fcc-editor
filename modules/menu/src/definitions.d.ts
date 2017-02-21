@@ -11,9 +11,9 @@ declare interface ProductCategory {
     icon: string
     color: string
     name: string
-    lft: number
-    rgt: number
-    depth: number
+    lft?: number
+    rgt?: number
+    depth?: number
     child_menus?: ProductCategory[]
     products?: Product[]
 }
