@@ -1,23 +1,38 @@
 import * as React from 'react'
+import * as CONST from '../../constants'
 
 const style = require('./menu-modal.css')
 
 interface Props {
-    show: boolean
+    menuItem: MenuItem
     close: ()=>void
 }
-interface State {}
-export default class MenuEditModal extends React.Component<Props, State>{
+
+export default class MenuEditModal extends React.Component<Props, null>{
+    
     constructor(props: Props){
         super(props)
     }
    
     render(){
-        if(!this.props.show) return null
-        
-        const options = ["apple", "mango", "grapes", "melon", "strawberry"]
-            .map(fruit =>({label: fruit, value: fruit}))
+        const {menuItem} = this.props
 
+        if(!menuItem) return null
+
+        const categories = menuItem.product_categories.map(item => (
+            <div key={item.id}>
+                <input type="checkbox" />
+                {item.name}
+            </div>
+        ))
+
+        const goods = menuItem.products.map(item => (
+            <div key={item.id}>
+                 <input type="checkbox" />
+                {item.description}
+            </div>
+        ))
+        
         return (
             <div className={style.container}>
                 <div className={style.overlay} onClick={this.props.close.bind(this)}/>
@@ -31,10 +46,24 @@ export default class MenuEditModal extends React.Component<Props, State>{
                                 aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 className="modal-title">Новый элемент меню</h4>
+                        <h4 className="modal-title">Элемент меню</h4>
                     </div>
                    <div className="modal-body">
-                        <p>One fine body&hellip;</p>
+                        <div className={style['input-group']}>
+                            <label>{CONST.MENU_ITEM_NAME}</label>&nbsp;
+                            <input defaultValue={menuItem.name} />
+                        </div>
+                        <div className={style.list}>
+                            <label>{CONST.INCLUDES_CATEGORIES}</label>
+                            {categories}
+                        </div>
+                        <br />
+                        <div className={style.list}>
+                            <label>{CONST.ALSO_CONTAINS}</label>
+                            {goods}
+                        </div>
+                        <br/>
+                        <p>выделенные позиции будут удалены</p>
                     </div>
                     <div className="modal-footer">
                         <button type="button" 

@@ -14,7 +14,6 @@ import MenuEditModal from '../Modals/MenuEditModal'
 const {connect} = require('react-redux')
 const style = require('./app.css')
 
-
 interface Props {
     nomenclature: ProductCategory
     category: ProductCategory
@@ -57,7 +56,7 @@ export default class App extends React.Component<Props, null> {
                     nomenclature={nomenclature}/>
                 <Products products={products}/>
                 <Menu menu={menu} actions={actions}/>
-                <MenuEditModal show={!!menuItem} close={()=>navigate.hideMenuEditModal()} />
+                <MenuEditModal menuItem={menuItem} close={()=>navigate.hideMenuEditModal()} />
             </section>
         )
     }
