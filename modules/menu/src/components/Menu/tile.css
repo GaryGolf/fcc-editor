@@ -6,18 +6,47 @@
     overflow: hidden;
     color: var(--gray-color);
 
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
 }
-.container div{
-    font-size: 48px;
+.text{
+    font-size: 24px;
+    align-self: left;
+    color: var(--primary-color);
+}
+.cell{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    height: 100%;
+}
+.plus{
+    flex: 1;
     align-self: center;
+    font-size: 48px;
+    text-align: center;
 }
 
+.button-group{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    & button {
+        margin: 4px 5px 4px 0;
+        visibility: hidden;
+    }
+
+    &:hover button{
+        visibility: visible;
+    }
+}
+
+
 .active{
-    color: red;
+    border-color: var(--active-cell-color);
 }
 .over {
     color: navy;
+}
+.none{
+    display: none;
 }

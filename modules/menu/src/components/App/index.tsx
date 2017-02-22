@@ -1,71 +1,61 @@
 import * as React from 'react'
+import { bindActionCreators } from 'redux'
 import DragDropContext from 'react-dnd/lib/DragDropContext'
 import {default as HTML5Backend} from 'react-dnd-html5-backend'
+import MenuEditModal from '../Modals/MenuEditModal'
 import Categories from '../Categories'
 import Products from '../Products'
 import Menu from '../Menu'
+import * as Actions from '../../actions'
 import * as CONST from '../../constants'
 
+const {connect} = require('react-redux')
 const style = require('./app.css')
 
-interface State {
+interface Props {
     nomenclature: ProductCategory
-    category: ProductCategory  // current (selected) category
+    category: ProductCategory
     menu: MenuState
+    menuItem: MenuItem
+    actions: Actions.Interface
 }
+
+@connect(
+    state => ({
+        nomenclature: state.nomenclature as ProductCategory,
+        category: state.category.current as ProductCategory,
+        menu: state.menu as MenuState,
+        menuItem: state.view.menuItem as MenuItem
+    }),
+    dispatch => ({
+        actions: {
+            nomenclature: bindActionCreators(Actions.Nomenclature as any, dispatch),
+            category: bindActionCreators(Actions.Category as any, dispatch),
+            menu: bindActionCreators(Actions.Menu as any, dispatch),
+            view: bindActionCreators(Actions.View as any, dispatch)  
+        } 
+    })
+)
 @DragDropContext(HTML5Backend)
-export default class App extends React.Component<{}, State> {
-    constructor(props: {}){
-        super(props) 
-        this.state = {
-            nomenclature: null,
-            category: null,
-            menu: null
-        }
-    }
-
-    componentDidMount(){
-
-        const root =    'c03cb760-1575-4858-ab41-52da066b9cd5'
-        const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'
-        const url = CONST.menu_view_url + menu_id
-        const options = {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-                'Tenant-Domain': 'google',
-                'Access-Token': 'infinity_access_token_google'
-            }
-        }
-        window['fetch'](url,options)
-            .then(response => response.json())
-            .then((nomenclature: ProductCategory) => this.setState({nomenclature}))
-            .catch(console.error)
-
-        const menu = Array(24).fill({
-            id: '',
-            description: '',
-            price: 0
-        })
-        this.setState({menu})
-    }
-
-    showProducts(category: ProductCategory){
-        this.setState({category})
+export default class App extends React.Component<Props, null> {
+    
+    componentWillMount(){
+        this.props.actions.nomenclature.fetch()
     }
 
     render(){
-        const {category, nomenclature, menu} = this.state
+
+        const {nomenclature, category, menu, menuItem, actions} = this.props
+
         if(!nomenclature) return null
         const products = category ? category.products : null
         return (
             <section className={style.container}>
-                <Categories 
-                    nomenclature={nomenclature}
-                    showProducts={this.showProducts.bind(this)}/>
+                <Categories actions={actions}
+                    nomenclature={nomenclature}/>
                 <Products products={products}/>
-                <Menu menu={menu}/>
+                <Menu menu={menu} actions={actions}/>
+                <MenuEditModal menuItem={menuItem} close={()=>actions.view.hideMenuEditModal()} />
             </section>
         )
     }

@@ -1,11 +1,11 @@
-declare interface MenuItem {
-    id: string
-    description: string
-    price: number
+declare interface SimpleAction {
+    type: string
+    payload?: any
 }
 
 declare interface Product {
     id: string
+    name: string
     product_category_id: string
     description: string
     price: number
@@ -17,12 +17,21 @@ declare interface ProductCategory {
     icon: string
     color: string
     name: string
-    lft: number
-    rgt: number
-    depth: number
+    lft?: number
+    rgt?: number
+    depth?: number
     child_menus?: ProductCategory[]
     products?: Product[]
 }
 
-declare type CategoryState = Array<ProductCategory>
+declare interface MenuItem {
+    id: string
+    icon: string
+    name: string
+    color: string
+    cell: number
+    products: Array<Product>
+    product_categories: Array<ProductCategory>
+}
+
 declare type MenuState = Array<MenuItem>

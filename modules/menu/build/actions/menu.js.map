@@ -1,0 +1,1 @@
+{"version":3,"file":"menu.js","sourceRoot":"","sources":["../../src/actions/menu.ts"],"names":[],"mappings":";AAAA,sCAAuC;AAIvC;AAEA,CAAC;AAFD,oBAEC;AAOD,sBAA6B,QAAkB;IAC3C,MAAM,CAAC;QACH,IAAI,EAAE,OAAO,CAAC,aAAa;QAC3B,OAAO,EAAE,QAAQ;KACpB,CAAA;AACL,CAAC;AALD,oCAKC"}
