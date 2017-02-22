@@ -22,7 +22,7 @@ export default class Categories extends React.Component<Props, null> {
 
         const {nomenclature, actions} = this.props
         
-        const items = nomenclature.child_menus.map(item => (
+        const items = nomenclature.child_categories.map(item => (
             <CategoryItem key={item.id}
                 category={item}
                 actions={actions} />

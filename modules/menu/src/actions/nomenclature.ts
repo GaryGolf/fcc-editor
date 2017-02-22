@@ -9,7 +9,8 @@ export const fetch = function(){
 
     const root =    'c03cb760-1575-4858-ab41-52da066b9cd5'
     const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'
-    const url = CONST.menu_view_url + menu_id
+    // const url = CONST.menu_view_url + menu_id
+    const url = 'http://localhost:1337/api.dev.dooglys.com/api/v1/product-category/info'
     const options = {
         method: 'GET',
         headers: {

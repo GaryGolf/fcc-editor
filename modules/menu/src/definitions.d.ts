@@ -21,6 +21,7 @@ declare interface ProductCategory {
     rgt?: number
     depth?: number
     child_menus?: ProductCategory[]
+    child_categories?: ProductCategory[]
     products?: Product[]
 }
 
