@@ -6,19 +6,25 @@
     overflow: hidden;
     color: var(--gray-color);
 
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
 }
-.plus{
-    font-size: 48px;
-    align-self: center;
-}
-.category{
-    font-size: 18px;
+.text{
+    font-size: 24px;
     align-self: left;
     color: var(--primary-color);
 }
+.cell{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    height: 100%;
+}
+.plus{
+    flex: 1;
+    align-self: center;
+    font-size: 48px;
+    text-align: center;
+}
+
 .button-group{
     position: absolute;
     bottom: 0;

@@ -9,7 +9,6 @@ export function checkProduct(
 
     if(!menuItem.id){ //create new menuItem from  dropped product
         const item  = { id: uuid(), color: '', icon: '', name: product.name, cell, products: [product], product_categories: [] }
-        console.log(product)
         actions.dropProduct(item)  
     } else if(menuItem.product_categories.length > 0) { // its not single product
         if(menuItem.products.some(item => item.id == product.id)) return // already exist
@@ -38,23 +37,3 @@ export function checkCategory(
         actions.dropAdditionalCategory({...menuItem, product_categories})  
     }
 }
-
-
-/*
-declare interface Product {
-    id: string
-    product_category_id: string
-    description: string
-    price: number
-    measure: string
-}
-declare interface MenuItem {
-    id: string
-    icon: string
-    name: string
-    color: string
-    cell: number
-    products: Array<Product>
-    product_categories: Array<ProductCategory>
-}
-*/

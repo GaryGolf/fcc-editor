@@ -10,7 +10,6 @@ const style = require('./tile.css')
 interface Props { 
     cell: number
     menuItem: MenuItem
-    // menu: MenuState
     actions: Actions.Interface
     canDrop?: boolean
     isOver?: boolean
@@ -45,29 +44,31 @@ const collect: DnD.DropTargetCollector =
 @DropTarget([CONST.PRODUCT, CONST.CATEGORY], boxTarget, collect)
 export default class Tile extends React.Component<Props, null>{
 
-
     render(){
 
         const { menuItem, canDrop, isOver, connectDropTarget, actions } = this.props
-        const isBusy = !!menuItem.id
+        const isCellOccupied = !!menuItem.id
         const tileStyle = [style.container, 'well', canDrop && isOver ? style.active : null ].join(' ')
-        const text = isBusy ? menuItem.name : '+'
-        const textStyle = [ isBusy ? style.category : style.plus ].join(' ')
-        const btnGrpStyle = [ isBusy ? style['button-group'] : style.none ].join(' ')
+        const text = isCellOccupied 
+        ? <div className={style.text}>{menuItem.name}</div>
+        : <div className={style.cell}><div className={style.plus}>+</div></div>
+        const buttonGroup = isCellOccupied ? (
+            <div className={style['button-group']}>
+                <button className="btn btn-info btn-sm"
+                        onClick={()=>actions.view.showMenuEditModal(menuItem)}>
+                    <span className="glyphicon glyphicon-pencil"/>
+                </button>
+                <button className="btn btn-danger btn-sm" 
+                        onClick={()=>actions.menu.removeMenuItem(menuItem)}>
+                    <span className="glyphicon glyphicon-trash"/>
+                </button>
+            </div>
+        ) : null
 
         return connectDropTarget(
             <div className={tileStyle}>
-                <div className={textStyle}>{text}</div>
-                <div className={btnGrpStyle}>
-                     <button className="btn btn-info btn-sm"
-                            onClick={()=>actions.view.showMenuEditModal(menuItem)}>
-                        <span className="glyphicon glyphicon-pencil"/>
-                    </button>
-                    <button className="btn btn-danger btn-sm" 
-                            onClick={()=>actions.menu.removeMenuItem(menuItem)}>
-                        <span className="glyphicon glyphicon-trash"/>
-                    </button>
-                </div>
+                {text}
+                {buttonGroup}        
             </div>
         )
     }

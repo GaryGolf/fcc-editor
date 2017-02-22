@@ -47,8 +47,6 @@ export default class Menu extends React.Component<Props, null> {
             return <Tile key={idx} cell={idx} menuItem={menuItem} actions={actions} />
         })
 
-        console.table(menu)
-        
         return (
             <section className={style.container}>
                 {items}
