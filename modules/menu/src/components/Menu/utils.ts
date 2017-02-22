@@ -1,24 +1,15 @@
 const uuid = require('uuid')
+import {Interface as MenuActionsInterface} from '../../actions/menu'
 
-export function checkout(props, monitor): void{
-
-    switch(monitor.getItemType()){
-        case 'CATEGORY' :
-            checkCategory(props, monitor.getItem().category)
-            break;
-        case 'PRODUCT' :
-            checkProduct(props, monitor.getItem().product)
-
-        default :
-    }
-}
-
-function checkProduct(props, product: Product): void{
-
-    const {cell, menuItem, actions} = props
+export function checkProduct(
+    cell: number, 
+    menuItem: MenuItem, 
+    product: Product, 
+    actions: MenuActionsInterface): void{
 
     if(!menuItem.id){ //create new menuItem from  dropped product
-        const item  = { id: uuid(), color: '', icon: '', name: product.description, cell, products: [product], product_categories: [] }
+        const item  = { id: uuid(), color: '', icon: '', name: product.name, cell, products: [product], product_categories: [] }
+        console.log(product)
         actions.dropProduct(item)  
     } else if(menuItem.product_categories.length > 0) { // its not single product
         if(menuItem.products.some(item => item.id == product.id)) return // already exist
@@ -29,10 +20,13 @@ function checkProduct(props, product: Product): void{
     }
 }
 
-function checkCategory(props, category: ProductCategory): void {
+export function checkCategory(
+    cell: number, 
+    menuItem: MenuItem,
+    category: ProductCategory,
+    actions: MenuActionsInterface ): void {
 
     const {id, color, icon, name, products} = category
-    const {cell, menuItem, actions} = props
 
     if(!menuItem.id){ //create new menuItem from  dropped category
         const product_categories = [{id, color, icon, name, products}]

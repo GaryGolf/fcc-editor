@@ -2,7 +2,7 @@ import * as React from 'react'
 import Tile from './Tile'
 
 import * as CONST from '../../constants'
-
+import * as Actions from '../../actions'
 
 
 const style = require('./menu.css')
@@ -10,38 +10,45 @@ const style = require('./menu.css')
 
 interface Props {
     menu: MenuState
-    actions: any
+    actions: Actions.Interface
 }
 
 export default class Menu extends React.Component<Props, null> {
     
     private menu: MenuState
-    private menuPrototype:MenuItem = {
-        id: '',
-        icon: '',
-        name: '',
-        color: '', 
-        cell: null,
-        products: [],
-        product_categories: []
-    }
+    private menuItemPrototype:MenuItem 
 
     constructor(props: Props){
         super(props)
-        this.menu  = Array(CONST.MENU_LENGTH).fill(this.menuPrototype)
+        this.menuItemPrototype = {
+            id: '',
+            icon: '',
+            name: '',
+            color: '', 
+            cell: null,
+            products: [],
+            product_categories: []
+        }
+        this.menu  = Array(CONST.MENU_LENGTH)
+            .fill(this.menuItemPrototype)
+            .map((item, index) => {
+                item.cell = index
+                return item
+            })
     }
 
     render(){
         
+        
         const {menu, actions} = this.props
-
-        console.table(menu)
 
         const items = this.menu.map((item, idx) =>{
             const menuItem = menu.find(item => item.cell == idx) || item
-            return <Tile key={idx} cell={idx} menuItem={menuItem} />
+            return <Tile key={idx} cell={idx} menuItem={menuItem} actions={actions} />
         })
 
+        console.table(menu)
+        
         return (
             <section className={style.container}>
                 {items}

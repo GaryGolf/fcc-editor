@@ -12,11 +12,7 @@ const initialState: ProductCategory = {
     products: []
 }
 
-interface Action {
-    type: string
-    payload?: ProductCategory
-}
-export default function nomenclature(state:ProductCategory = initialState, action: Action): ProductCategory{
+export default function nomenclature(state:ProductCategory = initialState, action: SimpleAction): ProductCategory{
 
     switch(action.type){
         case Actions.FETCH_NOMENCLATURE_PENDING :

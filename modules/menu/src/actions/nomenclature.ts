@@ -1,6 +1,10 @@
 import * as Actions from './types/nomenclature'
 import * as CONST from '../constants'
 
+export interface Interface {
+    fetch: () => Promise<any>
+}
+
 export const fetch = function(){
 
     const root =    'c03cb760-1575-4858-ab41-52da066b9cd5'
@@ -8,7 +12,6 @@ export const fetch = function(){
     const url = CONST.menu_view_url + menu_id
     const options = {
         method: 'GET',
-        // mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
             'Tenant-Domain': 'google',

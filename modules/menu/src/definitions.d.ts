@@ -1,5 +1,11 @@
+declare interface SimpleAction {
+    type: string
+    payload?: any
+}
+
 declare interface Product {
     id: string
+    name: string
     product_category_id: string
     description: string
     price: number

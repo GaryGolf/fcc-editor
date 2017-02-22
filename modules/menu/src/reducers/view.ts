@@ -1,10 +1,5 @@
 import * as Actions from '../actions/types/view'
 
-interface ViewAction {
-    type: string
-    payload?: MenuItem
-}
-
 export interface ViewState {
     menuItem: MenuItem
 }
@@ -14,7 +9,7 @@ const initialState: ViewState = {
 }
 
 
-export default function view(state: ViewState = initialState, action: ViewAction): ViewState{
+export default function view(state: ViewState = initialState, action: SimpleAction): ViewState {
     switch(action.type){
         case Actions.SHOW_MENU_EDIT_MODAL :
             return { ...state, menuItem: action.payload } 

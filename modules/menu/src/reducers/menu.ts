@@ -2,7 +2,7 @@ import * as Actions from '../actions/types/menu'
 
 const initialState: MenuState = []
 
-export default function menu(state:MenuState=initialState, action):MenuState{
+export default function menu(state:MenuState=initialState, action: SimpleAction):MenuState{
 
     switch(action.type){
 

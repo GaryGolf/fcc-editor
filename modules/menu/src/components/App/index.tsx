@@ -1,15 +1,13 @@
 import * as React from 'react'
+import { bindActionCreators } from 'redux'
 import DragDropContext from 'react-dnd/lib/DragDropContext'
 import {default as HTML5Backend} from 'react-dnd-html5-backend'
+import MenuEditModal from '../Modals/MenuEditModal'
 import Categories from '../Categories'
 import Products from '../Products'
 import Menu from '../Menu'
+import * as Actions from '../../actions'
 import * as CONST from '../../constants'
-import { bindActionCreators } from 'redux'
-import { RootState } from '../../reducers'
-import ActionCreator from '../../actions'
-import * as ViewActions from '../../actions/view'
-import MenuEditModal from '../Modals/MenuEditModal'
 
 const {connect} = require('react-redux')
 const style = require('./app.css')
@@ -19,11 +17,7 @@ interface Props {
     category: ProductCategory
     menu: MenuState
     menuItem: MenuItem
-    navigate: ViewActions.Interface
-    actions: {
-        fetch:( )=> void,
-        select:(category: ProductCategory) => void
-    }
+    actions: Actions.Interface
 }
 
 @connect(
@@ -33,21 +27,26 @@ interface Props {
         menu: state.menu as MenuState,
         menuItem: state.view.menuItem as MenuItem
     }),
-    dispatch => ({ 
-        actions: bindActionCreators(ActionCreator as any, dispatch) ,
-        navigate: bindActionCreators(ViewActions as any, dispatch)
+    dispatch => ({
+        actions: {
+            nomenclature: bindActionCreators(Actions.Nomenclature as any, dispatch),
+            category: bindActionCreators(Actions.Category as any, dispatch),
+            menu: bindActionCreators(Actions.Menu as any, dispatch),
+            view: bindActionCreators(Actions.View as any, dispatch)  
+        } 
     })
 )
 @DragDropContext(HTML5Backend)
 export default class App extends React.Component<Props, null> {
     
     componentWillMount(){
-        this.props.actions.fetch()
+        this.props.actions.nomenclature.fetch()
     }
 
     render(){
 
-        const {nomenclature, category, menu, menuItem, actions, navigate} = this.props
+        const {nomenclature, category, menu, menuItem, actions} = this.props
+
         if(!nomenclature) return null
         const products = category ? category.products : null
         return (
@@ -56,7 +55,7 @@ export default class App extends React.Component<Props, null> {
                     nomenclature={nomenclature}/>
                 <Products products={products}/>
                 <Menu menu={menu} actions={actions}/>
-                <MenuEditModal menuItem={menuItem} close={()=>navigate.hideMenuEditModal()} />
+                <MenuEditModal menuItem={menuItem} close={()=>actions.view.hideMenuEditModal()} />
             </section>
         )
     }

@@ -1,11 +1,14 @@
-import * as NomenclatureActions from './nomenclature'
-import * as CategoryActions from './category'
-import * as MenuActions from './menu'
+import * as Nomenclature from './nomenclature'
+import * as Category from './category'
+import * as Menu from './menu'
+import * as View from './view'
 
-const ActionCreator = Object.assign({},
-    NomenclatureActions,
-    CategoryActions,
-    MenuActions
-)
 
-export default ActionCreator
+interface Interface {
+    nomenclature?: Nomenclature.Interface
+    category?: Category.Interface
+    menu?: Menu.Interface
+    view?: View.Interface
+}
+
+export  { Interface, Nomenclature , Category, Menu, View }
