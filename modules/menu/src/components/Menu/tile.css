@@ -1,0 +1,23 @@
+@import '../../constants.css';
+.container{
+    flex: 1 0 20%;
+    position: relative;
+    margin: 8px;
+    overflow: hidden;
+    color: var(--gray-color);
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+}
+.container div{
+    font-size: 48px;
+    align-self: center;
+}
+
+.active{
+    color: red;
+}
+.over {
+    color: navy;
+}
