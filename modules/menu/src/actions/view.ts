@@ -1,4 +1,4 @@
-import * as Actions from './types/view'
+import * as Actions from './types'
 import {createAction} from 'redux-actions'
 
 export interface Interface {

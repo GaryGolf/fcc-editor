@@ -6,6 +6,7 @@ export const product_category_url = PRODUCTION
 export const MENU_LENGTH = 24
 export const PRODUCT = 'PRODUCT'
 export const CATEGORY = 'CATEGORY'
+export const API_LOAD_TIMEOUT = 4000
 
 
 

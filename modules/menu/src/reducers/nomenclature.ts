@@ -1,4 +1,4 @@
-import * as Actions from '../actions/types/nomenclature'
+import * as Actions from '../actions/types'
 
 const initialState: ProductCategory = {
     id: '',
@@ -13,7 +13,7 @@ const initialState: ProductCategory = {
     products: []
 }
 
-export default function nomenclature(state:ProductCategory = initialState, action: SimpleAction): ProductCategory{
+export default function nomenclature(state:ProductCategory = initialState, action: Action<ProductCategory>): ProductCategory{
 
     switch(action.type){
         case Actions.FETCH_NOMENCLATURE_PENDING :
