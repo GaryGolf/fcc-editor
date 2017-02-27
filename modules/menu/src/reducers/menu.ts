@@ -1,8 +1,8 @@
-import * as Actions from '../actions/types/menu'
+import * as Actions from '../actions/types'
 
 const initialState: MenuState = []
 
-export default function menu(state:MenuState=initialState, action: SimpleAction):MenuState{
+export default function menu(state:MenuState=initialState, action):MenuState{
 
     switch(action.type){
 
@@ -24,6 +24,13 @@ export default function menu(state:MenuState=initialState, action: SimpleAction)
             })
         case Actions.REMOVE_MENU_ITEM :
             return state.filter(item => action.payload.id != item.id)
+
+        case Actions.UPDATE_MENU_ITEM :
+            return [...state.filter(item => action.payload.id != item.id), action.payload]
+
+        case Actions.FETCH_MENU_FULFILLED :
+            console.log(action.payload)
+            return action.payload
 
         default :
             break

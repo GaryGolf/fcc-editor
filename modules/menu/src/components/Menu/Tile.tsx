@@ -58,10 +58,10 @@ export default class Tile extends React.Component<Props, null>{
                         onClick={()=>actions.view.showMenuEditModal(menuItem)}>
                     <span className="glyphicon glyphicon-pencil"/>
                 </button>
-                <button className="btn btn-danger btn-sm" 
+                {/*<button className="btn btn-danger btn-sm" 
                         onClick={()=>actions.menu.removeMenuItem(menuItem)}>
                     <span className="glyphicon glyphicon-trash"/>
-                </button>
+                </button>*/}
             </div>
         ) : null
 

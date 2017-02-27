@@ -35,6 +35,7 @@ export default class Menu extends React.Component<Props, null> {
                 item.cell = index
                 return item
             })
+        props.actions.menu.fetch()
     }
 
     render(){

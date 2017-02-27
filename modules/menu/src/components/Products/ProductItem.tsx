@@ -36,7 +36,7 @@ export default class ProductItem extends React.Component<Props, null>{
 
         return connectDragSource(
             <div className={style.container} style={{opacity}}>
-                {product.description}
+                {product.name}
             </div>
         )
     }

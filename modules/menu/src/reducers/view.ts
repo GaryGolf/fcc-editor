@@ -1,4 +1,4 @@
-import * as Actions from '../actions/types/view'
+import * as Actions from '../actions/types'
 
 export interface ViewState {
     menuItem: MenuItem
@@ -9,7 +9,7 @@ const initialState: ViewState = {
 }
 
 
-export default function view(state: ViewState = initialState, action: SimpleAction): ViewState {
+export default function view(state: ViewState = initialState, action: Action): ViewState {
     switch(action.type){
         case Actions.SHOW_MENU_EDIT_MODAL :
             return { ...state, menuItem: action.payload } 

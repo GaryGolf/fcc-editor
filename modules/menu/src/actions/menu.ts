@@ -1,16 +1,20 @@
-import * as Actions from './types/menu'
-import { createAction } from 'redux-actions'
+import * as Actions from './types'
 
 export interface Interface {
-    removeMenuItem: (menuItem: MenuItem) => void
-    dropProduct: (menuItem: MenuItem) => void
-    dropCategory: (menuItem: MenuItem) => void
-    dropAdditionalProduct: (menuItem: MenuItem) => void
-    dropAdditionalCategory: (menuItem: MenuItem) => void
+    fetch(): Action
+    removeMenuItem(payload: MenuItem): Action
+    updateMenuItem(payload: MenuItem): Action
+    dropProduct(payload: MenuItem): Action
+    dropCategory(payload: MenuItem): Action
+    dropAdditionalProduct(payload: MenuItem): Action
+    dropAdditionalCategory(payload: MenuItem): Action
 }
 
-export const removeMenuItem = createAction<MenuItem>(Actions.REMOVE_MENU_ITEM)
-export const dropProduct = createAction<MenuItem>(Actions.DROP_PRODUCT)
-export const dropCategory = createAction<MenuItem>(Actions.DROP_CATEGORY)
-export const dropAdditionalProduct = createAction<MenuItem>(Actions.DROP_ADDITIONAL_PRODUCT)
-export const dropAdditionalCategory = createAction<MenuItem>(Actions.DROP_ADDITIONAL_CATEGORY)
+export const fetch = () => ({ type: Actions.FETCH_MENU})
+export const removeMenuItem = payload => ({ type: Actions.REMOVE_MENU_ITEM, payload })
+export const updateMenuItem = payload => ({ type: Actions.UPDATE_MENU_ITEM, payload })
+export const dropProduct = payload => ({ type: Actions.DROP_PRODUCT, payload })
+export const dropCategory = payload => ({ type: Actions.DROP_CATEGORY, payload })
+export const dropAdditionalProduct = payload => ({ type: Actions.DROP_ADDITIONAL_PRODUCT, payload })
+export const dropAdditionalCategory = payload => ({ type: Actions.DROP_ADDITIONAL_CATEGORY, payload })
+
