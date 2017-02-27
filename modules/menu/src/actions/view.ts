@@ -1,9 +1,8 @@
 import * as Actions from './types'
-import {createAction} from 'redux-actions'
 
 export interface Interface {
-    showMenuEditModal: (menuItem: MenuItem) => void
-    hideMenuEditModal: () => void
+    showMenuEditModal(menuItem: MenuItem): Action
+    hideMenuEditModal(): Action
 }
-export const showMenuEditModal = createAction<MenuItem>(Actions.SHOW_MENU_EDIT_MODAL)
-export const hideMenuEditModal = createAction<MenuItem>(Actions.HIDE_MENU_EDIT_MODAL)
+export const showMenuEditModal = payload => ({ type: Actions.SHOW_MENU_EDIT_MODAL, payload})
+export const hideMenuEditModal = () => ({ type: Actions.HIDE_MENU_EDIT_MODAL})

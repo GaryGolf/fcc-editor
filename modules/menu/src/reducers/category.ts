@@ -8,7 +8,7 @@ const initialState: CategoryReducer = {
     current: null 
 }
 
-export default function category (state = initialState, action: Action<ProductCategory>): CategoryReducer{
+export default function category (state = initialState, action: Action): CategoryReducer{
 
     switch(action.type){
         case Actions.SELECT_CATEGORY :   

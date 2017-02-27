@@ -14,7 +14,7 @@ export function loadNomenclature(){
     }
     return window['fetch'](url, options)
         .then(response => {
-            if(!response.ok) throw response.error()
+            if(!response.ok) throw new Error(response.statusText)
             return response.json()})
         .then(data => data)
         .catch(error => { throw error})
@@ -23,9 +23,8 @@ export function loadNomenclature(){
 
 export function loadMenu(){
 
-    const root =    'c03cb760-1575-4858-ab41-52da066b9cd5'
     const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'
-    const url = CONST.menu_view_url + menu_id
+    const url = CONST.menu_view_url + menu_id + '?scenario=full'
     const options = {
         method: 'GET',
         headers: {
@@ -34,21 +33,20 @@ export function loadMenu(){
             'Access-Token': 'infinity_access_token_google'
         }
     }
-
     return window['fetch'](url, options)
         .then(response => {
-            if(!response.ok) throw response.error()
+            if(!response.ok) throw new Error(response.statusText)
             return response.json()})
         .then(data => data)
         .catch(error => { throw error})        
 }
 
-export function createMenuItem(item:MenuItem): Promise<any> {
+export function createMenuItem(menuItem:MenuItem): Promise<any> {
     
-    const root =    'c03cb760-1575-4858-ab41-52da066b9cd5'
-    const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'
-    const newId = uuid()
-    const url = 'http://localhost:1337/api.dev.dooglys.com/api/v1/menu/create-node/' + newId
+    const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'  // TODO change menu_id to root_id, taken from <META>
+    const products = menuItem.products.map(v => v.id)
+    const product_categories = menuItem.product_categories.map(v => v.id)
+    const url = 'http://localhost:1337/api.dev.dooglys.com/api/v1/menu/create-node/' + menu_id 
     const options = {
         method: 'POST',
         headers: {
@@ -56,17 +54,56 @@ export function createMenuItem(item:MenuItem): Promise<any> {
             'Tenant-Domain': 'google',
             'Access-Token': 'infinity_access_token_google'
         },
-        body: JSON.stringify({
-            id: menu_id,
-            MenuSave: item
-        })
+        body: JSON.stringify({...menuItem, products, product_categories})
     }
 
     return window['fetch'](url, options)
         .then(response => {
-            if(!response.ok) throw response.error()
+            if(!response.ok) throw new Error(response.statusText)
             return response.json()})
         .then(data => data)
         .catch(error => { throw error})      
+}
 
+export function updateMenuItem(menuItem:MenuItem): Promise<any> {
+    
+    const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'
+    const products = menuItem.products.map(v => v.id)
+    const product_categories = menuItem.product_categories.map(v => v.id)
+    const url = 'http://localhost:1337/api.dev.dooglys.com/api/v1/menu/update/' + menuItem.id
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': 'google',
+            'Access-Token': 'infinity_access_token_google'
+        },
+        body: JSON.stringify({...menuItem, products, product_categories })
+    }
+    return window['fetch'](url, options)
+        .then(response => {
+            if(!response.ok) throw new Error(response.statusText)
+            return response.json()})
+        .then(data => data)
+        .catch(error => { throw error})      
+}
+
+
+export function deleteMenuItem(menuItem:MenuItem): Promise<any> {
+ 
+    const url = 'http://localhost:1337/api.dev.dooglys.com/api/v1/menu/delete/' + menuItem.id
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': 'google',
+            'Access-Token': 'infinity_access_token_google'
+        }
+    }
+    return window['fetch'](url, options)
+        .then(response => {
+            if(!response.ok) throw new Error(response.statusText)
+            return response.json()})
+        .then(data => data)
+        .catch(error => { throw error})      
 }

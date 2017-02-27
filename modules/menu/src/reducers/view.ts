@@ -9,7 +9,7 @@ const initialState: ViewState = {
 }
 
 
-export default function view(state: ViewState = initialState, action: Action<MenuItem>): ViewState {
+export default function view(state: ViewState = initialState, action: Action): ViewState {
     switch(action.type){
         case Actions.SHOW_MENU_EDIT_MODAL :
             return { ...state, menuItem: action.payload } 

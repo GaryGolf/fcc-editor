@@ -1,11 +1,14 @@
 import * as React from 'react'
 import * as CONST from '../../constants'
+import * as MenuActions from '../../actions/menu'
 
 const style = require('./menu-modal.css')
 
 interface Props {
     menuItem: MenuItem
     close: ()=>void
+    actions: MenuActions.Interface
+        
 }
 
 interface State {
@@ -57,6 +60,16 @@ export default class MenuEditModal extends React.Component<Props, State>{
         setTimeout(()=>this.setState({menuItem}),300)
     }
 
+    deleteMenuItem() {
+        this.props.actions.removeMenuItem(this.state.menuItem)
+        this.props.close()
+    }
+
+    updateMenuItem() {
+        this.props.actions.updateMenuItem(this.state.menuItem)
+        this.props.close()
+    }
+
     render(){
         const {menuItem} = this.state
 
@@ -76,7 +89,7 @@ export default class MenuEditModal extends React.Component<Props, State>{
                  <input 
                     type="checkbox"  
                     onChange={(event)=>this.removeProductHandler(event, item.id)}/>
-                {item.description}
+                {item.name}
             </div>
         ))
         
@@ -122,12 +135,19 @@ export default class MenuEditModal extends React.Component<Props, State>{
                             className="btn btn-default" 
                             data-dismiss="modal"
                             onClick={this.props.close.bind(this)}>
-                            Close
+                            {CONST.CLOSE}
+                        </button>
+                         <button 
+                            type="button" 
+                            className="btn btn-danger"
+                            onClick={()=>this.deleteMenuItem()}>
+                            {CONST.DELETE}
                         </button>
                         <button 
                             type="button" 
-                            className="btn btn-primary">
-                            Save changes
+                            className="btn btn-primary"
+                            onClick={()=>this.updateMenuItem()}>
+                            {CONST.SAVE}
                         </button>
                     </div>
                     </div>

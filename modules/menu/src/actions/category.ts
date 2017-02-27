@@ -1,8 +1,7 @@
 import * as Actions from './types'
-import {createAction} from 'redux-actions'
 
 export interface Interface {
-    select: (category: ProductCategory) => Action<ProductCategory>
+    select(category: ProductCategory): Action
 }
 
-export const select = createAction<ProductCategory>(Actions.SELECT_CATEGORY)
+export const select = payload => ({ type: Actions.SELECT_CATEGORY, payload })

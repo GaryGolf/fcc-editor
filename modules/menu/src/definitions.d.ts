@@ -1,6 +1,6 @@
-declare interface Action<T> {
+declare interface Action {
     type: string
-    payload?: T
+    payload?: any
 }
 
 declare interface Product {

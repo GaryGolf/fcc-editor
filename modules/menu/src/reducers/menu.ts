@@ -25,7 +25,11 @@ export default function menu(state:MenuState=initialState, action):MenuState{
         case Actions.REMOVE_MENU_ITEM :
             return state.filter(item => action.payload.id != item.id)
 
+        case Actions.UPDATE_MENU_ITEM :
+            return [...state.filter(item => action.payload.id != item.id), action.payload]
+
         case Actions.FETCH_MENU_FULFILLED :
+            console.log(action.payload)
             return action.payload
 
         default :

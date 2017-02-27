@@ -13,13 +13,12 @@ const initialState: ProductCategory = {
     products: []
 }
 
-export default function nomenclature(state:ProductCategory = initialState, action: Action<ProductCategory>): ProductCategory{
+export default function nomenclature(state:ProductCategory = initialState, action: Action): ProductCategory{
 
     switch(action.type){
         case Actions.FETCH_NOMENCLATURE_PENDING :
             break
         case Actions.FETCH_NOMENCLATURE_FULFILLED :
-            console.log(action.payload)
             return action.payload
         case Actions.FETCH_NOMENCLATURE_REJECTED :
             console.error(action.payload)
