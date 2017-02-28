@@ -33,7 +33,7 @@ const fetchNomenclatureTimeot: Epic<Action, null> = action$ =>
  // menu
 const fetchMenu: Epic<Action, null> = action$ =>
   action$.ofType(Actions.FETCH_MENU)
-    .mergeMap(action => ActionsObservable.fromPromise(API.loadMenu() as Promise<Menu>)
+    .mergeMap(action => ActionsObservable.fromPromise(API.loadMenu() as Promise<any>)
         .takeUntil(action$.ofType(Actions.FETCH_MENU_TIMEOUT)))
     .map(menu => ({type: Actions.FETCH_MENU_FULFILLED, payload: menu.child_menus }))
     .catch(payload => ActionsObservable.of({ type: Actions.FETCH_MENU_REJECTED, payload }))
