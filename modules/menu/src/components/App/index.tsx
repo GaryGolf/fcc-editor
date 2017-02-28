@@ -9,6 +9,8 @@ import Menu from '../Menu'
 import * as Actions from '../../actions'
 import * as CONST from '../../constants'
 
+import * as API from '../../api'
+
 const {connect} = require('react-redux')
 const style = require('./app.css')
 
@@ -39,9 +41,6 @@ interface Props {
 @DragDropContext(HTML5Backend)
 export default class App extends React.Component<Props, null> {
     
-    componentWillMount(){
-        this.props.actions.nomenclature.fetch()
-    }
 
     render(){
 

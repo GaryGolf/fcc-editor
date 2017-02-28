@@ -2,14 +2,27 @@ import * as Actions from './actions/types'
 import * as CONST from './constants'
 const uuid = require('uuid')
 
+
+function getTenantDomain() {
+    const element = document.querySelector('meta[name=tenant-domain]')
+    if(element) return element['content']
+    return null
+}
+
+function getAccessToken() {
+    const element = document.querySelector('meta[name=access-token]')
+    if(element) return element['content']
+    return null
+}
+
 export function loadNomenclature(){
     const url = 'http://localhost:1337/api.dev.dooglys.com/api/v1/product-category/info'
     const options = {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Tenant-Domain': 'google',
-            'Access-Token': 'infinity_access_token_google'
+            'Tenant-Domain': getTenantDomain(),
+            'Access-Token': getAccessToken()
         }
     }
     return window['fetch'](url, options)
@@ -29,8 +42,8 @@ export function loadMenu(){
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Tenant-Domain': 'google',
-            'Access-Token': 'infinity_access_token_google'
+            'Tenant-Domain': getTenantDomain(),
+            'Access-Token': getAccessToken()
         }
     }
     return window['fetch'](url, options)
@@ -51,8 +64,8 @@ export function createMenuItem(menuItem:MenuItem): Promise<any> {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Tenant-Domain': 'google',
-            'Access-Token': 'infinity_access_token_google'
+            'Tenant-Domain': getTenantDomain(),
+            'Access-Token': getAccessToken()
         },
         body: JSON.stringify({...menuItem, products, product_categories})
     }
@@ -75,8 +88,8 @@ export function updateMenuItem(menuItem:MenuItem): Promise<any> {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Tenant-Domain': 'google',
-            'Access-Token': 'infinity_access_token_google'
+            'Tenant-Domain': getTenantDomain(),
+            'Access-Token': getAccessToken()
         },
         body: JSON.stringify({...menuItem, products, product_categories })
     }
@@ -96,8 +109,8 @@ export function deleteMenuItem(menuItem:MenuItem): Promise<any> {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Tenant-Domain': 'google',
-            'Access-Token': 'infinity_access_token_google'
+            'Tenant-Domain': getTenantDomain(),
+            'Access-Token': getAccessToken()
         }
     }
     return window['fetch'](url, options)

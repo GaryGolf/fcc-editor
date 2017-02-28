@@ -52,6 +52,11 @@ export default class Tile extends React.Component<Props, null>{
         const text = isCellOccupied 
         ? <div className={style.text}>{menuItem.name}</div>
         : <div className={style.cell}><div className={style.plus}>+</div></div>
+        const iconItem = CONST.icons.find(item => menuItem.icon == item.name)
+        const icon = iconItem 
+        ? <img src={iconItem.file} className={style.icon} />
+        : null
+
         const buttonGroup = isCellOccupied ? (
             <div className={style['button-group']}>
                 <button className="btn btn-info btn-sm"
@@ -68,6 +73,7 @@ export default class Tile extends React.Component<Props, null>{
         return connectDropTarget(
             <div className={tileStyle}>
                 {text}
+                {/*{icon}*/}
                 {buttonGroup}        
             </div>
         )

@@ -15,13 +15,19 @@ interface State {
     menuItem: MenuItem
 }
 
+interface Icon {
+    name: string
+    file: any
+}
+
 export default class MenuEditModal extends React.Component<Props, State>{
     
-
+    private icons: Icon[]
 
     constructor(props: Props){
         super(props)
         this.state = { menuItem: null }
+        this.icons = CONST.icons
     }
 
     componentWillReceiveProps(props: Props){
@@ -60,6 +66,12 @@ export default class MenuEditModal extends React.Component<Props, State>{
         setTimeout(()=>this.setState({menuItem}),300)
     }
 
+    selectIconHandler(icon: string) {
+        if(!icon) return
+        const menuItem = {...this.state.menuItem, icon}
+        this.setState({menuItem})
+    }
+
     deleteMenuItem() {
         this.props.actions.removeMenuItem(this.state.menuItem)
         this.props.close()
@@ -92,7 +104,18 @@ export default class MenuEditModal extends React.Component<Props, State>{
                 {item.name}
             </div>
         ))
+
+        const icons = this.icons.map(icon => (
+            <img
+                key={icon.name}
+                data-selected={menuItem.icon && menuItem.icon === icon.name} 
+                className={style.icon}
+                onClick={()=> this.selectIconHandler(icon.name)}
+                src={icon.file} />
+        ))
         
+        console.log(menuItem)
+
         return (
             <div className={style.container}>
                 <div className={style.overlay} onClick={this.props.close.bind(this)}/>
@@ -127,7 +150,12 @@ export default class MenuEditModal extends React.Component<Props, State>{
                             {goods}
                         </div>
                         <br/>
-                        <p>выделенные позиции будут удалены</p>
+                        <p className={style.comment} >выделенные позиции будут удалены</p>
+                        <label>{CONST.ICON}</label>
+                        <div className={''}>
+                            
+                            {icons}
+                        </div>
                     </div>
                     <div className="modal-footer">
                         <button 

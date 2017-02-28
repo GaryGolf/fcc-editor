@@ -19,7 +19,6 @@ const fetchNomenclature: Epic<Action, null> = action$ =>
     .map(payload => ({type: Actions.FETCH_NOMENCLATURE_FULFILLED, payload}))
     .catch(payload => ActionsObservable.of({ type: Actions.FETCH_NOMENCLATURE_REJECTED, payload }))
     
-
 const fetchNomenclaturePendeing: Epic<Action, null> = action$ =>
   action$.ofType(Actions.FETCH_NOMENCLATURE)
     .map(() => ({type: Actions.FETCH_NOMENCLATURE_PENDING}))
@@ -27,8 +26,7 @@ const fetchNomenclaturePendeing: Epic<Action, null> = action$ =>
 const fetchNomenclatureTimeot: Epic<Action, null> = action$ =>
   action$.ofType(Actions.FETCH_NOMENCLATURE_PENDING)
     .delay(CONST.API_LOAD_TIMEOUT)
-    .takeUntil(action$.ofType(Actions.FETCH_NOMENCLATURE_FULFILLED))
-    .takeUntil(action$.ofType(Actions.FETCH_NOMENCLATURE_REJECTED))
+    .takeUntil(action$.ofType(Actions.FETCH_NOMENCLATURE_FULFILLED, Actions.FETCH_NOMENCLATURE_REJECTED))
     .map(() => ({type: Actions.FETCH_NOMENCLATURE_TIMEOUT}))
     
 

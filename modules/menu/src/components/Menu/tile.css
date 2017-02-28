@@ -39,7 +39,13 @@
         visibility: visible;
     }
 }
-
+.icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: auto;
+}
 
 .active{
     border-color: var(--active-cell-color);
