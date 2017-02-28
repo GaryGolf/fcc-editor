@@ -35,5 +35,6 @@ export const INCLUDES_CATEGORIES = ' Включает в себя категор
 export const ALSO_CONTAINS = 'Дополнительно содержит :'
 export const SAVE  = 'Сохранить'
 export const CLOSE = 'Закрыть'
+export const ADD = 'Добавить'
 export const DELETE = 'Удалить'
 export const ICON = 'Иконка'

@@ -28,6 +28,7 @@ declare interface ProductCategory {
 declare interface MenuItem {
     id: string
     icon: string
+    icon_name?: string
     name: string
     color: string
     cell: number

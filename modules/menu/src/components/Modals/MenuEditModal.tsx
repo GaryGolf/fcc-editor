@@ -5,10 +5,10 @@ import * as MenuActions from '../../actions/menu'
 const style = require('./menu-modal.css')
 
 interface Props {
+    nomenclature: ProductCategory
     menuItem: MenuItem
-    close: ()=>void
     actions: MenuActions.Interface
-        
+    close: ()=>void
 }
 
 interface State {
@@ -17,6 +17,7 @@ interface State {
 
 interface Icon {
     name: string
+    value: string
     file: any
 }
 
@@ -34,6 +35,7 @@ export default class MenuEditModal extends React.Component<Props, State>{
         this.setState({menuItem: props.menuItem})
     }
    
+
     changeTitleHandler(name: string) {
         if(!name) return
         const menuItem = {...this.state.menuItem, name}
@@ -53,22 +55,17 @@ export default class MenuEditModal extends React.Component<Props, State>{
         setTimeout(()=>this.setState({menuItem}),300)
     }
 
-    removeProductHandler(event: any, id: string) {
+    removeProductHandler(id: string) {
         const category = this.state.menuItem.product_categories
-        const products = this.state.menuItem.products
-            .filter(item => item.id != id)
-        if(!category.length && !products.length) {
-            const checkbox = event.target
-            setTimeout(() => checkbox.checked = false, 300)
-            return
-        }
+        const products = this.state.menuItem.products.filter(item => item.id != id)
         const menuItem = {...this.state.menuItem, products}
-        setTimeout(()=>this.setState({menuItem}),300)
+        this.setState({menuItem})
     }
 
     selectIconHandler(icon: string) {
         if(!icon) return
-        const menuItem = {...this.state.menuItem, icon}
+        const icon_name = icon
+        const menuItem = {...this.state.menuItem, icon, icon_name}
         this.setState({menuItem})
     }
 
@@ -98,23 +95,26 @@ export default class MenuEditModal extends React.Component<Props, State>{
 
         const goods = menuItem.products.map(item => (
             <div key={item.id}>
-                 <input 
-                    type="checkbox"  
-                    onChange={(event)=>this.removeProductHandler(event, item.id)}/>
-                {item.name}
+                {item.name}&nbsp;
+                <button type="button" 
+                    onClick={()=>this.removeProductHandler(item.id)} 
+                    className={"close " + style.remove }
+                    data-dismiss="modal" 
+                    aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             </div>
         ))
 
         const icons = this.icons.map(icon => (
             <img
-                key={icon.name}
-                data-selected={menuItem.icon && menuItem.icon === icon.name} 
+                key={icon.value}
+                alt={icon.name}
+                data-selected={menuItem.icon_name && menuItem.icon_name === icon.value} 
                 className={style.icon}
-                onClick={()=> this.selectIconHandler(icon.name)}
+                onClick={()=> this.selectIconHandler(icon.value)}
                 src={icon.file} />
         ))
-        
-        console.log(menuItem)
 
         return (
             <div className={style.container}>
@@ -131,7 +131,7 @@ export default class MenuEditModal extends React.Component<Props, State>{
                         </button>
                         <h4 className="modal-title">Элемент меню</h4>
                     </div>
-                   <div className="modal-body">
+                    <div className="modal-body">
                         <div className={style['input-group']}>
                             <label>{CONST.MENU_ITEM_NAME}</label>&nbsp;
                             <input 
@@ -150,16 +150,15 @@ export default class MenuEditModal extends React.Component<Props, State>{
                             {goods}
                         </div>
                         <br/>
-                        <p className={style.comment} >выделенные позиции будут удалены</p>
                         <label>{CONST.ICON}</label>
                         <div className={''}>
-                            
                             {icons}
-                        </div>
+                        </div>  
                     </div>
                     <div className="modal-footer">
                         <button 
                             type="button" 
+                            style={{float: 'left'}}
                             className="btn btn-default" 
                             data-dismiss="modal"
                             onClick={this.props.close.bind(this)}>

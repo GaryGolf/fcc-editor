@@ -54,7 +54,11 @@ export default class App extends React.Component<Props, null> {
                     nomenclature={nomenclature}/>
                 <Products products={products}/>
                 <Menu menu={menu} actions={actions}/>
-                <MenuEditModal menuItem={menuItem} actions={actions.menu} close={()=>actions.view.hideMenuEditModal()} />
+                <MenuEditModal 
+                    menuItem={menuItem} 
+                    nomenclature={nomenclature}
+                    actions={actions.menu} 
+                    close={()=>actions.view.hideMenuEditModal()} />
             </section>
         )
     }
