@@ -9,7 +9,7 @@ import Menu from '../Menu'
 import * as Actions from '../../actions'
 import * as CONST from '../../constants'
 
-import Selectize from '../Selectize'
+import TagInput from '../TagInput'
 
 import * as API from '../../api'
 
@@ -47,14 +47,14 @@ export default class App extends React.Component<Props, null> {
     render(){
 
         return (
-        <Selectize>
+        <TagInput>
             <option value={'Cabbage'}>Cabbage</option>
             <option value={'Carrot'}>Carrot</option>
             <option value={'Limone'}>Limone</option>
             <option value={'Banana'}>Banana</option>
             <option value={'Apple'}>Apple</option>
             <option value={'Melon'}>Melon</option>
-        </Selectize>
+        </TagInput>
         )
         /*const {nomenclature, category, menu, menuItem, actions} = this.props
 
