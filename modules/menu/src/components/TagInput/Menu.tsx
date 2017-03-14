@@ -17,6 +17,8 @@ export default class Menu extends React.Component <Props, State> {
     }
 
     render(){
+        
+        if(!this.props.menuItems.length) return null
 
         const items = this.props.menuItems.map(item => ( 
             <li key={item.value}>
@@ -27,8 +29,11 @@ export default class Menu extends React.Component <Props, State> {
         ))
 
         return (
+            
             <div className={style.container}>
-                <ul className="dropdown-menu" style={{display:'block'}}>
+                <ul 
+                    className="dropdown-menu"
+                    style={{display:'block'}}>
                     {!items.length ? null : items}
                 </ul>
             </div>

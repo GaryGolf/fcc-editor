@@ -47,14 +47,22 @@ export default class App extends React.Component<Props, null> {
     render(){
 
         return (
-        <TagInput>
-            <option value={'Cabbage'}>Cabbage</option>
-            <option value={'Carrot'}>Carrot</option>
-            <option value={'Limone'}>Limone</option>
-            <option value={'Banana'}>Banana</option>
-            <option value={'Apple'}>Apple</option>
-            <option value={'Melon'}>Melon</option>
-        </TagInput>
+        <div style={{margin: '40px 100px'}}>
+            <TagInput selected={console.log}>
+                <option value={'Cabbage'}>Cabbage</option>
+                <option value={'Carrot'}>Carrot</option>
+                <option value={'Cpusca'}>Capusca</option>
+                <option value={'Cartophell'}>Cartophell</option>
+                <option value={'Caprice'}>Caprice</option>
+                <option value={'Canfette'}>Canfette</option>
+                <option value={'Carlotte'}>Carlotte</option>
+                <option value={'Carradouret'}>Carradouret</option>
+                <option value={'Limone'}>Limone</option>
+                <option value={'Banana'}>Banana</option>
+                <option value={'Apple'}>Apple</option>
+                <option value={'Melon'}>Melon</option>
+            </TagInput>
+        </div>
         )
         /*const {nomenclature, category, menu, menuItem, actions} = this.props
 
