@@ -48,7 +48,8 @@ export default class App extends React.Component<Props, null> {
 
         return (
         <div style={{margin: '40px 100px'}}>
-            <TagInput onSelect={console.log}>
+            <TagInput onSelect={console.log} 
+                selected={[ '14094589', '65632235', '26356226']}>
                 <option value={'34563456'}>Cabbage</option>
                 <option value={'74367377'}>Carrot</option>
                 <option value={'34677743'}>Capusca</option>

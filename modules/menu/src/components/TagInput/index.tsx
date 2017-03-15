@@ -9,6 +9,7 @@ interface MenuItem {
 
 interface Props {
     onSelect(selected:string[]):void
+    selected: Array<string>
 }
 interface State {
     selected: string[]
@@ -32,7 +33,7 @@ export default class TagInput extends React.Component <Props, State> {
     constructor(props){
         super(props)
         this.state = {
-            selected: [],
+            selected: props.selected,
             menu: []
         }
         const children =  React.Children.toArray(props.children) as Child[]
@@ -69,10 +70,10 @@ export default class TagInput extends React.Component <Props, State> {
         const {selected} = this.state
         switch(event.key){
             case 'Escape' :
-                this.handleBlur()
-                break
+                return this.handleBlur()
             case 'Backspace' :
                 if(!this.inputValue && !!selected.length) selected.pop()
+                break
             case 'Enter' :
                 
                 if (!!this.input.value) {
@@ -83,14 +84,15 @@ export default class TagInput extends React.Component <Props, State> {
                     
                     if(!!item) return this.addTag(item.key)
                 }
-
+                break
             default :
-                const menu = this.menu
-                    .filter(item => !selected.some(key => item.key==key))
-                    .filter(item => item.value.toUpperCase().includes(this.input.value.toUpperCase()))
-
-                this.setState({menu},this.onSelect) 
+                 
         }
+        const menu = this.menu
+            .filter(item => !selected.some(key => item.key==key))
+            .filter(item => item.value.toUpperCase().includes(this.input.value.toUpperCase()))
+
+        this.setState({menu},this.onSelect)
         this.inputValue = this.input.value 
     }
 
@@ -137,18 +139,16 @@ export default class TagInput extends React.Component <Props, State> {
             </span>
         ))
 
-        const items = this.state.menu.map(item => ( 
-            <li key={item.key}>
-                <a onClick={()=>this.addTag(item.key)}>
-                    {item.value}
-                </a>
-            </li>
-        ))
-        
-        const menu = !items.length ? null 
+        const menu = !this.state.menu.length ? null 
         :  <ul className="dropdown-menu"
                 style={{display:'block'}}>
-                {items}
+                {this.state.menu.map(item => ( 
+                    <li key={item.key}>
+                        <a onClick={()=>this.addTag(item.key)}>
+                            {item.value}
+                        </a>
+                    </li>
+                ))}
             </ul>
 
         return (
