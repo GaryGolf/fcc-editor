@@ -7,7 +7,7 @@ interface Props {
 }
 interface State {}
 export interface MenuItem {
-    name: string
+    key: string
     value: string
 }
 
@@ -21,9 +21,9 @@ export default class Menu extends React.Component <Props, State> {
         if(!this.props.menuItems.length) return null
 
         const items = this.props.menuItems.map(item => ( 
-            <li key={item.value}>
-                <a onClick={()=>this.props.onSelect(item.value)}>
-                    {item.name}
+            <li key={item.key}>
+                <a onClick={()=>this.props.onSelect(item.key)}>
+                    {item.value}
                 </a>
             </li>
         ))

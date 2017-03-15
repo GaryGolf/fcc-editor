@@ -48,19 +48,19 @@ export default class App extends React.Component<Props, null> {
 
         return (
         <div style={{margin: '40px 100px'}}>
-            <TagInput selected={console.log}>
-                <option value={'Cabbage'}>Cabbage</option>
-                <option value={'Carrot'}>Carrot</option>
-                <option value={'Cpusca'}>Capusca</option>
-                <option value={'Cartophell'}>Cartophell</option>
-                <option value={'Caprice'}>Caprice</option>
-                <option value={'Canfette'}>Canfette</option>
-                <option value={'Carlotte'}>Carlotte</option>
-                <option value={'Carradouret'}>Carradouret</option>
-                <option value={'Limone'}>Limone</option>
-                <option value={'Banana'}>Banana</option>
-                <option value={'Apple'}>Apple</option>
-                <option value={'Melon'}>Melon</option>
+            <TagInput onSelect={console.log}>
+                <option value={'34563456'}>Cabbage</option>
+                <option value={'74367377'}>Carrot</option>
+                <option value={'34677743'}>Capusca</option>
+                <option value={'09234560'}>Cartophell</option>
+                <option value={'76989568'}>Caprice</option>
+                <option value={'09836506'}>Canfette</option>
+                <option value={'14094589'}>Carlotte</option>
+                <option value={'65632235'}>Carradouret</option>
+                <option value={'26356226'}>Limone</option>
+                <option value={'18509486'}>Banana</option>
+                <option value={'93267006'}>Apple</option>
+                <option value={'19984650'}>Melon</option>
             </TagInput>
         </div>
         )

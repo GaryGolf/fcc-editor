@@ -1,14 +1,18 @@
 import * as React from 'react'
-import Menu, {MenuItem} from './Menu'
 
 const style = require('./tag-input.css')
 
+interface MenuItem {
+    key: string
+    value: string
+}
+
 interface Props {
-    selected(selected:string[]):void
+    onSelect(selected:string[]):void
 }
 interface State {
     selected: string[]
-    menu: Array<{name:string, value:string}>
+    menu: Array<MenuItem>
 }
 interface Child {
     props: {
@@ -19,10 +23,12 @@ interface Child {
 
 export default class TagInput extends React.Component <Props, State> {
     private menu: MenuItem[]
+    private map: Map<string,string>
     private input: HTMLInputElement
     private inputValue: string
-    private blurTimer: NodeJS.Timer
-    // private blurTimer: number
+    private blurTimer: number
+    private active: boolean
+
     constructor(props){
         super(props)
         this.state = {
@@ -30,23 +36,32 @@ export default class TagInput extends React.Component <Props, State> {
             menu: []
         }
         const children =  React.Children.toArray(props.children) as Child[]
-        this.menu = children.map(v=>({name:v.props.children, value: v.props.value}) )
+        this.menu = children.map(v=>({key: v.props.value, value: v.props.children}))
+        this.map = new Map()
+        this.menu.forEach(v => {
+            this.map.set(v.key, v.value)
+        })
+        this.active = false
     }
 
     componentWillReceiveProps(props){
         const children =  React.Children.toArray(props.children) as Child[]
-        this.menu = children.map(v=>({name:v.props.children, value: v.props.value}) )
+        this.menu = children.map(v=>({key: v.props.value, value: v.props.children}))
+        this.map = new Map()
+        this.menu.forEach(v => {
+            this.map.set(v.key, v.value)
+        })
     }
 
     handleFocus(){
-        // if(this.blurTimer) clearTimeout(this.blurTimer)
+        this.active = true
+        if(this.blurTimer) clearTimeout(this.blurTimer)
         if(this.input) this.input.focus()
     }
 
     handleBlur(){
-        this.setState({menu:[]})
-    //    this.blurTimer = setTimeout(()=>this.setState({menu:[]}),300)
-    //    console.log(this.blurTimer)
+       this.active = false 
+       this.blurTimer = window.setTimeout(()=>this.setState({menu:[]}),300)
     }
 
     handleInput(event: React.KeyboardEvent<HTMLInputElement>){
@@ -57,15 +72,24 @@ export default class TagInput extends React.Component <Props, State> {
                 this.handleBlur()
                 break
             case 'Backspace' :
-                if(!this.inputValue && !!selected.length)
-                    // this.removeTag(selected[selected.length-1])
-                    selected.pop()
+                if(!this.inputValue && !!selected.length) selected.pop()
             case 'Enter' :
+                
+                if (!!this.input.value) {
+                    
+                    const item = this.menu
+                        .filter(v => !selected.some(key => v.key == key))
+                        .find(v => v.value.toUpperCase().includes(this.input.value.toUpperCase()))
+                    
+                    if(!!item) return this.addTag(item.key)
+                }
+
             default :
-                 const menu = this.menu
-                    .filter(item => !selected.some(value => item.value==value))
-                    .filter(item => item.name.toUpperCase().includes(this.input.value.toUpperCase()))
-                this.setState({menu},this.selected) 
+                const menu = this.menu
+                    .filter(item => !selected.some(key => item.key==key))
+                    .filter(item => item.value.toUpperCase().includes(this.input.value.toUpperCase()))
+
+                this.setState({menu},this.onSelect) 
         }
         this.inputValue = this.input.value 
     }
@@ -74,21 +98,21 @@ export default class TagInput extends React.Component <Props, State> {
         const selected = this.state.selected.filter(item=>item != tag)
         selected.push(tag)
         const menu = this.menu
-            .filter(item => !selected.some(value => item.value==value))
-            .filter(item => item.name.toUpperCase().includes(this.input.value.toUpperCase()))
-        this.setState({menu, selected}, this.selected)
+            .filter(item => !selected.some(key => item.key==key))
+            .filter(item => item.value.toUpperCase().includes(this.input.value.toUpperCase()))
+        this.setState({menu, selected}, this.onSelect)
     }
 
     removeTag(tag: string): void {
         const selected = this.state.selected.filter(item=>item != tag)
         const menu = this.menu
-            .filter(item => !selected.some(value => item.value==value))
-            .filter(item => item.name.toUpperCase().includes(this.input.value.toUpperCase()))
-        this.setState({menu, selected}, this.selected)
+            .filter(item => !selected.some(key => item.key==key))
+            .filter(item => item.value.toUpperCase().includes(this.input.value.toUpperCase()))
+        this.setState({menu, selected}, this.onSelect)
     }
 
-    selected(){
-        if(this.props.selected) this.props.selected(this.state.selected)
+    onSelect(){
+        if(this.props.onSelect) this.props.onSelect(this.state.selected)
     }
 
     render(){
@@ -98,17 +122,35 @@ export default class TagInput extends React.Component <Props, State> {
         const tagStyle = ['label', 'label-info',  style.tag].join(' ')
         const inputStyle = [style.input].join(' ')
         const formStyle = [style.form].join(' ')
+        const containerStyle = [
+            style.container,
+            this.active ? style.active : null
+        ].join(' ')
 
         const tags = this.state.selected.map(tag => ( 
             <span 
                 key={tag}
                 className={tagStyle}
                 onClick={()=>this.removeTag(tag)}>
-                {tag}
+                {this.map.get(tag)}
                 <span data-role="remove"></span>
             </span>
         ))
+
+        const items = this.state.menu.map(item => ( 
+            <li key={item.key}>
+                <a onClick={()=>this.addTag(item.key)}>
+                    {item.value}
+                </a>
+            </li>
+        ))
         
+        const menu = !items.length ? null 
+        :  <ul className="dropdown-menu"
+                style={{display:'block'}}>
+                {items}
+            </ul>
+
         return (
             <div 
                 className={style.container}
@@ -121,13 +163,12 @@ export default class TagInput extends React.Component <Props, State> {
                         autoFocus={true} 
                         className={inputStyle}
                         ref={element=>this.input=element}
+                        onBlur={this.handleBlur.bind(this)}
                         onFocus={this.handleFocus.bind(this)}
                         onKeyUp={this.handleInput.bind(this)}/>        
                 </div>
                 <div className={style.menu}>
-                    <Menu
-                        menuItems={this.state.menu}
-                        onSelect={(item)=>this.addTag(item)} />
+                    {menu}
                 </div>
             </div>
         )
