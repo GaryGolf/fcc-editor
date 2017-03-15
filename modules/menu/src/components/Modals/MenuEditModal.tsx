@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as CONST from '../../constants'
 import * as MenuActions from '../../actions/menu'
+import TagInput from '../TagInput'
 
 const style = require('./menu-modal.css')
 
@@ -84,27 +85,26 @@ export default class MenuEditModal extends React.Component<Props, State>{
 
         if(!menuItem) return null
 
-        const categories = menuItem.product_categories.map((item, i) => (
-            <div key={item.id}>
-                <input 
-                    type="checkbox" 
-                    onChange={(event)=>this.removeCategoryHandler(event, item.id)}/>
+        const categories = menuItem.product_categories.map(item => (
+            <option 
+                key={item.id}
+                value={item.id}>
                 {item.name}
-            </div>
+            </option>
         ))
 
+        const selectedCategories = menuItem.product_categories.map(item => item.id)
+
         const goods = menuItem.products.map(item => (
-            <div key={item.id}>
-                {item.name}&nbsp;
-                <button type="button" 
-                    onClick={()=>this.removeProductHandler(item.id)} 
-                    className={"close " + style.remove }
-                    data-dismiss="modal" 
-                    aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
+            <option 
+                key={item.id}
+                value={item.id}>
+                {item.name}
+            </option>
         ))
+
+        const selectedGoods = menuItem.products.map(item => item.id)
+        
 
         const icons = this.icons.map(icon => (
             <img
@@ -142,12 +142,22 @@ export default class MenuEditModal extends React.Component<Props, State>{
                         <br/>
                         <div className={style.list}>
                             <label>{CONST.INCLUDES_CATEGORIES}</label>
-                            {categories}
+                             <br/>
+                            <TagInput 
+                                selected={selectedCategories}
+                                onSelect={null}>
+                                {categories}
+                            </TagInput>
                         </div>
                         <br/>
                         <div className={style.list}>
                             <label>{CONST.ALSO_CONTAINS}</label>
-                            {goods}
+                            <br/>
+                            <TagInput 
+                                selected={selectedGoods}
+                                onSelect={null}>
+                                {goods}
+                            </TagInput>
                         </div>
                         <br/>
                         <label>{CONST.ICON}</label>

@@ -30,9 +30,9 @@ export const icons = [
     {name: 'детское меню', value: 'babyis-menu', file: require('./img/19 детское меню.svg')}
 ]
 
-export const MENU_ITEM_NAME = 'Наименование '
-export const INCLUDES_CATEGORIES = ' Включает в себя категории :'
-export const ALSO_CONTAINS = 'Дополнительно содержит :'
+export const MENU_ITEM_NAME = 'Название '
+export const INCLUDES_CATEGORIES = 'Категории '
+export const ALSO_CONTAINS = 'Товары '
 export const SAVE  = 'Сохранить'
 export const CLOSE = 'Закрыть'
 export const ADD = 'Добавить'
