@@ -1,8 +1,8 @@
 
-export const menu_view_url =  PRODUCTION ? 'http://api.dev.dooglys.com/api/v1/menu/view/' : 'http://localhost:1337/api.dev.dooglys.com/api/v1/menu/view/'
+export const menu_view_url =  PRODUCTION ? 'http://api.release.dooglys.com/api/v1/menu/view/' : 'http://localhost:1337/api.release.dooglys.com/api/v1/menu/view/'
 export const product_category_url = PRODUCTION 
-    ? 'http://api.dev.dooglys.com/api/v1/product-category/info'
-    : 'http://localhost:1337/api.dev.dooglys.com/api/v1/product-category/info'
+    ? 'http://api.release.dooglys.com/api/v1/product-category/info'
+    : 'http://localhost:1337/api.release.dooglys.com/api/v1/product-category/info'
 export const MENU_LENGTH = 24
 export const PRODUCT = 'PRODUCT'
 export const CATEGORY = 'CATEGORY'

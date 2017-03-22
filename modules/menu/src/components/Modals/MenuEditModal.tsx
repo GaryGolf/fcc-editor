@@ -140,7 +140,7 @@ export default class MenuEditModal extends React.Component<Props, State>{
                                 defaultValue={menuItem.name} />
                         </div>
                         <br/>
-                        <div className={style.list}>
+                        {/*<div className={style.list}>
                             <label>{CONST.INCLUDES_CATEGORIES}</label>
                              <br/>
                             <TagInput 
@@ -163,7 +163,7 @@ export default class MenuEditModal extends React.Component<Props, State>{
                         <label>{CONST.ICON}</label>
                         <div className={''}>
                             {icons}
-                        </div>  
+                        </div>  */}
                     </div>
                     <div className="modal-footer">
                         <button 

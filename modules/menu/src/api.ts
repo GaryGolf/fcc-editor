@@ -16,7 +16,7 @@ function getAccessToken() {
 }
 
 export function loadNomenclature(){
-    const url = 'http://localhost:1337/api.dev.dooglys.com/api/v1/product-category/info'
+    const url = 'http://localhost:1337/api.release.dooglys.com/api/v1/product-category/info'
     const options = {
         method: 'GET',
         headers: {
@@ -36,8 +36,9 @@ export function loadNomenclature(){
 
 export function loadMenu(){
 
-    const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'
-    const url = CONST.menu_view_url + menu_id + '?scenario=full'
+    // const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35' // dev
+    const menu_id = 'de1b6a1f-805f-47bf-a6b7-4d7798c50e8d'  //release
+    const url = 'http://localhost:1337/api.release.dooglys.com/api/v1/menu/view/' + menu_id + '?scenario=full'
     const options = {
         method: 'GET',
         headers: {
@@ -56,10 +57,12 @@ export function loadMenu(){
 
 export function createMenuItem(menuItem:MenuItem): Promise<any> {
     
-    const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'  // TODO change menu_id to root_id, taken from <META>
+    // const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'  // TODO change menu_id to root_id, taken from <META>
+    // const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35' // dev
+    const menu_id = 'de1b6a1f-805f-47bf-a6b7-4d7798c50e8d'  //release
     const products = menuItem.products.map(v => v.id)
     const product_categories = menuItem.product_categories.map(v => v.id)
-    const url = 'http://localhost:1337/api.dev.dooglys.com/api/v1/menu/create-node/' + menu_id 
+    const url = 'http://localhost:1337/api.release.dooglys.com/api/v1/menu/create-node/' + menu_id 
     const options = {
         method: 'POST',
         headers: {
@@ -83,7 +86,7 @@ export function updateMenuItem(menuItem:MenuItem): Promise<any> {
     const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'
     const products = menuItem.products.map(v => v.id)
     const product_categories = menuItem.product_categories.map(v => v.id)
-    const url = 'http://localhost:1337/api.dev.dooglys.com/api/v1/menu/update/' + menuItem.id
+    const url = 'http://localhost:1337/api.release.dooglys.com/api/v1/menu/update/' + menuItem.id
     const options = {
         method: 'POST',
         headers: {
@@ -104,7 +107,7 @@ export function updateMenuItem(menuItem:MenuItem): Promise<any> {
 
 export function deleteMenuItem(menuItem:MenuItem): Promise<any> {
  
-    const url = 'http://localhost:1337/api.dev.dooglys.com/api/v1/menu/delete/' + menuItem.id
+    const url = 'http://localhost:1337/api.release.dooglys.com/api/v1/menu/delete/' + menuItem.id
     const options = {
         method: 'POST',
         headers: {
