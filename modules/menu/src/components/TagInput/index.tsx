@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-const style = require('./tag-input.css')
+const styles = require('./tag-input.css')
 
 interface MenuItem {
     key: string
@@ -117,12 +117,13 @@ export default class TagInput extends React.Component <Props, State> {
 
         const menu = this.state.active ? this.getMenu() : []
 
-        const tagStyle = ['label', 'label-info',  style.tag].join(' ')
-        const inputStyle = [style.input].join(' ')
-        const formStyle = [style.form].join(' ')
+        const tagStyle = ['label', 'label-info',  styles.tag].join(' ')
+        const inputStyle = [styles.input].join(' ')
+        const formStyle = [styles.form].join(' ')
         const containerStyle = [
-            style.container,
-            this.state.active ? style.active : null
+            'form-control',
+            styles.container,
+            this.state.active ? styles.active : null
         ].join(' ')
 
         const tags = this.state.selected.map(tag => ( 
@@ -152,6 +153,7 @@ export default class TagInput extends React.Component <Props, State> {
                 className={containerStyle}
                 onDoubleClick={()=>this.removeTag('')}
                 onClick={this.handleFocus.bind(this)}>
+                <div className={styles.form}>
                     {tags}
                     <input 
                         type="text" 
@@ -160,9 +162,10 @@ export default class TagInput extends React.Component <Props, State> {
                         onBlur={this.handleBlur.bind(this)}
                         onFocus={this.handleFocus.bind(this)}
                         onKeyUp={this.handleInput.bind(this)}/>        
-                <div className={style.menu}>
-                    {menus}
                 </div>
+                {/*<div className={styles.menu}>*/}
+                    {menus}
+                {/*</div>*/}
             </div>
         )
     }

@@ -45,9 +45,10 @@ export default class App extends React.Component<Props, null> {
     
 
     render(){
-
-    /*    return (
-        <div style={{margin: '40px 100px'}}>
+/*
+        return (
+        <div className="form-group" style={{margin: '40px 100px'}}>
+            <label>Fruits :</label>
             <TagInput onSelect={console.log} 
                 selected={[ '14094589', '65632235', '26356226']}>
                 <option value={'34563456'}>Cabbage</option>
@@ -64,7 +65,9 @@ export default class App extends React.Component<Props, null> {
                 <option value={'19984650'}>Melon</option>
             </TagInput>
         </div>
-        )*/
+        )
+*/
+
 
         const {nomenclature, category, menu, menuItem, actions} = this.props
 
@@ -84,5 +87,6 @@ export default class App extends React.Component<Props, null> {
                     close={()=>actions.view.hideMenuEditModal()} />
             </section>
         )
+
     }
 }

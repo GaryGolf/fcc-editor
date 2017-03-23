@@ -152,41 +152,39 @@ export default class MenuEditModal extends React.Component<Props, State>{
                                 aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 className="modal-title">Элемент меню</h4>
+                        <h3 className="modal-title">{CONST.MENU_ITEM}</h3>
                     </div>
                     <div className="modal-body">
-                        <div className={style.list}>
+                        <div className="form-group">
                             <label>{CONST.MENU_ITEM_NAME}</label><br/>
                             <input 
+                                className="form-control"
                                 type="text" 
                                 onChange={(event)=>this.changeTitleHandler(event.target.value)}
                                 defaultValue={menuItem.name} />
                         </div>
-                        <br/>
-                        <div className={style.list}>
+                        <div className="form-group">
                             <label>{CONST.INCLUDES_CATEGORIES}</label>
-                             <br/>
                             <TagInput 
                                 selected={selectedCategories}
                                 onSelect={this.selectCategoryHandler.bind(this)}>
                                 {categories}
                             </TagInput>
                         </div>
-                        <br/>
-                        <div className={style.list}>
+                        <div className="form-group">
                             <label>{CONST.ALSO_CONTAINS}</label>
-                            <br/>
                             <TagInput 
                                 selected={selectedGoods}
                                 onSelect={this.selectProductHandler.bind(this)}>
                                 {goods}
                             </TagInput>
                         </div>
-                        <br/>
-                        <label>{CONST.ICON}</label>
-                        <div className={''}>
-                            {icons}
-                        </div>  
+                        <div className="form-group">
+                            <label>{CONST.ICON}</label>
+                            <div className={''}>
+                                {icons}
+                            </div>  
+                        </div>
                     </div>
                     <div className="modal-footer">
                         <button 
