@@ -29,7 +29,6 @@ export default function menu(state:MenuState=initialState, action):MenuState{
             return [...state.filter(item => action.payload.id != item.id), action.payload]
 
         case Actions.FETCH_MENU_FULFILLED :
-            console.log(action.payload)
             return action.payload
 
         default :
