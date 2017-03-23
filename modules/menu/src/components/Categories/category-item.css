@@ -1,0 +1,9 @@
+@import '../../constants.css';
+
+.container{
+    padding: 5px 20px;
+    cursor: pointer;
+    &:hover{
+        background-color: var(--lightgray-color);
+    }    
+}

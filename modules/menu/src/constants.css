@@ -3,6 +3,7 @@
     --primary-color: #333333;
     --gray-color: rgba(215, 215, 215, 1);
     --lightgray-color: rgba(228, 228, 228, 1);
+    --active-cell-color: lightblue;
 
     --list-item: {
         width: 100%;
