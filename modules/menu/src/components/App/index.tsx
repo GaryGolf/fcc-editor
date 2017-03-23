@@ -46,7 +46,7 @@ export default class App extends React.Component<Props, null> {
 
     render(){
 
-        return (
+    /*    return (
         <div style={{margin: '40px 100px'}}>
             <TagInput onSelect={console.log} 
                 selected={[ '14094589', '65632235', '26356226']}>
@@ -64,8 +64,8 @@ export default class App extends React.Component<Props, null> {
                 <option value={'19984650'}>Melon</option>
             </TagInput>
         </div>
-        )
-       /* const {nomenclature, category, menu, menuItem, actions} = this.props
+        )*/
+        const {nomenclature, category, menu, menuItem, actions} = this.props
 
         if(!nomenclature) return null
         const products = category ? category.products : null
@@ -81,6 +81,6 @@ export default class App extends React.Component<Props, null> {
                     actions={actions.menu} 
                     close={()=>actions.view.hideMenuEditModal()} />
             </section>
-        )*/
+        )
     }
 }

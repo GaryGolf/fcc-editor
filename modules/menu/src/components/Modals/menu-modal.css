@@ -51,3 +51,6 @@
     font-size: 16px;
     outline: none;
 }
+.list input{
+    width: 100%;
+}

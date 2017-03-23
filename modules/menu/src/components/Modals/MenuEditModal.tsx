@@ -70,6 +70,21 @@ export default class MenuEditModal extends React.Component<Props, State>{
         this.setState({menuItem})
     }
 
+    selectCategoryHandler(ids: Array<string>){
+        const product_categories = this.props.nomenclature.child_categories
+            .filter(item => ids.includes(item.id))
+        const menuItem = {...this.state.menuItem, product_categories}
+        this.setState({menuItem})
+    }
+
+    selectProductHandler(ids: Array<string>){
+        const products = this.props.nomenclature.child_categories
+            .reduce((acc,item) => [...acc,...item.products],[])
+            .filter(item => ids.includes(item.id))
+        const menuItem = {...this.state.menuItem, products}
+        this.setState({menuItem})
+    }
+
     deleteMenuItem() {
         this.props.actions.removeMenuItem(this.state.menuItem)
         this.props.close()
@@ -85,7 +100,10 @@ export default class MenuEditModal extends React.Component<Props, State>{
 
         if(!menuItem) return null
 
-        const categories = menuItem.product_categories.map(item => (
+        // console.log(menuItem)
+        const categories = this.props.nomenclature.child_categories
+            // .filter(category => !menuItem.product_categories.some(mItemCat => mItemCat.id == category.id))
+            .map(item => (
             <option 
                 key={item.id}
                 value={item.id}>
@@ -95,7 +113,12 @@ export default class MenuEditModal extends React.Component<Props, State>{
 
         const selectedCategories = menuItem.product_categories.map(item => item.id)
 
-        const goods = menuItem.products.map(item => (
+        let products = []
+        this.props.nomenclature.child_categories.forEach(item => {
+            products = [...products, ...item.products]
+        })
+
+        const goods = products.map(item => (
             <option 
                 key={item.id}
                 value={item.id}>
@@ -132,20 +155,20 @@ export default class MenuEditModal extends React.Component<Props, State>{
                         <h4 className="modal-title">Элемент меню</h4>
                     </div>
                     <div className="modal-body">
-                        <div className={style['input-group']}>
-                            <label>{CONST.MENU_ITEM_NAME}</label>&nbsp;
+                        <div className={style.list}>
+                            <label>{CONST.MENU_ITEM_NAME}</label><br/>
                             <input 
                                 type="text" 
                                 onChange={(event)=>this.changeTitleHandler(event.target.value)}
                                 defaultValue={menuItem.name} />
                         </div>
                         <br/>
-                        {/*<div className={style.list}>
+                        <div className={style.list}>
                             <label>{CONST.INCLUDES_CATEGORIES}</label>
                              <br/>
                             <TagInput 
                                 selected={selectedCategories}
-                                onSelect={null}>
+                                onSelect={this.selectCategoryHandler.bind(this)}>
                                 {categories}
                             </TagInput>
                         </div>
@@ -155,7 +178,7 @@ export default class MenuEditModal extends React.Component<Props, State>{
                             <br/>
                             <TagInput 
                                 selected={selectedGoods}
-                                onSelect={null}>
+                                onSelect={this.selectProductHandler.bind(this)}>
                                 {goods}
                             </TagInput>
                         </div>
@@ -163,7 +186,7 @@ export default class MenuEditModal extends React.Component<Props, State>{
                         <label>{CONST.ICON}</label>
                         <div className={''}>
                             {icons}
-                        </div>  */}
+                        </div>  
                     </div>
                     <div className="modal-footer">
                         <button 

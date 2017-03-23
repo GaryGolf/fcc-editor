@@ -13,7 +13,6 @@ interface Props {
 }
 interface State {
     selected: string[]
-    menu: Array<MenuItem>
     input: string
     active: boolean
 }
@@ -26,37 +25,29 @@ interface Child {
 
 export default class TagInput extends React.Component <Props, State> {
     private menu: MenuItem[]
-    // private map: Map<string,string>
     private input: HTMLInputElement
     private inputValue: string
     private blurTimer: number
-    // private active: boolean
 
     constructor(props){
         super(props)
         this.state = {
             selected: props.selected,
-            menu: [],
             input: '',
             active: false
         }
         this.inputValue = ''
         const children =  React.Children.toArray(props.children) as Child[]
         this.menu = children.map(v=>({key: v.props.value, value: v.props.children}))
-        // this.map = new Map()
-        // this.menu.forEach(v => {
-        //     this.map.set(v.key, v.value)
-        // })
-        // this.active = false
     }
 
     componentWillReceiveProps(props){
         const children =  React.Children.toArray(props.children) as Child[]
         this.menu = children.map(v=>({key: v.props.value, value: v.props.children}))
-        // this.map = new Map()
-        // this.menu.forEach(v => {
-        //     this.map.set(v.key, v.value)
-        // })
+    }
+
+    componentWillUnmount(){
+        if(this.blurTimer) clearTimeout(this.blurTimer)
     }
 
     handleFocus(){
