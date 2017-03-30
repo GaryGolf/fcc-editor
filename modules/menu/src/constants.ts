@@ -39,6 +39,7 @@ export const ADD = 'Добавить'
 export const DELETE = 'Удалить'
 export const ICON = 'Иконка'
 export const MENU_ITEM = 'Элемент меню'
+export const R_U_SURE = 'Вы действительно хотите удалить '
 
 // API
 export const HTTP = 'http://'
