@@ -9,9 +9,8 @@ import Menu from '../Menu'
 import * as Actions from '../../actions'
 import * as CONST from '../../constants'
 
-import TagInput from '../TagInput'
-
-import * as API from '../../api'
+// import TagInput from '../TagInput'
+// import * as API from '../../api'
 
 const {connect} = require('react-redux')
 const style = require('./app.css')
@@ -42,7 +41,6 @@ interface Props {
 )
 @DragDropContext(HTML5Backend)
 export default class App extends React.Component<Props, null> {
-    
 
     render(){
 /*
@@ -73,6 +71,7 @@ export default class App extends React.Component<Props, null> {
 
         if(!nomenclature) return null
         const products = category ? category.products : null
+    
         return (
             <section className={style.container}>
                 <Categories actions={actions}
@@ -86,6 +85,5 @@ export default class App extends React.Component<Props, null> {
                     close={()=>actions.view.hideMenuEditModal()} />
             </section>
         )
-
     }
 }

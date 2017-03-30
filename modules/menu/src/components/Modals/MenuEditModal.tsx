@@ -16,16 +16,9 @@ interface State {
     menuItem: MenuItem
 }
 
-interface Icon {
-    name: string
-    value: string
-    file: any
-}
-
 export default class MenuEditModal extends React.Component<Props, State>{
     
-    private icons: Icon[]
-
+    private icons: Array<string>
     constructor(props: Props){
         super(props)
         this.state = { menuItem: null }
@@ -131,12 +124,12 @@ export default class MenuEditModal extends React.Component<Props, State>{
 
         const icons = this.icons.map(icon => (
             <img
-                key={icon.value}
-                alt={icon.name}
-                data-selected={menuItem.icon_name && menuItem.icon_name === icon.value} 
+                key={icon}
+                alt={icon}
+                data-selected={menuItem.icon_name && menuItem.icon_name === icon} 
                 className={style.icon}
-                onClick={()=> this.selectIconHandler(icon.value)}
-                src={icon.file} />
+                onClick={()=> this.selectIconHandler(icon)}
+                src={CONST.DOMAIN + 'img/' + icon + '.svg'} />
         ))
 
         return (

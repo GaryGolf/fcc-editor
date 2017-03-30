@@ -1,11 +1,15 @@
 const path = require('path')
 const webpack = require('webpack')
+const config = require('config')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const outPath = path.join(__dirname, './dist')
 const sourcePath = path.join(__dirname, './src')
 const PRODUCTION = process.argv.indexOf('-p') >= 0
+const domain = config.has('domain') ? config.get('domain') : null
+
+if(!domain) throw new Error("can't get domain attribute from config file")
 
 module.exports = {
   context: sourcePath,
@@ -81,6 +85,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       PRODUCTION: JSON.stringify(PRODUCTION),
+      ENV_DOMAIN: JSON.stringify(domain)
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
