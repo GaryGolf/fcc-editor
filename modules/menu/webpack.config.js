@@ -15,14 +15,14 @@ module.exports = {
   context: sourcePath,
   entry: {
     main: './index.tsx',
-    vendor: [
-      'react',
-      'react-dom',
-      'react-redux',
-      'react-router',
-      'react-router-redux',
-      'redux'
-    ]
+    // vendor: [
+    //   'react',
+    //   'react-dom',
+    //   'react-redux',
+    //   'react-router',
+    //   'react-router-redux',
+    //   'redux'
+    // ]
   },
   output: {
     path: outPath,
@@ -87,12 +87,12 @@ module.exports = {
       PRODUCTION: JSON.stringify(PRODUCTION),
       ENV_DOMAIN: JSON.stringify(domain)
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.bundle.js',
-      minChunks: Infinity
-    }),
-    new webpack.optimize.AggressiveMergingPlugin(),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor',
+    //   filename: 'vendor.bundle.js',
+    //   minChunks: Infinity
+    // }),
+    // new webpack.optimize.AggressiveMergingPlugin(),
     new ExtractTextPlugin({
       filename: 'styles.css',
       disable: !PRODUCTION
