@@ -39,3 +39,8 @@ export const ADD = 'Добавить'
 export const DELETE = 'Удалить'
 export const ICON = 'Иконка'
 export const MENU_ITEM = 'Элемент меню'
+
+// API
+export const HTTP = 'http://'
+export const PROXY = 'localhost:1337/'
+export const DOMAIN = 'api.dev.dooglys.com/api/v1/'

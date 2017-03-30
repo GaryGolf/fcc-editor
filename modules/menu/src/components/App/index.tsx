@@ -73,7 +73,6 @@ export default class App extends React.Component<Props, null> {
 
         if(!nomenclature) return null
         const products = category ? category.products : null
-        console.log(this.props.menu)
         return (
             <section className={style.container}>
                 <Categories actions={actions}
