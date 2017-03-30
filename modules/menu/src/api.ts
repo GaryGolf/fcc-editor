@@ -89,6 +89,7 @@ export function updateMenuItem(menuItem:MenuItem): Promise<any> {
     const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'
     const products = menuItem.products.map(v => v.id)
     const product_categories = menuItem.product_categories.map(v => v.id)
+    const icon = menuItem.icon_name
     const url = CONST.HTTP + CONST.PROXY + CONST.DOMAIN + 'menu/update/' + menuItem.id
     // const url = 'http://localhost:1337/api.release.dooglys.com/api/v1/menu/update/' + menuItem.id
     const options = {
@@ -98,7 +99,7 @@ export function updateMenuItem(menuItem:MenuItem): Promise<any> {
             'Tenant-Domain': getTenantDomain(),
             'Access-Token': getAccessToken()
         },
-        body: JSON.stringify({...menuItem, products, product_categories })
+        body: JSON.stringify({...menuItem, products, product_categories, icon })
     }
     return window['fetch'](url, options)
         .then(response => {

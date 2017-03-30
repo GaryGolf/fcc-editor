@@ -10,10 +10,11 @@
     display: table-cell;
 }
 .input {
+    /*display: inline-block;*/
+    float: left;
     border: none;
     outline: none;
-    float: left;
-    max-width: 10%;
+    max-width: 100%;
     padding-left: 5px; 
 }
 .menu { 
@@ -34,5 +35,12 @@
     float: left;
     user-select: none;
     cursor: pointer;
+}
+.hidden {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -2;
+    visibility: hidden;
 }
 

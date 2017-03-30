@@ -66,9 +66,9 @@ export default class App extends React.Component<Props, null> {
             </TagInput>
         </div>
         )
+
+
 */
-
-
         const {nomenclature, category, menu, menuItem, actions} = this.props
 
         if(!nomenclature) return null
