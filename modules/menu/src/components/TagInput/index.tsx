@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-const style = require('./tag-input.css')
+const styles = require('./tag-input.css')
 
 interface MenuItem {
     key: string
@@ -26,8 +26,10 @@ interface Child {
 export default class TagInput extends React.Component <Props, State> {
     private menu: MenuItem[]
     private input: HTMLInputElement
+    private hidden: HTMLSpanElement
     private inputValue: string
     private blurTimer: number
+    private inputWidth: number
 
     constructor(props){
         super(props)
@@ -36,7 +38,9 @@ export default class TagInput extends React.Component <Props, State> {
             input: '',
             active: false
         }
+        this.handleInput = this.handleInput.bind(this)
         this.inputValue = ''
+        this.inputWidth = 30
         const children =  React.Children.toArray(props.children) as Child[]
         this.menu = children.map(v=>({key: v.props.value, value: v.props.children}))
     }
@@ -60,12 +64,12 @@ export default class TagInput extends React.Component <Props, State> {
        this.blurTimer = window.setTimeout(()=>this.setState({active: false}),300)
     }
 
-    handleInput(event: React.KeyboardEvent<HTMLInputElement>){
-        
-        
-        const input = event.target['value']
-        const menu = this.getMenu()
+    handleInput(event: React.KeyboardEvent<HTMLInputElement>) {
 
+        const val = event.target['value']
+        const input = val.length > 30 ? this.state.input : val
+        const menu = this.getMenu()
+        
         switch(event.key){
             case 'Escape' :
                 this.handleBlur()
@@ -79,7 +83,9 @@ export default class TagInput extends React.Component <Props, State> {
                 break
             default :        
         }
+        this.input.value = input
         this.inputValue = input
+        this.inputWidth = this.hidden.offsetWidth + 30
         this.setState({input})
     }
 
@@ -117,12 +123,13 @@ export default class TagInput extends React.Component <Props, State> {
 
         const menu = this.state.active ? this.getMenu() : []
 
-        const tagStyle = ['label', 'label-info',  style.tag].join(' ')
-        const inputStyle = [style.input].join(' ')
-        const formStyle = [style.form].join(' ')
+        const tagStyle = ['label', 'label-info',  styles.tag].join(' ')
+        const inputStyle = [styles.input].join(' ')
+        const formStyle = [styles.form].join(' ')
         const containerStyle = [
-            style.container,
-            this.state.active ? style.active : null
+            'form-control',
+            styles.container,
+            this.state.active ? styles.active : null
         ].join(' ')
 
         const tags = this.state.selected.map(tag => ( 
@@ -146,23 +153,30 @@ export default class TagInput extends React.Component <Props, State> {
                     </li>
                 ))}
             </ul>
+        
+        const width = this.inputWidth+'px'
 
         return (
             <div 
                 className={containerStyle}
                 onDoubleClick={()=>this.removeTag('')}
                 onClick={this.handleFocus.bind(this)}>
+                <div className={styles.form}>
                     {tags}
                     <input 
                         type="text" 
+                        style={{width}}
                         className={inputStyle}
                         ref={element=>this.input=element}
                         onBlur={this.handleBlur.bind(this)}
                         onFocus={this.handleFocus.bind(this)}
-                        onKeyUp={this.handleInput.bind(this)}/>        
-                <div className={style.menu}>
-                    {menus}
+                        onKeyUp={this.handleInput}/>
                 </div>
+                <span className={styles.hidden}
+                    ref={span=>this.hidden = span}>
+                    {this.state.input}
+                </span>
+                {menus}
             </div>
         )
     }

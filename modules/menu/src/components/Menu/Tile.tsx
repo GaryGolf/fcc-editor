@@ -49,32 +49,31 @@ export default class Tile extends React.Component<Props, null>{
         const { menuItem, canDrop, isOver, connectDropTarget, actions } = this.props
         const isCellOccupied = !!menuItem.id
         const tileStyle = [style.container, 'well', canDrop && isOver ? style.active : null ].join(' ')
-        const text = isCellOccupied 
-        ? <div className={style.text}>{menuItem.name}</div>
-        : <div className={style.cell}><div className={style.plus}>+</div></div>
-        const iconItem = CONST.icons.find(item => menuItem.icon_name === item.value)
-        const icon = iconItem 
-        ? <img src={iconItem.file} className={style.icon} alt={iconItem.name}/>
-        : null
+        const text = isCellOccupied ? <div className={style.text}>{menuItem.name}</div> : <div className={style.cell}/>
+        const file = CONST.DOMAIN + 'img/' + menuItem.icon_name + '.svg'
+        const icon = !!menuItem.icon_name ? <img src={file} className={style.icon}/>: null
 
-        const buttonGroup = isCellOccupied ? (
+        /*const buttonGroup = isCellOccupied ? (
             <div className={style['button-group']}>
                 <button className="btn btn-info btn-sm"
                         onClick={()=>actions.view.showMenuEditModal(menuItem)}>
-                    <span className="glyphicon glyphicon-pencil"/>
+                    <span className="glyphicon glyphicon-edit"/>
                 </button>
-                {/*<button className="btn btn-danger btn-sm" 
-                        onClick={()=>actions.menu.removeMenuItem(menuItem)}>
+                <button className="btn btn-danger btn-sm" 
+                        onClick={()=>{
+                            if(window.confirm(CONST.R_U_SURE + menuItem.name + '?'))
+                            actions.menu.removeMenuItem(menuItem)}}>
                     <span className="glyphicon glyphicon-trash"/>
-                </button>*/}
+                </button>
             </div>
-        ) : null
+        ) : null*/
 
         return connectDropTarget(
-            <div className={tileStyle}>
+            <div className={tileStyle}
+                onClick={()=> {if(isCellOccupied) actions.view.showMenuEditModal(menuItem)}}>
                 {text}
                 {icon}
-                {buttonGroup}        
+                {/*{buttonGroup}*/}
             </div>
         )
     }

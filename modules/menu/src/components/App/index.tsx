@@ -9,9 +9,8 @@ import Menu from '../Menu'
 import * as Actions from '../../actions'
 import * as CONST from '../../constants'
 
-import TagInput from '../TagInput'
-
-import * as API from '../../api'
+// import TagInput from '../TagInput'
+// import * as API from '../../api'
 
 const {connect} = require('react-redux')
 const style = require('./app.css')
@@ -42,12 +41,12 @@ interface Props {
 )
 @DragDropContext(HTML5Backend)
 export default class App extends React.Component<Props, null> {
-    
 
     render(){
-
-    /*    return (
-        <div style={{margin: '40px 100px'}}>
+/*
+        return (
+        <div className="form-group" style={{margin: '40px 100px'}}>
+            <label>Fruits :</label>
             <TagInput onSelect={console.log} 
                 selected={[ '14094589', '65632235', '26356226']}>
                 <option value={'34563456'}>Cabbage</option>
@@ -64,11 +63,15 @@ export default class App extends React.Component<Props, null> {
                 <option value={'19984650'}>Melon</option>
             </TagInput>
         </div>
-        )*/
+        )
+
+
+*/
         const {nomenclature, category, menu, menuItem, actions} = this.props
 
         if(!nomenclature) return null
         const products = category ? category.products : null
+    
         return (
             <section className={style.container}>
                 <Categories actions={actions}
