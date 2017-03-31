@@ -5,6 +5,7 @@
     margin: 8px;
     overflow: hidden;
     color: var(--gray-color);
+    user-select: none;
 
 }
 .text{
@@ -27,7 +28,7 @@
 
 .button-group{
     position: absolute;
-    bottom: 0;
+    top: 0;
     right: 0;
 
     & button {
@@ -39,7 +40,17 @@
         visibility: visible;
     }
 }
-
+.icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30%;
+    margin: 8px;
+    height: auto;
+}
+.add {
+    float: right;
+}
 
 .active{
     border-color: var(--active-cell-color);

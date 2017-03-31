@@ -16,6 +16,7 @@ export default class Categories extends React.Component<Props, null> {
 
     constructor(props: Props){
         super(props)
+        props.actions.nomenclature.fetch()
     }
 
     render(){

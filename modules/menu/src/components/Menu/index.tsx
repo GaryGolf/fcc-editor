@@ -40,7 +40,6 @@ export default class Menu extends React.Component<Props, null> {
 
     render(){
         
-        
         const {menu, actions} = this.props
 
         const items = this.menu.map((item, idx) =>{
