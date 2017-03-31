@@ -1,6 +1,6 @@
 // API
-export const DOMAIN = PRODUCTION ? "http://" + ENV_DOMAIN : "http://localhost:1337/" + ENV_DOMAIN
-
+// export const DOMAIN = PRODUCTION ? "http://" + ENV_DOMAIN : "http://localhost:1337/" + ENV_DOMAIN
+export const DOMAIN = "http://localhost:1337/" + ENV_DOMAIN
 export const MENU_LENGTH = 24
 export const PRODUCT = 'PRODUCT'
 export const CATEGORY = 'CATEGORY'
