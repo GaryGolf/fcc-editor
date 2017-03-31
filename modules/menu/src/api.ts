@@ -120,6 +120,6 @@ export function deleteMenuItem(menuItem:MenuItem): Promise<any> {
         .then(response => {
             if(!response.ok) throw new Error(response.statusText)
             return response.json()})
-        .then(data => data)
+        .then(data => data ? menuItem : null )
         .catch(error => { throw error})      
 }

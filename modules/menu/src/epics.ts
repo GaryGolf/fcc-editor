@@ -12,6 +12,8 @@ interface Menu {
 type Store = { getState: Function, dispatch: Function }
 
 // Nomenclature 
+
+
 const fetchNomenclature: Epic<Action, null> = action$ =>
   action$.ofType(Actions.FETCH_NOMENCLATURE)
     .mergeMap(action => ActionsObservable.fromPromise(API.loadNomenclature())

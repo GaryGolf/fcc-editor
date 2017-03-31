@@ -28,8 +28,8 @@ export default function menu(state:MenuState=initialState, action):MenuState{
         case Actions.UPDATE_MENU_ITEM :
             return [...state.filter(item => action.payload.id != item.id), action.payload]
 
-        case Actions.FETCH_MENU_FULFILLED :
-            return action.payload
+        case Actions.FETCH_MENU :
+            return action.payload.child_menus
 
         default :
             break

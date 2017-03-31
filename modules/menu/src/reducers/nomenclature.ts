@@ -16,12 +16,9 @@ const initialState: ProductCategory = {
 export default function nomenclature(state:ProductCategory = initialState, action: Action): ProductCategory{
 
     switch(action.type){
-        case Actions.FETCH_NOMENCLATURE_PENDING :
-            break
-        case Actions.FETCH_NOMENCLATURE_FULFILLED :
+
+        case Actions.FETCH_NOMENCLATURE :
             return action.payload
-        case Actions.FETCH_NOMENCLATURE_REJECTED :
-            console.error(action.payload)
     }
 
     return state
