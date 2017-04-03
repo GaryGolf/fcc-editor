@@ -47,3 +47,11 @@ body {
 .selectize-dropdown {
   min-width: 200px !important;
 }
+
+.main-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow: auto;
+}
