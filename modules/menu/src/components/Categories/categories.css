@@ -1,6 +1,6 @@
 @import '../../constants.css';
 .container{
-    flex: 1 2 15%;
+    flex: 1 4 10%;
     background: silver;
     user-select: none;
     color: var(--primary-color);
