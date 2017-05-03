@@ -19,6 +19,7 @@ function getMenuID() {
 }
 
 export function loadNomenclature(){
+    
     const options = {
         url: CONST.DOMAIN + 'api/v1/nomenclature/category/info',
         method: 'GET',

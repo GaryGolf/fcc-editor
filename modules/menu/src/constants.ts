@@ -1,6 +1,13 @@
 // API
-// export const DOMAIN = PRODUCTION ? "http://" + ENV_DOMAIN : "http://localhost:1337/" + ENV_DOMAIN
-export const DOMAIN = "http://localhost:1337/" + ENV_DOMAIN
+function getDomain(){
+    const http = 'http://'
+    const proxy = PRODUCTION ? '' : 'localhost:1337/'
+    const tenant = document.querySelector('meta[name=tenant-domain]')['content']
+    const domain = ENV_DOMAIN
+    return http + proxy + tenant + '.' + domain
+}
+
+export const DOMAIN = getDomain()
 export const MENU_LENGTH = 24
 export const PRODUCT = 'PRODUCT'
 export const CATEGORY = 'CATEGORY'
