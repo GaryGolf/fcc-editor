@@ -56,19 +56,17 @@ export function createMenuItem(menuItem:MenuItem): Promise<any> {
     // const menu_id = 'de1b6a1f-805f-47bf-a6b7-4d7798c50e8d'  //release
     const products = menuItem.products.map(v => v.id)
     const product_categories = menuItem.product_categories.map(v => v.id)
-    console.log(JSON.stringify({...menuItem, products, product_categories}))
     
     const options = {
         url: CONST.DOMAIN + 'api/v1/terminal-menu/menu/create-node/' + menu_id,
-        method: 'POST',
+        method: 'post',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
             'Tenant-Domain': getTenantDomain(),
             'Access-Token': getAccessToken()
         },
-        body: JSON.stringify({...menuItem, products, product_categories})
+        data: {...menuItem, products, product_categories}
     }
-
     return axios(options)
         .then(response => response.data)
         .catch(error => { throw error})      
@@ -87,7 +85,7 @@ export function updateMenuItem(menuItem:MenuItem): Promise<any> {
             'Tenant-Domain': getTenantDomain(),
             'Access-Token': getAccessToken()
         },
-        body: JSON.stringify({...menuItem, products, product_categories, icon })
+        data: {...menuItem, products, product_categories, icon }
     }
     return axios(options)
         .then(response => response.data)
