@@ -2,16 +2,21 @@
 .container{
     flex: 1 0 20%;
     position: relative;
-    margin: 8px;
+    margin: 5px;
     overflow: hidden;
     color: var(--gray-color);
     user-select: none;
-
 }
 .text{
-    font-size: 16px;
-    align-self: left;
     color: var(--primary-color);
+}
+.icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30%;
+    margin: 8px;
+    height: auto;
 }
 .cell{
     display: flex;
@@ -39,14 +44,6 @@
     &:hover button{
         visibility: visible;
     }
-}
-.icon {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 30%;
-    margin: 8px;
-    height: auto;
 }
 .add {
     float: right;
