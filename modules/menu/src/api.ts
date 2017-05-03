@@ -5,14 +5,17 @@ const uuid = require('uuid')
 
 function getTenantDomain() {
     const element = document.querySelector('meta[name=tenant-domain]')
-    if(element) return element['content']
-    return null
+    return !!element ? element['content'] : null
 }
 
 function getAccessToken() {
     const element = document.querySelector('meta[name=access-token]')
-    if(element) return element['content']
-    return null
+    return !!element ? element['content'] : null
+}
+
+function getMenuID() {
+    const element = document.querySelector('#interactive-menu')
+    return !!element ? element.getAttribute('data-id') : null
 }
 
 export function loadNomenclature(){
@@ -32,8 +35,7 @@ export function loadNomenclature(){
 
 export function loadMenu(){
 
-    const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35' // dev
-    // const menu_id = 'de1b6a1f-805f-47bf-a6b7-4d7798c50e8d'  //release
+    const menu_id = getMenuID()
     const options = {
         url: CONST.DOMAIN + 'api/v1/terminal-menu/menu/view/' + menu_id + '?scenario=full',
         method: 'GET',
@@ -50,9 +52,7 @@ export function loadMenu(){
 
 export function createMenuItem(menuItem:MenuItem): Promise<any> {
     
-    // const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'  // TODO change menu_id to root_id, taken from <META>
-    const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35' // dev
-    // const menu_id = 'de1b6a1f-805f-47bf-a6b7-4d7798c50e8d'  //release
+    const menu_id = getMenuID()
     const products = menuItem.products.map(v => v.id)
     const product_categories = menuItem.product_categories.map(v => v.id)
     
@@ -72,7 +72,7 @@ export function createMenuItem(menuItem:MenuItem): Promise<any> {
 }
 
 export function updateMenuItem(menuItem:MenuItem): Promise<any> {
-    const menu_id = '647ea788-3b78-4ef3-a885-d0eb1fc18a35'
+   // const menu_id = getMenuID()
     const products = menuItem.products.map(v => v.id)
     const product_categories = menuItem.product_categories.map(v => v.id)
     const icon = menuItem.icon_name

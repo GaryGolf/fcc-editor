@@ -133,8 +133,7 @@ export default class MenuEditModal extends React.Component<Props, State>{
         ))
 
         return (
-            <div className={style.container}>
-                <div className={style.overlay} onClick={this.props.close.bind(this)}/>
+            <div className={style.overlay} onClick={this.props.close.bind(this)}>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                     <div className="modal-header">
