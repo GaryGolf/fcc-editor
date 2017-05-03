@@ -48,7 +48,7 @@ export default class MenuEditModal extends React.Component<Props, State>{
         const menuItem = {...this.state.menuItem, product_categories}
         setTimeout(()=>this.setState({menuItem}),300)
     }
-
+    
     removeProductHandler(id: string) {
         const category = this.state.menuItem.product_categories
         const products = this.state.menuItem.products.filter(item => item.id != id)
@@ -134,7 +134,7 @@ export default class MenuEditModal extends React.Component<Props, State>{
 
         return (
             <div className={style.overlay} onClick={this.props.close.bind(this)}>
-                <div className="modal-dialog" role="document">
+                <div className="modal-dialog" role="document" onClick={(e)=>e.stopPropagation()}>
                     <div className="modal-content">
                     <div className="modal-header">
                         <button type="button" 
