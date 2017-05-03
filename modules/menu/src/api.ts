@@ -3,7 +3,6 @@ import * as CONST from './constants'
 import axios from 'axios'
 const uuid = require('uuid')
 
-
 function getTenantDomain() {
     const element = document.querySelector('meta[name=tenant-domain]')
     if(element) return element['content']
@@ -59,9 +58,9 @@ export function createMenuItem(menuItem:MenuItem): Promise<any> {
     
     const options = {
         url: CONST.DOMAIN + 'api/v1/terminal-menu/menu/create-node/' + menu_id,
-        method: 'post',
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json',
             'Tenant-Domain': getTenantDomain(),
             'Access-Token': getAccessToken()
         },
