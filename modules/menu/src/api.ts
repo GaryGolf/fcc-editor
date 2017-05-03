@@ -103,6 +103,6 @@ export function deleteMenuItem(menuItem:MenuItem): Promise<any> {
         }
     }
     return axios(options)
-        .then(response => response.data)
+        .then(response => !!response.data ? menuItem : null )
         .catch(error => { throw error})      
 }
