@@ -15,5 +15,5 @@ ReactDOM.render(
       <Route path="/" component={App}/>
     </Router>
   </Provider>,
-  document.getElementById('interactive-menu') 
+  document.querySelector('.main-content') 
 )

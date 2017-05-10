@@ -3,9 +3,9 @@ import * as CONST from './constants'
 import axios from 'axios'
 const uuid = require('uuid')
 
-const accessToken =  document.querySelector('meta[name=access-token]')['content']
-const tenantDomain =  document.querySelector('meta[name=tenant-domain]')['content']
-const menuID =  document.querySelector('#interactive-menu').getAttribute('data-id')
+const accessToken =  document.querySelector('meta[name=access-token]').getAttribute('content')
+const tenantDomain =  document.querySelector('meta[name=tenant-domain]').getAttribute('content')
+const menuID =  document.querySelector('.main-content').getAttribute('data-id')
 
 export function loadNomenclature(){
 
