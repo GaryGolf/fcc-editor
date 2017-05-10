@@ -9,7 +9,8 @@
     "start": "npm-run-all --parallel proxy dev",
     "dev": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
     "proxy": "corsproxy",
-    "build": "webpack -p --progress --colors"
+    "build": "webpack -p --progress --colors && npm run copy",
+    "copy": "cpx ./dist/bundle.js ../../backend_pages/menu/public/js && cpx ./dist/styles.css ../../backend_pages/menu/public/css"
   },
   "license": "MIT",
   "devDependencies": {
@@ -30,6 +31,7 @@
     "@types/webpack-env": "^1.13.0",
     "config": "^1.25.1",
     "corsproxy": "^1.5.0",
+    "cpx": "^1.5.0",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^2.0.0-beta.5",
     "file-loader": "^0.10.0",
