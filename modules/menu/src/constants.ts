@@ -2,8 +2,7 @@
 function getDomain(){
     const proxy = PRODUCTION ? '' : 'localhost:1337/'
     const tenant = document.querySelector('meta[name=tenant-domain]')['content']
-    const domain = ENV_DOMAIN
-    return `http://${proxy}${tenant}.${domain}`
+    return `http://${proxy}${tenant}.${ENV_DOMAIN}`
 }
 
 export const DOMAIN = getDomain()
