@@ -15,5 +15,5 @@ ReactDOM.render(
       <Route path="/" component={App}/>
     </Router>
   </Provider>,
-  document.getElementById('layout') 
+  document.querySelector('.main-content') 
 )

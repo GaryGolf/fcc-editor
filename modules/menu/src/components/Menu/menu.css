@@ -1,6 +1,6 @@
 .container{
-    flex: 1 0 65%;
-    padding: 15px;
+    flex: 6 0 65%;
+    /*padding: 15px;*/
     display: flex;
     flex-flow: row wrap;
 }
