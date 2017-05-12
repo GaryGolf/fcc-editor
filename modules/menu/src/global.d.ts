@@ -12,3 +12,4 @@ declare interface Window {
 }
 // enviroment constant
 declare const PRODUCTION: boolean
+declare const ENV_DOMAIN: string

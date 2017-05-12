@@ -1,6 +1,6 @@
 @import '../../constants.css';
 .container{
-    flex: 1 2 15%;
+    flex: 1 4 10%;
     background: silver;
     user-select: none;
     color: var(--primary-color);
@@ -10,11 +10,4 @@
 .scrollable{
     @apply --scrollable;
     
-}
-.catigories{
-    padding: 5px 20px;
-    cursor: pointer;
-    &:hover{
-        background-color: var(--lightgray-color);
-    }    
 }

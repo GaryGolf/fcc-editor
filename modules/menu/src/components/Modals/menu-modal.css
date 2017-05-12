@@ -1,0 +1,43 @@
+@import '../../constants.css';
+
+.overlay{
+   @apply --overlay;
+}
+.input-group{
+    text-align: center;
+}
+.icons {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    user-select: none;
+}
+.icon {
+    flex: 1;
+    width: 22px;
+    height: 22px;
+    margin: 3px;
+    cursor: pointer;
+    filter: grayscale();
+    opacity: .2;
+}
+.icon:hover {
+    filter: none;
+}
+.icon[data-selected=true] {
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    filter: none;
+    opacity: 1;
+}
+.remove {
+    float: none;
+    font-size: 16px;
+    outline: none;
+}
+.list input{
+    width: 100%;
+}
