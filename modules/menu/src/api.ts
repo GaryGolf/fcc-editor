@@ -5,7 +5,7 @@ const uuid = require('uuid')
 
 const accessToken =  document.querySelector('meta[name=access-token]').getAttribute('content')
 const tenantDomain =  document.querySelector('meta[name=tenant-domain]').getAttribute('content')
-const menuID =  document.querySelector('.main-content').getAttribute('data-id')
+const menuID =  document.querySelector('#menu-visual').getAttribute('data-id')
 
 export function loadNomenclature(){
 

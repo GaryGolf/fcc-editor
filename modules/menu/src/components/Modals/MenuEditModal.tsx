@@ -148,7 +148,7 @@ export default class MenuEditModal extends React.Component<Props, State>{
                     </div>
                     <div className="modal-body">
                         <div className="form-group">
-                            <label>{CONST.MENU_ITEM_NAME}</label><br/>
+                            <label>{CONST.MENU_ITEM_NAME}</label>
                             <input 
                                 className="form-control"
                                 type="text" 

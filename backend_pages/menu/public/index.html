@@ -11,8 +11,10 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/selectize.bootstrap3.css" rel="stylesheet">
     <link href="css/site.css" rel="stylesheet">
+
+    <link href="css/styles.css" rel="stylesheet"> <!-- поставил перед main -->
+
     <link href="css/main.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
 
@@ -57,13 +59,17 @@
 
     <div class="container">
 
-        <div class="main-content" data-id="647ea788-3b78-4ef3-a885-d0eb1fc18a35">
+        <div class="main-content">
             <h1>Редактирование меню</h1>
+
+            <div id="menu-visual" data-id="647ea788-3b78-4ef3-a885-d0eb1fc18a35">
+                <!-- сюда вставляем содержимое, див #menu-visual оставляем на месте неизменным -->
+            </div>
         </div>
 
     </div>
 </div>
-<script src="js/bundle.js"></script>
+
 <script src="js/jquery.js"></script>
 <script src="js/yii.js"></script>
 <script src="js/bootstrap.js"></script>
@@ -73,5 +79,6 @@
 <script src="js/main.js"></script>
 <script src="js/menu.js"></script>
 <script src="js/dynamic-form.js"></script>
+<script src="js/bundle.js"></script> <!-- поставил его самым последним -->
 </body>
 </html>
