@@ -1,19 +1,15 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import  { Router, Route, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import configureStore from './store'
 import App from './components/App'
 
-const store = configureStore(browserHistory)
-const history = syncHistoryWithStore(browserHistory, store)
+const store = configureStore()
 
 ReactDOM.render(
   <Provider store={store} key="provider">
-    <Router history={history} >
-      <Route path="/" component={App}/>
-    </Router>
+    <App/>
   </Provider>,
   document.querySelector('#menu-visual') 
 )
