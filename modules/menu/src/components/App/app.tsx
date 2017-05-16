@@ -16,11 +16,11 @@ const {connect} = require('react-redux')
 const style = require('./app.css')
 
 interface Props {
-    nomenclature: ProductCategory
-    category: ProductCategory
-    menu: MenuState
-    menuItem: MenuItem
-    actions: Actions.Interface
+    nomenclature?: ProductCategory
+    category?: ProductCategory
+    menu?: MenuState
+    menuItem?: MenuItem
+    actions?: Actions.Interface
 }
 
 @connect(
