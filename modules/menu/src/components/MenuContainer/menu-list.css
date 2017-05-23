@@ -1,0 +1,10 @@
+@import '../../constants.css';
+.icon {
+    width: 22px;
+    height: 22px;
+}
+
+.active {
+    border-color: var(--active-cell-color);
+    background-color: var(--active-cell-color);
+}

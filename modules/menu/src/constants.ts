@@ -14,16 +14,25 @@ export const API_LOAD_TIMEOUT = 4000
 
 // intl
 export const MENU_ITEM_NAME = 'Название '
-export const INCLUDES_CATEGORIES = 'Категории '
+export const INCLUDES_CATEGORIES = 'Товары из категории '
 export const ALSO_CONTAINS = 'Товары '
 export const SAVE  = 'Сохранить'
+export const CANCEL= 'Отменить'
 export const CLOSE = 'Закрыть'
 export const ADD = 'Добавить'
 export const DELETE = 'Удалить'
 export const ICON = 'Иконка'
+export const COLOR = 'Цвет'
 export const MENU_ITEM = 'Элемент меню'
-export const R_U_SURE = 'Вы действительно хотите удалить '
-
+export const R_U_SURE = 'Вы действительно хотите удалить ?'
+export const ENTER_CATEGORY_NAME = 'Введите название раздела меню'
+export const NAME = 'Наименование'
+export const PARENT = 'Родитель'
+export const PRODUCTS = 'Товары'
+export const PRODUCTS_OF_CATEGORY = 'Товары из категории'
+export const EXCLUDED_GOODS = 'Исключить товары'
+export const CREATE_NEW_ITEM = 'Создать новую запись в меню'
+export const EDIT = 'Редактировать'
 
 export const icons = [
         'salad', 
@@ -46,3 +55,12 @@ export const icons = [
         'cheese-cake',
         'babyish-menu'
     ]
+export const colors = [
+    'red',
+    'yellow',
+    'blue',
+    'cyan',
+    'green',
+    'lightyellow',
+    'gray'
+]

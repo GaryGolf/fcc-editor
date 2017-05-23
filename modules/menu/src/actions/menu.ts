@@ -9,6 +9,7 @@ export interface Interface {
     dropCategory(payload: MenuItem): Action
     dropAdditionalProduct(payload: MenuItem): Action
     dropAdditionalCategory(payload: MenuItem): Action
+    createMenuItem(payload: MenuItem): Action
 }
 
 export const fetch = () => ({ type: Actions.FETCH_MENU, payload: API.loadMenu()})
@@ -18,4 +19,4 @@ export const dropProduct = payload => ({ type: Actions.DROP_PRODUCT, payload: AP
 export const dropCategory = payload => ({ type: Actions.DROP_CATEGORY, payload: API.createMenuItem(payload) })
 export const dropAdditionalProduct = payload => ({ type: Actions.DROP_ADDITIONAL_PRODUCT, payload: API.updateMenuItem(payload) })
 export const dropAdditionalCategory = payload => ({ type: Actions.DROP_ADDITIONAL_CATEGORY, payload: API.updateMenuItem(payload) })
-
+export const createMenuItem = payload => ({type: Actions.CREATE_MENU_ITEM, payload: API.createMenuItem(payload)})

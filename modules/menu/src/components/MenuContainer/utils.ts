@@ -37,3 +37,22 @@ export function checkCategory(
         actions.dropAdditionalCategory({...menuItem, product_categories})  
     }
 }
+
+export function createNewMenuItem(menu: Menu): MenuItem {
+    return {
+        id: uuid(),
+        icon: null,
+        name: null,
+        color: null,
+        cell: getFreeCell(menu),
+        products: [],
+        product_categories: []
+    }
+}
+
+function getFreeCell(menu:Menu): number {
+    const cells = menu.child_menus
+        .map(item => item.cell) as Array<number>
+    for(let i=0; i < 100; i++) if(!cells.includes(i)) return i
+    return null
+}
