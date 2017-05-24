@@ -62,5 +62,12 @@ export const colors = [
     'cyan',
     'green',
     'lightyellow',
-    'gray'
+    'gray',
+    'pink',
+    'gold',
+    'greenyellow',
+    'hotpink',
+    'lightgray',
+    'lightgreen',
+    'brown'
 ]
