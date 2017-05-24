@@ -70,29 +70,45 @@ export default class MenuListItem extends React.Component <Props, State> {
         const {opened} = this.state
         const {menuItem, isOver, canDrop} = this.props
         
-        const containerStyle = isOver && canDrop ? styles.active : null
+        const listStyle = [
+            "row list-group-item",
+            isOver && canDrop ? styles.active : null,
+            styles['list-item']
+        ].join(' ')
 
-        const style = !menuItem.color ? {borderLeft: '25px solid white'}
-            : {borderLeft: `25px solid ${menuItem.color}`}
+        const productStyle = [
+            'list-group-item',
+            styles.pointer
+        ].join(' ')
+
+        const folderStyle =[
+            opened ? "col-xs-1 glyphicon glyphicon-folder-open" : "col-xs-1 glyphicon glyphicon-folder-close",
+            styles.pointer
+        ].join(' ')
+
+
+        const style = !menuItem.color ? null : {borderLeft: `5px solid ${menuItem.color}`}
 
             // ToDo waiting backend 
             // products total should reduce while added excluded_products
         const products = opened ? menuItem.products_total.map(product => (
                 <li key={product.id} 
                     onClick={()=>this.props.onSelect(menuItem.id, product.id)}
-                    className="list-group-item">
+                    className={productStyle}>
                     <span className="glyphicon glyphicon-menu-down"/> &nbsp;
                     {product.name}
                 </li>
             )) : null
 
         return this.props.connectDropTarget(
-            <div>
+            <div className={styles.container}>
                 <li style={style}
-                    className={"row list-group-item row "+containerStyle}>
+                    className={listStyle}>
+                    {!menuItem.color ? <span>&nbsp;</span> : null}
                     <span onClick={()=>{this.setState({opened:!opened})}}
-                        className={opened ? "col-xs-1 glyphicon glyphicon-folder-open" : "col-xs-1 glyphicon glyphicon-folder-close"}/> &nbsp;
-                    <span className="col-xs-6" onClick={()=>this.props.onSelect(menuItem.id, null)}>
+                        className={folderStyle}/> &nbsp;
+                    <span className={"col-xs-6 " + styles.pointer} 
+                        onClick={()=>this.props.onSelect(menuItem.id, null)}>
                         {menuItem.name}
                     </span>
                     <span className="col-xs-2"/>

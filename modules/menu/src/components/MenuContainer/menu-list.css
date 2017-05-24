@@ -1,4 +1,7 @@
 @import '../../constants.css';
+.container{
+    margin-left: 20px;
+}
 .icon {
     width: 22px;
     height: 22px;
@@ -7,4 +10,12 @@
 .active {
     border-color: var(--active-cell-color);
     background-color: var(--active-cell-color);
+}
+.list-item {
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+}
+.pointer {
+    cursor: pointer;
 }
