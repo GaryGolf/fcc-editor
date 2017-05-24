@@ -55,6 +55,11 @@ export default class MenuTile extends React.Component<Props, State> {
         this.setState({menuItem: null})
     }
 
+    deleteMenuItem(menuItem:MenuItem) {
+        this.props.actions.menu.removeMenuItem(menuItem)
+        this.setState({menuItem: null})
+    }
+
     submitEditModal(menuItem:MenuItem){
         this.props.actions.menu.updateMenuItem(menuItem)
         this.setState({menuItem: null})
@@ -87,6 +92,7 @@ export default class MenuTile extends React.Component<Props, State> {
                     menu={menu}
                     menuItem={this.state.menuItem}
                     onClose={this.closeEditModal.bind(this)}
+                    onDelete={this.deleteMenuItem.bind(this)}
                     onSubmit={this.submitEditModal.bind(this)}
                 />
             </div>

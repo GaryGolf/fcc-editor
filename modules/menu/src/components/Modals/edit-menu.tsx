@@ -1,17 +1,18 @@
 import * as React from 'react'
 import * as styles from './new-menu.css'
 import * as CONST from '../../constants'
-
 import Selectize from '../Common/selectize'
 import ParentSelector from '../Common/parent-selector'
 import IconPicker from '../Common/icon-picker'
 import ColorPicker from '../Common/color-picker'
+import ConfirmDelete from './confirm-delete'
 import {createNewMenuItem} from '../MenuContainer/utils'
 
 interface Props {
     menu: Menu
     menuItem: MenuItem
     onClose(): void
+    onDelete(menuItem:MenuItem): void
     onSubmit(menuItem: MenuItem): void
 }
 
@@ -19,6 +20,7 @@ interface State {
     menuItem: MenuItem
     showIconMenu: boolean
     showColorMenu: boolean
+    showConfirmModal: boolean
 }
 
 export default class EditMenu extends React.Component <Props, State> {
@@ -28,7 +30,8 @@ export default class EditMenu extends React.Component <Props, State> {
         this.state= { 
             menuItem: props.menuItem,
             showColorMenu: false,
-            showIconMenu: false
+            showIconMenu: false,
+            showConfirmModal: false
         }
     }
 
@@ -73,6 +76,11 @@ export default class EditMenu extends React.Component <Props, State> {
         this.setState({menuItem, showColorMenu: false})
     }
 
+    deleteMenuItem(){
+        this.setState({showConfirmModal: false})
+        this.props.onDelete(this.state.menuItem)
+    }
+
     submitHandler(){
        // ToDo: check errors
        this.props.onSubmit(this.state.menuItem)
@@ -88,6 +96,12 @@ export default class EditMenu extends React.Component <Props, State> {
                         src={`${CONST.DOMAIN}img/${menuItem.icon_name}.svg`} /> : null
         return (
             <div className={styles.overlay} onClick={onClose}>
+                 <ConfirmDelete
+                    visible={this.state.showConfirmModal}
+                    name={menuItem.name}
+                    onClose={()=>this.setState({showConfirmModal: false})}
+                    onDelete={this.deleteMenuItem.bind(this)}
+                />
                 <div className="modal-dialog" role="document" onClick={e=>e.stopPropagation()}>
                     <div className="modal-content">
                     <div className="modal-header">
@@ -174,6 +188,12 @@ export default class EditMenu extends React.Component <Props, State> {
                         </div>
                     </div>
                     <div className="modal-footer">
+                        <button className="btn btn-danger" 
+                            onClick={()=>this.setState({showConfirmModal:true})}
+                            style={{float: 'left'}}>
+                            <span className="glyphicon glyphicon-trash"/>&nbsp;
+                            {CONST.DELETE}
+                        </button> 
                         <button 
                             type="button" 
                             className="btn btn-default" 
@@ -190,7 +210,7 @@ export default class EditMenu extends React.Component <Props, State> {
                     </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         )
     }
 }
