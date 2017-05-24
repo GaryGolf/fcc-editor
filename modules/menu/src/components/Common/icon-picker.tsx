@@ -24,7 +24,7 @@ export default class IconPicker extends React.Component <Props, null> {
     }
     render(){
         const {icons, visible, onSelect} = this.props
-        if(!visible) return null
+        const style = visible ? {visibility: 'visible'} : {visibility: 'hidden'}
         const items = icons.map(icon => (
              <img key={icon}
                 className={styles.icon}
@@ -33,8 +33,8 @@ export default class IconPicker extends React.Component <Props, null> {
             />
         ))
         return (
-            <div className={styles.container}>
-                <div className={styles.overlay}
+            <div className={styles.container} style={style}>
+                <div className={styles.overlay} 
                     onClick={()=>onSelect(null)}
                 />
                 <div className={styles.modal}>{items}</div>

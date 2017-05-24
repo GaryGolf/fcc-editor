@@ -10,7 +10,7 @@ interface Props {
 export default class ColorPicker extends React.Component<Props, null> {
     render(){
         const {colors, onSelect, visible} = this.props
-        if(!visible) return null
+        const style = visible ? {visibility: 'visible'} : {visibility: 'hidden'}
         const items = colors.map(color => (
             <div key={color}
                 className={styles.color}
@@ -19,7 +19,7 @@ export default class ColorPicker extends React.Component<Props, null> {
             />
         ))
         return (
-            <div className={styles.container}>
+            <div className={styles.container} style={style}>
                 <div className={styles.overlay}
                     onClick={()=>onSelect(null)}
                 />
