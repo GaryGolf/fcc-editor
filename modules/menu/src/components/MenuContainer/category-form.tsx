@@ -19,6 +19,7 @@ interface State {
     showIconMenu: boolean
     showColorMenu: boolean
     showDeleteConfirm: boolean
+    showSpinner: boolean
 }
 
 export default class CategoryForm extends React.Component<Props, State> {
@@ -33,7 +34,8 @@ export default class CategoryForm extends React.Component<Props, State> {
             menuItem: this.findMenuItem(props.menuItemID, props.menu),
             showIconMenu: false,
             showColorMenu: false,
-            showDeleteConfirm: false
+            showDeleteConfirm: false,
+            showSpinner: false
         }
 
         this.saveMenuItem = this.saveMenuItem.bind(this)
@@ -47,7 +49,8 @@ export default class CategoryForm extends React.Component<Props, State> {
 
     componentWillReceiveProps(nextProps) {
         const menuItem = this.findMenuItem(nextProps.menuItemID, nextProps.menu)
-        this.setState({menuItem})
+        const showSpinner = false
+        this.setState({menuItem, showSpinner})
     }
 
     findMenuItem(id:string, menu:Menu ): MenuItem {
@@ -59,7 +62,10 @@ export default class CategoryForm extends React.Component<Props, State> {
             ...this.state.menuItem,
             name: this.nameInput.value
         }
-        this.props.actions.menu.updateMenuItem(menuItem)
+        this.setState({showSpinner: true}, () => 
+           this.props.actions.menu.updateMenuItem(menuItem)
+        )
+        
     }
 
     deleteMenuItem() {
@@ -95,7 +101,7 @@ export default class CategoryForm extends React.Component<Props, State> {
     render(){
 
         const {menu} = this.props
-        const {menuItem} = this.state
+        const {menuItem, showSpinner} = this.state
         if(!menuItem || !menu) return null
 
         const options = this.props.menu.child_menus.map(item=>(
@@ -108,6 +114,9 @@ export default class CategoryForm extends React.Component<Props, State> {
         const color = <div className={styles.color} style={{backgroundColor:menuItem.color}}/>
         const icon = !!menuItem.icon_name ? <img key={menuItem.icon_name} className={styles.icon} 
                         src={`${CONST.DOMAIN}img/${menuItem.icon_name}.svg`} /> : null
+        const spinner = showSpinner ? 
+            <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> : 
+            <span className="glyphicon glyphicon-ok"/>
 
         return (
             <div className={styles.form}>
@@ -187,10 +196,10 @@ export default class CategoryForm extends React.Component<Props, State> {
                         style={{float: 'left'}}>
                         <span className="glyphicon glyphicon-trash"/>
                     </button> 
-                    <button className="btn btn-primary"
+                    <button className="btn btn-primary start"
                         onClick={this.saveMenuItem}
                         style={{float: 'right'}}>
-                        {CONST.SAVE}
+                        {spinner}&nbsp;{CONST.SAVE}
                     </button> 
                     <button className="btn btn-default" 
                         onClick={this.cancelEditMenuItem}
