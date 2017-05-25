@@ -76,7 +76,7 @@ export default class Selectize extends React.Component <Props, null> {
         const options = this.props.nomenclature.child_categories
             .reduce((acc, item) => [...acc, ...item.products],[])
             .map(item => <option key={item.id} value={item.id}>{item.name}</option>)
-        const selected = this.props.menuItem.excluded_products.map(item => item.id)
+        const selected =  !this.props.menuItem.excluded_products ? [] : this.props.menuItem.excluded_products.map(item => item.id)
 
         return this.renderTagInput({options, selected})
     }
