@@ -21,6 +21,7 @@ interface State {
     showColorMenu: boolean
     showConfirmModal: boolean
     showSpinner: boolean
+    showTrashSpinner: boolean
 }
 
 export default class EditMenu extends React.Component <Props, State> {
@@ -32,13 +33,14 @@ export default class EditMenu extends React.Component <Props, State> {
             showColorMenu: false,
             showIconMenu: false,
             showConfirmModal: false,
-            showSpinner: false
+            showSpinner: false,
+            showTrashSpinner: false
         }
     }
 
     componentWillReceiveProps(nextProps: Props){
-        if(this.state.showSpinner) this.props.onClose()
-        this.setState({menuItem: nextProps.menuItem, showSpinner: false})
+        if(this.state.showSpinner || this.state.showTrashSpinner) this.props.onClose()
+        this.setState({menuItem: nextProps.menuItem, showSpinner: false, showTrashSpinner: false})
     }
 
 
@@ -70,8 +72,9 @@ export default class EditMenu extends React.Component <Props, State> {
     }
 
     deleteMenuItem(){
-        this.setState({showConfirmModal: false})
-        this.props.onDelete(this.state.menuItem)
+        this.setState({showConfirmModal: false, showTrashSpinner: true}, ()=> {
+            this.props.onDelete(this.state.menuItem)
+        })
     }
 
     submitHandler(){
@@ -93,6 +96,9 @@ export default class EditMenu extends React.Component <Props, State> {
         const spinner = this.state.showSpinner ? 
             <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> : 
             <span className="glyphicon glyphicon-ok"/>
+        const trash = this.state.showTrashSpinner ? 
+            <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> :
+            <span className="glyphicon glyphicon-trash"/>
         return (
             <div className={styles.overlay} onClick={onClose}>
                  <ConfirmDelete
@@ -178,8 +184,7 @@ export default class EditMenu extends React.Component <Props, State> {
                         <button className="btn btn-danger" 
                             onClick={()=>this.setState({showConfirmModal:true})}
                             style={{float: 'left'}}>
-                            <span className="glyphicon glyphicon-trash"/>&nbsp;
-                            {CONST.DELETE}
+                            {trash}&nbsp;{CONST.DELETE}
                         </button> 
                         <button 
                             type="button" 

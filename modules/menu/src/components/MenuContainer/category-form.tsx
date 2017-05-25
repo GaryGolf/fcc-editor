@@ -20,6 +20,7 @@ interface State {
     showColorMenu: boolean
     showDeleteConfirm: boolean
     showSpinner: boolean
+    showTrashSpinner: boolean
 }
 
 export default class CategoryForm extends React.Component<Props, State> {
@@ -35,7 +36,8 @@ export default class CategoryForm extends React.Component<Props, State> {
             showIconMenu: false,
             showColorMenu: false,
             showDeleteConfirm: false,
-            showSpinner: false
+            showSpinner: false,
+            showTrashSpinner: false
         }
 
         this.saveMenuItem = this.saveMenuItem.bind(this)
@@ -48,9 +50,11 @@ export default class CategoryForm extends React.Component<Props, State> {
     }
 
     componentWillReceiveProps(nextProps) {
+        if(!this.state.showTrashSpinner) this.props.onClose()
         const menuItem = this.findMenuItem(nextProps.menuItemID, nextProps.menu)
         const showSpinner = false
-        this.setState({menuItem, showSpinner})
+        const showTrashSpinner = false
+        this.setState({menuItem, showSpinner, showTrashSpinner})
     }
 
     findMenuItem(id:string, menu:Menu ): MenuItem {
@@ -69,9 +73,9 @@ export default class CategoryForm extends React.Component<Props, State> {
     }
 
     deleteMenuItem() {
-        this.props.actions.menu.removeMenuItem(this.state.menuItem)
-        this.setState({showDeleteConfirm: false})
-        this.props.onClose()
+        this.setState({showDeleteConfirm: false, showTrashSpinner: true}, ()=> {
+            this.props.actions.menu.removeMenuItem(this.state.menuItem)
+        })
     }
 
     cancelEditMenuItem(){
@@ -101,7 +105,7 @@ export default class CategoryForm extends React.Component<Props, State> {
     render(){
 
         const {menu} = this.props
-        const {menuItem, showSpinner} = this.state
+        const {menuItem, showSpinner, showTrashSpinner} = this.state
         if(!menuItem || !menu) return null
 
         const options = this.props.menu.child_menus.map(item=>(
@@ -117,6 +121,9 @@ export default class CategoryForm extends React.Component<Props, State> {
         const spinner = showSpinner ? 
             <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> : 
             <span className="glyphicon glyphicon-ok"/>
+        const trash = showTrashSpinner ? 
+            <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> :
+            <span className="glyphicon glyphicon-trash"/>
 
         return (
             <div className={styles.form}>
@@ -194,7 +201,7 @@ export default class CategoryForm extends React.Component<Props, State> {
                     <button className="btn btn-danger" 
                         onClick={()=>this.setState({showDeleteConfirm:true})}
                         style={{float: 'left'}}>
-                        <span className="glyphicon glyphicon-trash"/>
+                        {trash}
                     </button> 
                     <div className="button-group" style={{float: 'right',display:'inline'}}>
                         <button className="btn btn-default" 

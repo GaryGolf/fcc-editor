@@ -57,12 +57,10 @@ export default class MenuTile extends React.Component<Props, State> {
 
     deleteMenuItem(menuItem:MenuItem) {
         this.props.actions.menu.removeMenuItem(menuItem)
-        this.setState({menuItem: null})
     }
 
     submitEditModal(menuItem:MenuItem){
         this.props.actions.menu.updateMenuItem(menuItem)
-       // setTimeout(()=>this.setState({menuItem: null}), 2000)
     }
 
     render(){
@@ -85,7 +83,6 @@ export default class MenuTile extends React.Component<Props, State> {
         })
 
         return (
-            // <section className={style.container}>
             <div className={styles.container}>
                 {items}
                 <EditMenu
@@ -96,7 +93,6 @@ export default class MenuTile extends React.Component<Props, State> {
                     onSubmit={this.submitEditModal.bind(this)}
                 />
             </div>
-            // </section>
         )
     }
 }
