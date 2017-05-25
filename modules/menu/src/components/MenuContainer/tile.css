@@ -6,6 +6,9 @@
     overflow: hidden;
     color: var(--gray-color);
     user-select: none;
+    &:hover button{
+        visibility: visible;
+    }
 }
 .text{
     color: var(--primary-color);
@@ -13,7 +16,7 @@
 .icon {
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: 10px;
     width: 15%;
     margin: 8px;
     height: auto;
@@ -41,9 +44,6 @@
         visibility: hidden;
     }
 
-    &:hover button{
-        visibility: visible;
-    }
 }
 .add {
     float: right;

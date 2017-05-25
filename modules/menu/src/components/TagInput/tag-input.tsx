@@ -28,7 +28,6 @@ export default class TagInput extends React.Component <Props, State> {
     private input: HTMLInputElement
     private hidden: HTMLSpanElement
     private inputValue: string
-    private blurTimer: number
     private inputWidth: number
 
     constructor(props){
@@ -45,23 +44,15 @@ export default class TagInput extends React.Component <Props, State> {
         this.menu = children.map(v=>({key: v.props.value, value: v.props.children}))
     }
 
-    componentWillReceiveProps(props){
-        const children =  React.Children.toArray(props.children) as Child[]
+    componentWillReceiveProps(nextProps){
+        this.setState({selected: nextProps.selected})
+        const children =  React.Children.toArray(nextProps.children) as Child[]
         this.menu = children.map(v=>({key: v.props.value, value: v.props.children}))
-    }
-
-    componentWillUnmount(){
-        if(this.blurTimer) clearTimeout(this.blurTimer)
     }
 
     handleFocus(){
         this.setState({active:true})
-        if(this.blurTimer) clearTimeout(this.blurTimer)
         if(this.input) this.input.focus()
-    }
-
-    handleBlur(){
-       this.blurTimer = window.setTimeout(()=>this.setState({active: false}),300)
     }
 
     handleInput(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -72,7 +63,7 @@ export default class TagInput extends React.Component <Props, State> {
         
         switch(event.key){
             case 'Escape' :
-                this.handleBlur()
+                this.setState({active:false})
                 break
             case 'Backspace' :
                 if(!this.inputValue) this.removeLastTag()
@@ -117,13 +108,39 @@ export default class TagInput extends React.Component <Props, State> {
             .filter(item => item.value.toUpperCase().includes(this.inputValue.toUpperCase()))
     }
 
+    renderMenu(){
+
+        const menu =  this.getMenu()
+        if(!this.state.active || !menu.length) return null
+        
+        return  (
+        <div>
+            <div className={styles.overlay}
+                onClick={event => { 
+                    event.stopPropagation()
+                    this.setState({active:false})
+                    }
+                }
+            />
+             <ul className="dropdown-menu" 
+                style={{display:'block'}}>
+                {menu.map(item => ( 
+                    <li key={item.key}>
+                        <a onClick={e=>this.addTag(item.key)}>
+                            {item.value}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+        )
+    }
+
     render(){
         
         if(!this.menu) return null
 
-        const menu = this.state.active ? this.getMenu() : []
-
-        const tagStyle = ['label', 'label-info',  styles.tag].join(' ')
+        const tagStyle = ['label', 'label-default',  styles.tag].join(' ')
         const inputStyle = [styles.input].join(' ')
         const formStyle = [styles.form].join(' ')
         const containerStyle = [
@@ -136,31 +153,24 @@ export default class TagInput extends React.Component <Props, State> {
             <span 
                 key={tag}
                 className={tagStyle}
-                onClick={()=>this.removeTag(tag)}>
+                onClick={event => {
+                    event.stopPropagation()
+                    this.removeTag(tag)
+                }}
+            >
                 {this.menu.find(item => item.key == tag).value}
                 <span data-role="remove"></span>
             </span>
         ))
-
-        const menus = !menu.length ? null 
-        :  <ul className="dropdown-menu"
-                style={{display:'block'}}>
-                {menu.map(item => ( 
-                    <li key={item.key}>
-                        <a onClick={()=>this.addTag(item.key)}>
-                            {item.value}
-                        </a>
-                    </li>
-                ))}
-            </ul>
         
         const width = this.inputWidth+'px'
-
+        const menus = this.renderMenu()
         return (
             <div 
                 className={containerStyle}
                 onDoubleClick={()=>this.removeTag('')}
-                onClick={this.handleFocus.bind(this)}>
+                onClick={this.handleFocus.bind(this)}
+                >
                 <div className={styles.form}>
                     {tags}
                     <input 
@@ -168,8 +178,6 @@ export default class TagInput extends React.Component <Props, State> {
                         style={{width}}
                         className={inputStyle}
                         ref={element=>this.input=element}
-                        onBlur={this.handleBlur.bind(this)}
-                        onFocus={this.handleFocus.bind(this)}
                         onKeyUp={this.handleInput}/>
                 </div>
                 <span className={styles.hidden}

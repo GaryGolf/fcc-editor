@@ -5,12 +5,15 @@ import * as Actions from '../../actions'
 import * as CONST from '../../constants'
 import {checkProduct, checkCategory} from './utils'
 
+import Icon from '../Common/icon'
+
 const style = require('./tile.css')
 
 interface Props { 
     cell: number
     menuItem: MenuItem
     actions: Actions.Interface
+    onClick(menuItem:MenuItem):void
     canDrop?: boolean
     isOver?: boolean
     connectDropTarget?: DnD.ConnectDropTarget
@@ -46,12 +49,10 @@ export default class Tile extends React.Component<Props, null>{
 
     render(){
 
-        const { menuItem, canDrop, isOver, connectDropTarget, actions } = this.props
+        const { menuItem, canDrop, isOver, connectDropTarget, actions, onClick } = this.props
         const isCellOccupied = !!menuItem.id
         const tileStyle = [style.container, 'well', canDrop && isOver ? style.active : null ].join(' ')
         const text = isCellOccupied ? <div className={style.text}>{menuItem.name}</div> : <div className={style.cell}/>
-        const file = CONST.DOMAIN + 'img/' + menuItem.icon_name + '.svg'
-        const icon = !!menuItem.icon_name ? <img src={file} className={style.icon}/>: null
 
         /*const buttonGroup = isCellOccupied ? (
             <div className={style['button-group']}>
@@ -70,9 +71,11 @@ export default class Tile extends React.Component<Props, null>{
 
         return connectDropTarget(
             <div className={tileStyle}
-                onClick={()=> {if(isCellOccupied) actions.view.showMenuEditModal(menuItem)}}>
+                onClick={()=> {if(isCellOccupied) onClick(menuItem)}}>
                 {text}
-                {icon}
+                <div className={style.icon}>
+                    <Icon menuItem={menuItem} />
+                </div>
                 {/*{buttonGroup}*/}
             </div>
         )
