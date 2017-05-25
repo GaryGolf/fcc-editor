@@ -20,6 +20,7 @@ interface State {
     showIconMenu: boolean
     showColorMenu: boolean
     showConfirmModal: boolean
+    showSpinner: boolean
 }
 
 export default class EditMenu extends React.Component <Props, State> {
@@ -30,12 +31,14 @@ export default class EditMenu extends React.Component <Props, State> {
             menuItem: props.menuItem,
             showColorMenu: false,
             showIconMenu: false,
-            showConfirmModal: false
+            showConfirmModal: false,
+            showSpinner: false
         }
     }
 
     componentWillReceiveProps(nextProps: Props){
-        this.setState({menuItem: nextProps.menuItem})
+        if(this.state.showSpinner) this.props.onClose()
+        this.setState({menuItem: nextProps.menuItem, showSpinner: false})
     }
 
 
@@ -73,7 +76,10 @@ export default class EditMenu extends React.Component <Props, State> {
 
     submitHandler(){
        // ToDo: check errors
-       this.props.onSubmit(this.state.menuItem)
+        if(!this.state.menuItem.name) return console.log('наименование не должно быть пустым')
+        this.setState({showSpinner: true},()=>{
+            this.props.onSubmit(this.state.menuItem)
+        })
     }
 
     render(){
@@ -84,6 +90,9 @@ export default class EditMenu extends React.Component <Props, State> {
         const color = <div className={styles.color} style={{backgroundColor:menuItem.color}}/>
         const icon = !!menuItem.icon_name ? <img key={menuItem.icon_name} className={styles.icon} 
                         src={`${CONST.DOMAIN}img/${menuItem.icon_name}.svg`} /> : null
+        const spinner = this.state.showSpinner ? 
+            <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> : 
+            <span className="glyphicon glyphicon-ok"/>
         return (
             <div className={styles.overlay} onClick={onClose}>
                  <ConfirmDelete
@@ -183,7 +192,7 @@ export default class EditMenu extends React.Component <Props, State> {
                             type="button" 
                             className="btn btn-primary"
                             onClick={this.submitHandler.bind(this)}>
-                            {CONST.SAVE}
+                            {spinner}&nbsp;{CONST.SAVE}
                         </button>
                     </div>
                     </div>

@@ -17,6 +17,7 @@ interface State {
     menuItem: MenuItem
     showIconMenu: boolean
     showColorMenu: boolean
+    showSpinner: boolean
 }
 
 export default class NewMenu extends React.Component <Props, State> {
@@ -24,11 +25,13 @@ export default class NewMenu extends React.Component <Props, State> {
     state= { 
         menuItem: createNewMenuItem(this.props.menu),
         showColorMenu: false,
-        showIconMenu: false
+        showIconMenu: false,
+        showSpinner: false
     }
 
     componentWillReceiveProps(nextProp){
-        this.setState({menuItem: createNewMenuItem(nextProp.menu)})
+        if(this.state.showSpinner) this.props.onClose()
+        this.setState({menuItem: createNewMenuItem(nextProp.menu), showSpinner: false})
     }
 
 
@@ -57,7 +60,10 @@ export default class NewMenu extends React.Component <Props, State> {
 
     submitHandler(){
        // ToDo: check errors
-       this.props.onSubmit(this.state.menuItem)
+       if(!this.state.menuItem.name) return console.log('error заполните поле наименование')
+       this.setState({showSpinner: true},()=>{
+            this.props.onSubmit(this.state.menuItem)
+        })
     }
 
     render(){
@@ -68,6 +74,10 @@ export default class NewMenu extends React.Component <Props, State> {
         const color = <div className={styles.color} style={{backgroundColor:menuItem.color}}/>
         const icon = !!menuItem.icon_name ? <img key={menuItem.icon_name} className={styles.icon} 
                         src={`${CONST.DOMAIN}img/${menuItem.icon_name}.svg`} /> : null
+        const spinner = this.state.showSpinner ? 
+            <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> : 
+            <span className="glyphicon glyphicon-ok"/>
+
         return (
             <div className={styles.overlay} onClick={onClose}>
                 <div className="modal-dialog" role="document" onClick={e=>e.stopPropagation()}>
@@ -153,11 +163,12 @@ export default class NewMenu extends React.Component <Props, State> {
                             onClick={onClose}>
                             {CONST.CANCEL}
                         </button>
+                        <span>&nbsp;</span>
                         <button
                             type="button" 
                             className="btn btn-primary"
                             onClick={this.submitHandler.bind(this)}>
-                            {CONST.SAVE}
+                            {spinner}&nbsp;{CONST.SAVE}
                         </button>
                     </div>
                     </div>

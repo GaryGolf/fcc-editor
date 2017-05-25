@@ -190,23 +190,23 @@ export default class CategoryForm extends React.Component<Props, State> {
                     />
                 </div>
                 <br/>
-                <div className="button-group">
+                <div className="button-form">
                     <button className="btn btn-danger" 
                         onClick={()=>this.setState({showDeleteConfirm:true})}
                         style={{float: 'left'}}>
                         <span className="glyphicon glyphicon-trash"/>
                     </button> 
-                    <button className="btn btn-primary start"
-                        onClick={this.saveMenuItem}
-                        style={{float: 'right'}}>
-                        {spinner}&nbsp;{CONST.SAVE}
-                    </button> 
-                    <button className="btn btn-default" 
-                        onClick={this.cancelEditMenuItem}
-                        style={{float: 'right'}}>
-                        {CONST.CANCEL}
-                    </button> 
-
+                    <div className="button-group" style={{float: 'right',display:'inline'}}>
+                        <button className="btn btn-default" 
+                            onClick={this.cancelEditMenuItem}>
+                            {CONST.CANCEL}
+                        </button>
+                        <span>&nbsp;</span> 
+                        <button className="btn btn-primary start"
+                            onClick={this.saveMenuItem}>
+                            {spinner}&nbsp;{CONST.SAVE}
+                        </button>
+                    </div>
                 </div>
             </div>
         )

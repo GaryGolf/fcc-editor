@@ -32,7 +32,6 @@ export default class MenuContainer extends React.Component <Props, State> {
 
     sumitNewMenuHandler(menuItem:MenuItem){
         this.props.actions.menu.createMenuItem(menuItem)
-        this.setState({showNewMenuModal: false})
     }
 
     render(){

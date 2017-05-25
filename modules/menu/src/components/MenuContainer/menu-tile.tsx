@@ -62,7 +62,7 @@ export default class MenuTile extends React.Component<Props, State> {
 
     submitEditModal(menuItem:MenuItem){
         this.props.actions.menu.updateMenuItem(menuItem)
-        this.setState({menuItem: null})
+       // setTimeout(()=>this.setState({menuItem: null}), 2000)
     }
 
     render(){

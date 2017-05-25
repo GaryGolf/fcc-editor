@@ -72,20 +72,3 @@ export const colors = [
     '#91006C',
     '#007C80'
 ]
-/*
-export const colors = [
-    'lightgray',
-    'darkgray',
-    'darkslategray',
-    'mediumaquamarine',
-    'lightseagreen',
-    'lightsteelblue',
-    'steelblue',
-    'tomato',
-    'sandybrown',
-    'yellowgreen',
-    'orchid',
-    'darkred',
-    'purple',
-    'teal'
-]*/
