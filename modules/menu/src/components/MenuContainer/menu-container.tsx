@@ -61,7 +61,7 @@ export default class MenuContainer extends React.Component <Props, State> {
                         </div>
                     </div>
                 </div>
-                <NewMenu 
+                <NewMenu  
                     visible={this.state.showNewMenuModal}
                     menu={this.props.menu}
                     onClose={()=>this.setState({showNewMenuModal:false})}
