@@ -2,7 +2,6 @@ import * as React from 'react'
 import * as styles from './new-menu.css'
 import * as CONST from '../../constants'
 import Selectize from '../Common/selectize'
-import ParentSelector from '../Common/parent-selector'
 import IconPicker from '../Common/icon-picker'
 import ColorPicker from '../Common/color-picker'
 import ConfirmDelete from './confirm-delete'
@@ -53,15 +52,6 @@ export default class EditMenu extends React.Component <Props, State> {
 
     selectProductHandler(menuItem: MenuItem){
         this.setState({menuItem})
-    }
-
-    selectParentHandler(parent_id: string){
-        /* not implemented yet
-        this.setState(state => {
-            const menuItem = {...state.menuItem, parent_id }
-            return {menuItem}
-        })
-        */ 
     }
 
     selectIconHandler(icon: string){
@@ -116,6 +106,9 @@ export default class EditMenu extends React.Component <Props, State> {
                     </div>
                     <div className="modal-body">
                         <div className="form-group">
+                            <label className="control-label">
+                                {CONST.NAME}
+                            </label>
                             <input 
                                 className="form-control"
                                 type="text" 
@@ -125,42 +118,27 @@ export default class EditMenu extends React.Component <Props, State> {
                              />
                         </div>
                         <div className="form-group">
-                            <label className="control-label">
-                                {CONST.PARENT}
-                            </label>
-                            <div className="row">
-                                <div className="col-xs-6">
-                                    <ParentSelector
-                                        menu={menu}
-                                        defaultValue={menu.id}
-                                        onSelect={this.selectParentHandler.bind(this)}
-                                    />
-                                </div>
-
-                                <div className="form-group button-group col-xs-6">
-                                    <button className="btn btn-default dropdown-toggle" 
-                                        onClick={()=>this.setState({showColorMenu: true})}
-                                        style={{float: 'right'}}>
-                                        {CONST.COLOR} &nbsp;{color}&nbsp;<span className="caret"/>
-                                    </button>
-                                    <ColorPicker
-                                        visible={this.state.showColorMenu}
-                                        colors={CONST.colors}
-                                        onSelect={this.selectColorHandler.bind(this)}
-                                    />
-                                    <button className="btn btn-default dropdown-toggle"
-                                        onClick={()=>this.setState({showIconMenu: true})}>
-                                        {CONST.ICON} &nbsp; {icon} &nbsp;<span className="caret"/>
-                                    </button>
-                                    <IconPicker
-                                        visible={this.state.showIconMenu}
-                                        icons={CONST.icons}
-                                        onSelect={this.selectIconHandler.bind(this)}
-                                    />
-                                </div>
+                            <div className="button-group">
+                                <button className="btn btn-default dropdown-toggle" 
+                                    onClick={()=>this.setState({showColorMenu: true})}
+                                    style={{float: 'right'}}>
+                                    {CONST.COLOR} &nbsp;{color}&nbsp;<span className="caret"/>
+                                </button>
+                                <ColorPicker
+                                    visible={this.state.showColorMenu}
+                                    colors={CONST.colors}
+                                    onSelect={this.selectColorHandler.bind(this)}
+                                />
+                                <button className="btn btn-default dropdown-toggle"
+                                    onClick={()=>this.setState({showIconMenu: true})}>
+                                    {CONST.ICON} &nbsp; {icon} &nbsp;<span className="caret"/>
+                                </button>
+                                <IconPicker
+                                    visible={this.state.showIconMenu}
+                                    icons={CONST.icons}
+                                    onSelect={this.selectIconHandler.bind(this)}
+                                />
                             </div>
-
-
                         </div>
                         <div className="form-group">
                             <label>{CONST.ALSO_CONTAINS}</label>

@@ -7,7 +7,6 @@ import ColorPicker from '../Common/color-picker'
 import IconPicker from '../Common/icon-picker'
 import Selectize from '../Common/selectize'
 import ConfirmDelete from '../Modals/confirm-delete'
-import ParentSelector from '../Common/parent-selector'
 
 interface Props {
     menu: Menu
@@ -20,6 +19,7 @@ interface State {
     showIconMenu: boolean
     showColorMenu: boolean
     showDeleteConfirm: boolean
+    showSpinner: boolean
 }
 
 export default class CategoryForm extends React.Component<Props, State> {
@@ -34,7 +34,8 @@ export default class CategoryForm extends React.Component<Props, State> {
             menuItem: this.findMenuItem(props.menuItemID, props.menu),
             showIconMenu: false,
             showColorMenu: false,
-            showDeleteConfirm: false
+            showDeleteConfirm: false,
+            showSpinner: false
         }
 
         this.saveMenuItem = this.saveMenuItem.bind(this)
@@ -44,12 +45,12 @@ export default class CategoryForm extends React.Component<Props, State> {
         this.selectColor = this.selectColor.bind(this)
         this.selectCategories = this.selectCategories.bind(this)
         this.selectProducts = this.selectProducts.bind(this)
-        this.selectParent = this.selectParent.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
         const menuItem = this.findMenuItem(nextProps.menuItemID, nextProps.menu)
-        this.setState({menuItem})
+        const showSpinner = false
+        this.setState({menuItem, showSpinner})
     }
 
     findMenuItem(id:string, menu:Menu ): MenuItem {
@@ -61,7 +62,10 @@ export default class CategoryForm extends React.Component<Props, State> {
             ...this.state.menuItem,
             name: this.nameInput.value
         }
-        this.props.actions.menu.updateMenuItem(menuItem)
+        this.setState({showSpinner: true}, () => 
+           this.props.actions.menu.updateMenuItem(menuItem)
+        )
+        
     }
 
     deleteMenuItem() {
@@ -93,14 +97,11 @@ export default class CategoryForm extends React.Component<Props, State> {
     selectProducts(menuItem: MenuItem) {
        this.setState({menuItem})
     }
-    selectParent(parent_id:string){
-        // not implemented yet
-    }
 
     render(){
 
         const {menu} = this.props
-        const {menuItem} = this.state
+        const {menuItem, showSpinner} = this.state
         if(!menuItem || !menu) return null
 
         const options = this.props.menu.child_menus.map(item=>(
@@ -113,6 +114,9 @@ export default class CategoryForm extends React.Component<Props, State> {
         const color = <div className={styles.color} style={{backgroundColor:menuItem.color}}/>
         const icon = !!menuItem.icon_name ? <img key={menuItem.icon_name} className={styles.icon} 
                         src={`${CONST.DOMAIN}img/${menuItem.icon_name}.svg`} /> : null
+        const spinner = showSpinner ? 
+            <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> : 
+            <span className="glyphicon glyphicon-ok"/>
 
         return (
             <div className={styles.form}>
@@ -132,16 +136,6 @@ export default class CategoryForm extends React.Component<Props, State> {
                         className="form-control"
                         placeholder = {CONST.ENTER_CATEGORY_NAME}
                         defaultValue={menuItem.name}
-                    />
-                </div>
-                <div className="form-group">
-                    <label className="control-label">
-                        {CONST.PARENT}
-                    </label>
-                    <ParentSelector
-                        menu={menu}
-                        defaultValue={menu.id}
-                        onSelect={this.selectParent.bind(this)}
                     />
                 </div>
                 <div className="form-group">
@@ -174,7 +168,7 @@ export default class CategoryForm extends React.Component<Props, State> {
                         onSelect={this.selectCategories}
                     />
                 </div>
-                <div className="form-group button-group">
+                <div className="button-group">
                     <button className="btn btn-default dropdown-toggle"
                         onClick={()=>this.setState({showIconMenu: true})}>
                         {CONST.ICON} &nbsp; {icon} &nbsp;<span className="caret"/>
@@ -202,10 +196,10 @@ export default class CategoryForm extends React.Component<Props, State> {
                         style={{float: 'left'}}>
                         <span className="glyphicon glyphicon-trash"/>
                     </button> 
-                    <button className="btn btn-primary"
+                    <button className="btn btn-primary start"
                         onClick={this.saveMenuItem}
                         style={{float: 'right'}}>
-                        {CONST.SAVE}
+                        {spinner}&nbsp;{CONST.SAVE}
                     </button> 
                     <button className="btn btn-default" 
                         onClick={this.cancelEditMenuItem}

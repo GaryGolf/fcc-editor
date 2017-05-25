@@ -93,7 +93,7 @@ export default class MenuListItem extends React.Component <Props, State> {
             // products total should reduce while added excluded_products
         const products = opened ? menuItem.products_total.map(product => (
                 <li key={product.id} 
-                    onClick={()=>this.props.onSelect(menuItem.id, product.id)}
+                    //onClick={()=>this.props.onSelect(menuItem.id, product.id)}
                     className={productStyle}>
                     <span className="glyphicon glyphicon-menu-down"/> &nbsp;
                     {product.name}
