@@ -7,7 +7,6 @@ import ColorPicker from '../Common/color-picker'
 import IconPicker from '../Common/icon-picker'
 import Selectize from '../Common/selectize'
 import ConfirmDelete from '../Modals/confirm-delete'
-import ParentSelector from '../Common/parent-selector'
 
 interface Props {
     menu: Menu
@@ -44,7 +43,6 @@ export default class CategoryForm extends React.Component<Props, State> {
         this.selectColor = this.selectColor.bind(this)
         this.selectCategories = this.selectCategories.bind(this)
         this.selectProducts = this.selectProducts.bind(this)
-        this.selectParent = this.selectParent.bind(this)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -93,9 +91,6 @@ export default class CategoryForm extends React.Component<Props, State> {
     selectProducts(menuItem: MenuItem) {
        this.setState({menuItem})
     }
-    selectParent(parent_id:string){
-        // not implemented yet
-    }
 
     render(){
 
@@ -136,16 +131,6 @@ export default class CategoryForm extends React.Component<Props, State> {
                 </div>
                 <div className="form-group">
                     <label className="control-label">
-                        {CONST.PARENT}
-                    </label>
-                    <ParentSelector
-                        menu={menu}
-                        defaultValue={menu.id}
-                        onSelect={this.selectParent.bind(this)}
-                    />
-                </div>
-                <div className="form-group">
-                    <label className="control-label">
                         {CONST.PRODUCTS}
                     </label>
                     <Selectize key={"product"+menuItem.id}
@@ -174,7 +159,7 @@ export default class CategoryForm extends React.Component<Props, State> {
                         onSelect={this.selectCategories}
                     />
                 </div>
-                <div className="form-group button-group">
+                <div className="button-group">
                     <button className="btn btn-default dropdown-toggle"
                         onClick={()=>this.setState({showIconMenu: true})}>
                         {CONST.ICON} &nbsp; {icon} &nbsp;<span className="caret"/>
