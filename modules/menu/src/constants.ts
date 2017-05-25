@@ -55,6 +55,24 @@ export const icons = [
         'cheese-cake',
         'babyish-menu'
     ]
+    
+export const colors = [
+    '#cccccc',
+    '#999999',
+    '#333333',
+    '#66CCCC',
+    '#08A9AE',
+    '#95ACE6',
+    '#476FBD',
+    '#FF4646',
+    '#FFCC33',
+    '#8AAE3E',
+    '#D679BD',
+    '#A60000',
+    '#91006C',
+    '#007C80'
+]
+/*
 export const colors = [
     'lightgray',
     'darkgray',
@@ -70,4 +88,4 @@ export const colors = [
     'darkred',
     'purple',
     'teal'
-]
+]*/
