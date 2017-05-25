@@ -56,18 +56,18 @@ export const icons = [
         'babyish-menu'
     ]
 export const colors = [
-    'red',
-    'yellow',
-    'blue',
-    'cyan',
-    'green',
-    'lightyellow',
-    'gray',
-    'pink',
-    'gold',
-    'greenyellow',
-    'hotpink',
     'lightgray',
-    'lightgreen',
-    'brown'
+    'darkgray',
+    'darkslategray',
+    'mediumaquamarine',
+    'lightseagreen',
+    'lightsteelblue',
+    'steelblue',
+    'tomato',
+    'sandybrown',
+    'yellowgreen',
+    'orchid',
+    'darkred',
+    'purple',
+    'teal'
 ]
