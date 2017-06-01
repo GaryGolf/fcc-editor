@@ -1,7 +1,7 @@
 import * as Actions from '../constants/actions'
 
 export interface PlanningReducer {
-    current: number
+    current: SalesPlan
 }
 
 const initialState: PlanningReducer = {
@@ -11,8 +11,8 @@ const initialState: PlanningReducer = {
 export default function planning (state = initialState, action: Action): PlanningReducer{
 
     switch(action.type){
-        case Actions.DO_NOTHING :   
-            return {current: 1} as PlanningReducer
+        case Actions.FETCH_SALES_PLAN :   
+            return {current: action.payload} as PlanningReducer
     }
     return state
 }

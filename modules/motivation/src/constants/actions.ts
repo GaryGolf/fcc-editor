@@ -1,1 +1,2 @@
 export const DO_NOTHING = 'DO_NOTHING'
+export const FETCH_SALES_PLAN = 'FETCH_SALES_PLAN'

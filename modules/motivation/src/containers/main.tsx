@@ -1,52 +1,38 @@
 import * as React from 'react'
 import * as styles from './main.css'
+import * as Actions from '../actions'
+import * as CONST from '../constants'
+import { bindActionCreators } from 'redux'
 
-// import * as Actions from '../../actions'
-// import * as CONST from '../../constants'
-// import { bindActionCreators } from 'redux'
-// import DragDropContext from 'react-dnd/lib/DragDropContext'
-// import {default as HTML5Backend} from 'react-dnd-html5-backend'
-// import Categories from '../Categories'
-// import Products from '../Products'
-// import MenuContainer from '../MenuContainer'
-
-// const {connect} = require('react-redux')
+const {connect} = require('react-redux')
 
 interface Props {
-
-    // nomenclature?: ProductCategory
-    // category?: ProductCategory
-    // menu?: Menu
-    // menuItem?: MenuItem
-    // actions?: Actions.Interface
-
+    salesplan?: {SalesPlan}
+    actions?: Actions.Interface
 }
 
-// @connect(
-//     state => ({
-//         nomenclature: state.nomenclature as ProductCategory,
-//         category: state.category.current as ProductCategory,
-//         menu: state.menu as Menu
-//     }),
-//     dispatch => ({
-//         actions: {
-//             nomenclature: bindActionCreators(Actions.Nomenclature as any, dispatch),
-//             category: bindActionCreators(Actions.Category as any, dispatch),
-//             menu: bindActionCreators(Actions.Menu as any, dispatch)
-//         } 
-//     })
-// )
-// @DragDropContext(HTML5Backend)
+@connect(
+    state => ({
+        salesplan: state.planning as {SalesPlan},
+    }),
+    dispatch => ({
+        actions: {
+            planning: bindActionCreators(Actions.Planning as any, dispatch)
+        } 
+    })
+)
 export default class MainScreen extends React.Component<Props, null> {
 
     constructor(props: Props){
         super(props)
     }
 
-    render(){
+    componentDidMount(){
+        this.props.actions.planning.fetchSalesPlan(CONST.PLAN_ID)
+    }
 
-
-    
+    render(){    
+        console.log(this.props.salesplan)
         return (
             <div className={styles.container}>
               Hello world
