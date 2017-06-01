@@ -1,7 +1,9 @@
-import * as Planning from './planning'
+import * as salesplan from './salesplan'
+import * as planitems from './planitems'
 
 interface Interface {
-    planning?: Planning.Interface
+    salesplan?: salesplan.Interface
+    planitems?: planitems.Interface
 }
 
-export  { Interface, Planning} 
+export  { Interface, salesplan, planitems} 

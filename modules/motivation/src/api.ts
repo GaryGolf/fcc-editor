@@ -19,3 +19,17 @@ export function getDocumentView(id: string){
         .then(response => response.data)
         .catch(error => { throw error})
 }
+export function getDocumentItems(id: string, type: string){
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document/${id}/document-item/${type}`,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        }
+    }
+    return axios(options)
+        .then(response => response.data)
+        .catch(error => { throw error})
+}
