@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux'
 import * as API from '../api'
 const {connect} = require('react-redux')
 
+import ProductsPlan from '../components/products-plan'
+
 interface Props {
     salesplan?: SalesPlan
     salesreport?: Array<SalesReport>
@@ -49,7 +51,7 @@ export default class MainScreen extends React.Component<Props, null> {
         console.log(this.props.salesreport)
         return (
             <div className={styles.container}>
-              Hello world
+              <ProductsPlan/>
             </div>
         )
     }

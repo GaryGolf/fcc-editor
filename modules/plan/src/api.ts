@@ -54,9 +54,8 @@ export function getSalesReport(){
 
     const dateFrom = '2016-01-01'
     const dateTo = '2017-03-30'
-    const salePointID = CONST.SALE_POINT_ID //'94bdb66f-70ba-4940-8a67-b637d6edf46f'
     const options = {
-        url: `${CONST.DOMAIN}api/v1/sales/report/sale-point?date_accepted_from=${dateFrom}&date_accepted_to=${dateTo}&sale_point_ids[]=${salePointID}`,
+        url: `${CONST.DOMAIN}api/v1/sales/report/sale-point?date_accepted_from=${dateFrom}&date_accepted_to=${dateTo}&sale_point_ids[]=${CONST.SALE_POINT_ID}`,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
