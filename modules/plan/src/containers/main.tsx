@@ -47,8 +47,8 @@ export default class MainScreen extends React.Component<Props, null> {
     }
 
     render(){    
-        console.log(this.props.salesplan)
-        console.log(this.props.salesreport)
+        // console.log(this.props.salesplan)
+        // console.log(this.props.salesreport)
         return (
             <div className={styles.container}>
               <ProductsPlan/>

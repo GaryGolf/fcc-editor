@@ -26,20 +26,25 @@ declare interface SalesPlan {
     user_fio: string
 }
 
+declare interface Days {
+    day: number
+    plan: number
+}
+
 declare interface PlanItem {
-    id: string  // 
+    id?: string  // 
     item_id: string // product ID
     planning_document_id: string // plan id
-    tenant_id: string   // google_id
+    tenant_id?: string   // google_id
     type: 'product' | 'tag'
     plan: number // quantity
     percent: number // ?s
     price: number
     cost_price: number
-    days: Array<{ day: number, plan: number }> // ? date, quantity
-    created_at: number
-    updated_at: number
-    status: 'enabled' | 'disabled'
+    days: Array<Days> // ? date, quantity
+    created_at?: number
+    updated_at?: number
+    status?: 'enabled' | 'disabled'
 }
 
 declare interface SalesReport {

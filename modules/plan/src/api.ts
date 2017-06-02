@@ -67,3 +67,20 @@ export function getSalesReport(){
         .then(response => response.data[CONST.SALE_POINT_ID])
         .catch(error => { throw error})
 }
+
+export function createDocumentItem(body: PlanItem){
+    console.log(body)
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document-item/create`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        },
+        body: JSON.stringify(body)
+    }
+    return axios(options)
+        .then(response => response.data)
+        .catch(error => { throw error})
+}
