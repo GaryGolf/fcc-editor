@@ -1,0 +1,7 @@
+
+@import '../../constants/variables.css';
+
+.overlay{
+   @apply --overlay;
+   z-index: 3;
+}
