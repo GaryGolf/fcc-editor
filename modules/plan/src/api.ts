@@ -33,3 +33,19 @@ export function getDocumentItems(id: string, type: string){
         .then(response => response.data)
         .catch(error => { throw error})
 }
+
+export function getNomenclature(){
+
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/nomenclature/category/info`,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        }
+    }
+    return axios(options)
+        .then(response => response.data)
+        .catch(error => { throw error})
+}

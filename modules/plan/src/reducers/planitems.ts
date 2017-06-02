@@ -1,5 +1,4 @@
 import * as Actions from '../constants/actions'
-import * as API from '../api'
 
 const initialState: Array<PlanItem> = []
 

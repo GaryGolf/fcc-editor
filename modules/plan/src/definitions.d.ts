@@ -3,6 +3,18 @@ declare interface Action {
     payload?: any
 }
 
+declare interface Product {
+    id: string
+    name: string
+    short_name: string
+    product_category_id: string
+    description: string
+    price: number
+    cost_price: number
+    measure: string
+    status: 'enabled' | 'disabled'
+}
+
 declare interface SalesPlan {
     id: string
     name: string
