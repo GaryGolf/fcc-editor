@@ -41,6 +41,14 @@ declare interface PlanItem {
     updated_at: number
     status: 'enabled' | 'disabled'
 }
+
+declare interface SalesReport {
+    product_id: string
+    cost: string
+    total_cost: number
+    discount_percent: string
+    quantity: number
+}
 /*
 {
   "id": "ef9274c9-f283-4c3d-a8f9-3c395985aa5e",

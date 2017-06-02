@@ -8,6 +8,7 @@ const {connect} = require('react-redux')
 
 interface Props {
     salesplan?: SalesPlan
+    salesreport?: Array<SalesReport>
     actions?: Actions.Interface
 }
 
@@ -15,13 +16,15 @@ interface Props {
     state => ({
         salesplan: state.salesplan as SalesPlan,
         planitems: state.planitems as PlanItem[],
-        products: state.products as Product[]
+        products: state.products as Product[],
+        salesreport: state.salesreport as SalesReport[]
     }),
     dispatch => ({
         actions: {
             salesplan: bindActionCreators(Actions.salesplan as any, dispatch),
             planitems: bindActionCreators(Actions.planitems as any, dispatch),
-            products: bindActionCreators(Actions.products as any, dispatch)
+            products: bindActionCreators(Actions.products as any, dispatch),
+            salesreport: bindActionCreators(Actions.salesreport as any, dispatch)
         } 
     })
 )
@@ -35,12 +38,15 @@ export default class MainScreen extends React.Component<Props, null> {
         this.props.actions.salesplan.fetchSalesPlan(CONST.PLAN_ID)
         this.props.actions.planitems.fetchPlanItems(CONST.PLAN_ID, 'products')
         this.props.actions.products.fetchProducts()
+        this.props.actions.salesreport.fetchSalesReport()
+
 
 
     }
 
     render(){    
         console.log(this.props.salesplan)
+        console.log(this.props.salesreport)
         return (
             <div className={styles.container}>
               Hello world
