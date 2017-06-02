@@ -68,8 +68,7 @@ export function getSalesReport(){
         .catch(error => { throw error})
 }
 
-export function createDocumentItem(body: PlanItem){
-    console.log(body)
+export function createDocumentItem(item: PlanItem){
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document-item/create`,
         method: 'POST',
@@ -78,7 +77,7 @@ export function createDocumentItem(body: PlanItem){
             'Tenant-Domain': tenantDomain,
             'Access-Token': accessToken
         },
-        body: JSON.stringify(body)
+        data: JSON.stringify(item)
     }
     return axios(options)
         .then(response => response.data)
