@@ -1,5 +1,5 @@
 export const SALE_POINT_ID = "babf9d2a-fea2-4702-a63a-a0f0222779ff"
-export const PLAN_ID = "6ce740b7-6c06-41af-9523-75471aef79cb"
+export const PLAN_ID = "32ca6183-341a-420d-a867-3742153bd2ad"
 export const PERIOD  = Date.now()
 
 
@@ -17,6 +17,7 @@ export const DOMAIN = getDomain()
 // strings
 export const TXT = {
     ADD_PRODUCT: 'Добавить товар',
+    EDIT_PRODUCT: 'Редактировать товар',
     PRODUCT: 'Товар',
     QUANTITY: 'Количество',
     PRICE: 'Цена',
@@ -25,5 +26,6 @@ export const TXT = {
     PROFIT: 'Прибыль',
     SAVE: 'Сохранить',
     CANCEL: 'Отменить',
+    REMOVE: 'Удалить',
     ARRANGE_PRODUCTS: 'Распределить товар по дням'
 }

@@ -84,3 +84,34 @@ export function createDocumentItem(item: PlanItem){
         .then(response => response.data)
         .catch(error => { throw error})
 }
+
+export function updateDocumentItem(item: PlanItem){
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document-item/update/${item.id}`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        },
+        data: JSON.stringify(item)
+    }
+    return axios(options)
+        .then(response => response.data)
+        .catch(error => { throw error})
+}
+
+export function removeDocumentItem(item: PlanItem){
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document-item/delete/${item.id}`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        }
+    }
+    return axios(options)
+        .then(_=>item)
+        .catch(error => { throw error})
+}

@@ -7,6 +7,7 @@ import {getAmount, getProfit} from '../utils'
 const {connect} = require('react-redux')
 
 interface Props {
+    onEdit(item:PlanItem):void
     planitems?: PlanItem[]
     products?: Product[]
     actions?: Actions.Interface
@@ -30,7 +31,7 @@ interface State {}
 export default class ProductsTable extends React.Component <Props, State> {
     render(){
         const {planitems, products} =this.props
-        if(!planitems) return null
+        if(!planitems || !products) return null
         const rows = planitems.map((item, idx) => {
             const product = products.find(v=>v.id == item.item_id)
             if(!product) return null
@@ -43,7 +44,10 @@ export default class ProductsTable extends React.Component <Props, State> {
             return (
                 <tr key={item.id}>
                     <td className={styles.number}>{idx+1}</td>
-                    <td className={styles['product-name']}>{product.name}</td>
+                    <td className={styles['product-name']}
+                        onDoubleClick={()=>this.props.onEdit(item)}>
+                        {product.name}
+                    </td>
                     <td className={styles.number}>{item.plan}</td>
                     <td className={styles.number}>{item.price}</td>
                     <td className={styles.number}>{item.cost_price}</td>

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import * as CONST from '../../constants'
 import * as Actions from '../../actions'
-import * as styles from './new-item-modal.css'
+import * as styles from './new-product-item.css'
 import { bindActionCreators } from 'redux'
-import {createDays} from './utils'
+import {createDays, getAmount, getProfit} from '../utils'
 const {connect} = require('react-redux')
 
 
@@ -45,7 +45,7 @@ export default class NewItemModal extends React.Component <Props, State> {
         this.state={
             id: null,
             qty: 1,
-            arrange: false,
+            arrange: true,
             showSpinner: false
         }
     }
@@ -90,8 +90,8 @@ export default class NewItemModal extends React.Component <Props, State> {
         const prod = products.find(item => item.id == id)
         const price = !prod ? '' : prod.price.toString()
         const cost_price = !prod ? '' : prod.cost_price.toString()
-        const amount = !qty ? '' : (prod.price*qty).toString()
-        const profit = !qty ? '' : (prod.price*qty - prod.cost_price*qty).toString()
+        const amount = !qty ? '' : getAmount(qty, prod.price)
+        const profit = !qty ? '' : getProfit(qty, prod.price, prod.cost_price)
         const spinner = !showSpinner ? <span className="glyphicon glyphicon-ok"/> 
             : <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> 
         return (
@@ -114,6 +114,7 @@ export default class NewItemModal extends React.Component <Props, State> {
                         <div className="checkbox">
                             <label>
                                 <input type="checkbox"
+                                    checked={this.state.arrange}
                                     onChange={this.arrangeChangeHandler.bind(this)}
                                 />
                                 {CONST.TXT.ARRANGE_PRODUCTS}
