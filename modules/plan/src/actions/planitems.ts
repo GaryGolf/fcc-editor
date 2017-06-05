@@ -6,5 +6,5 @@ export interface Interface {
     createPlanItem(item: PlanItem): Action
 }
 
-export const fetchPlanItems = (id:string, type: string) => ({ type: Actions.FETCH_SALES_PLAN, payload: API.getDocumentItems(id, type)})
+export const fetchPlanItems = (id:string, type: string) => ({ type: Actions.FETCH_PLAN_ITEMS, payload: API.getDocumentItems(id, type)})
 export const createPlanItem = (item:PlanItem) => ({type: Actions.CREATE_PLAN_ITEM, payload : API.createDocumentItem(item)}) 

@@ -38,7 +38,7 @@ export default class MainScreen extends React.Component<Props, null> {
 
     componentDidMount(){
         this.props.actions.salesplan.fetchSalesPlan(CONST.PLAN_ID)
-        this.props.actions.planitems.fetchPlanItems(CONST.PLAN_ID, 'products')
+        this.props.actions.planitems.fetchPlanItems(CONST.PLAN_ID, 'product')
         this.props.actions.products.fetchProducts()
         this.props.actions.salesreport.fetchSalesReport()
 

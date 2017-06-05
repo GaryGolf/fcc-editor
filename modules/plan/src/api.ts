@@ -19,7 +19,8 @@ export function getDocumentView(id: string){
         .then(response => response.data)
         .catch(error => { throw error})
 }
-export function getDocumentItems(id: string, type: string){
+export function getDocumentItems(id:string, type:string){
+    console.log('fetchind plan items')
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/${id}/document-item/${type}`,
         method: 'GET',
