@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as styles from './products-plan.css'
+
 import NewItemModal from './new-item-modal'
+import ProductsTable from '../products-table'
 
 interface Props {}
 interface State {
@@ -27,6 +29,7 @@ export default class ProductsPlan extends React.Component<Props, State> {
                     onClick={this.addNewItemHandler.bind(this)}>
                     Add
                 </button>
+                <ProductsTable/>
             </div>
         )
     }

@@ -1,0 +1,26 @@
+.container {
+    
+}
+
+table {
+    width: 100%;
+    cursor: default;
+    user-select: none;
+}
+
+.number {
+    text-align: right;
+}
+.plan-item {
+    max-width: 24px;
+    min-width: 24px;
+    overflow: hidden;
+    text-align: right;
+} 
+.product-name{
+    white-space: nowrap;
+}
+.main{
+}
+.days{
+}
