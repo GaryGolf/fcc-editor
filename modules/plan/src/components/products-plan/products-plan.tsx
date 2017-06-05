@@ -21,9 +21,6 @@ export default class ProductsPlan extends React.Component<Props, State> {
         }
         this.currentItem = null
     }
-    addNewItemHandler(){
-        this.setState({showNewItemModal: true})
-    }
     editProductItemHandler(item:PlanItem){
         this.currentItem = item
         this.setState({showEditItemModal: true})
@@ -40,9 +37,9 @@ export default class ProductsPlan extends React.Component<Props, State> {
                     onClose={()=>this.setState({showEditItemModal: false})}
                     visible={this.state.showEditItemModal}
                 />
-                <button className="btn btn-default"
-                    onClick={this.addNewItemHandler.bind(this)}>
-                    Add
+                <button className="btn btn-default btn-xs"
+                    onClick={()=>this.setState({showNewItemModal: true})}>
+                    <span className="glyphicon glyphicon-plus"/>
                 </button>
                 <ProductsTable 
                     onEdit={this.editProductItemHandler.bind(this)}

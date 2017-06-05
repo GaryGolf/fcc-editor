@@ -57,12 +57,8 @@ export default class EditProductItem extends React.Component <Props, State> {
     productChangeHandler(e){
         this.setState({id: e.target.value})
     }
-    quantityChangeHandler(e){
-        this.setState({qty: e.target.value})
-    }
-    arrangeChangeHandler(e) {
-        this.setState({arrange: e.target.checked})
-    }
+    
+   
     submitHandler(){
         this.setState({showSaveSpinner: true},
             () => {
@@ -113,7 +109,7 @@ export default class EditProductItem extends React.Component <Props, State> {
                             <label>
                                 <input type="checkbox"
                                     checked={arrange}
-                                    onChange={this.arrangeChangeHandler.bind(this)}
+                                    onChange={e=>this.setState({arrange: e.target.checked})}
                                 />
                                 {CONST.TXT.ARRANGE_PRODUCTS}
                             </label>
@@ -122,7 +118,7 @@ export default class EditProductItem extends React.Component <Props, State> {
                             <label>{CONST.TXT.PRODUCT}</label>
                             <select className="form-control"
                                 defaultValue={id}
-                                onChange={this.productChangeHandler.bind(this)}>
+                                onChange={e=>this.setState({id: e.target.value})}>
                                 {options}
                             </select>
                         </div>
@@ -131,7 +127,7 @@ export default class EditProductItem extends React.Component <Props, State> {
                             <input className="form-control"
                                 type="number"
                                 defaultValue={''+qty}
-                                onChange={this.quantityChangeHandler.bind(this)}/>
+                                onChange={e=>this.setState({qty: Number(e.target.value)})}/>
                         </div>
                         <div className="form-group">
                             <label>{CONST.TXT.PRICE}</label>

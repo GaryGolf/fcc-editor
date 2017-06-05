@@ -4,8 +4,8 @@
 
 table {
     width: 100%;
-    cursor: default;
     user-select: none;
+    cursor: default;
 }
 
 .number {
@@ -19,6 +19,9 @@ table {
 } 
 .product-name{
     white-space: nowrap;
+}
+.hand {
+    cursor: pointer;
 }
 .main{
 }

@@ -87,18 +87,18 @@ export default class ProductsTable extends React.Component <Props, State> {
                 <td key={item.id + day.day}
                     ref={td=>this.tableCells[item.id+day.day]=td}
                     onClick={()=>this.showInputDialog(item, day.day)}
-                    className={styles['plan-item']}>
+                    className={[styles['plan-item'], styles.hand].join(' ')}>
                     {day.plan}
                 </td>
             ))
             return (
                 <tr key={item.id}>
                     <td className={styles.number}>{idx+1}</td>
-                    <td className={styles['product-name']}
-                        onDoubleClick={()=>this.props.onEdit(item)}>
+                    <td className={[styles['product-name'], styles.hand].join(' ')}
+                        onClick={()=>this.props.onEdit(item)}>
                         {product.name}
                     </td>
-                    <td className={styles.number} 
+                    <td className={[styles.number,styles.hand].join(' ')} 
                         ref={td=>this.tableCells[item.id]=td}
                         onClick={()=>this.showInputDialog(item)}>
                         {item.plan}
