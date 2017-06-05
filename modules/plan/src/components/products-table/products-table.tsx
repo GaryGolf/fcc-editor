@@ -129,12 +129,12 @@ export default class ProductsTable extends React.Component <Props, State> {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Cost</th>
-                            <th>Amount</th>
-                            <th>Profit</th>
+                            <th>{CONST.TXT.PRODUCT}</th>
+                            <th>{CONST.TXT.QUANTITY}</th>
+                            <th>{CONST.TXT.PRICE}</th>
+                            <th>{CONST.TXT.COST}</th>
+                            <th>{CONST.TXT.AMOUNT}</th>
+                            <th>{CONST.TXT.PROFIT}</th>
                             {new Array(31).fill(1).map((_,i)=>(<th key={i}>{i+1}</th>))}
                         </tr>
                     </thead>

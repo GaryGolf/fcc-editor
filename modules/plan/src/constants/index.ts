@@ -19,13 +19,14 @@ export const TXT = {
     ADD_PRODUCT: 'Добавить товар',
     EDIT_PRODUCT: 'Редактировать товар',
     PRODUCT: 'Товар',
-    QUANTITY: 'Количество',
+    QUANTITY: 'Кол-во',
     PRICE: 'Цена',
-    COST: 'Себестоимость',
+    COST: 'Стоимость',
     AMOUNT: 'Сумма',
     PROFIT: 'Прибыль',
     SAVE: 'Сохранить',
     CANCEL: 'Отменить',
     REMOVE: 'Удалить',
     ARRANGE_PRODUCTS: 'Распределить товар по дням'
+
 }
