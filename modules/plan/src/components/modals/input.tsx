@@ -13,12 +13,17 @@ interface State {}
 
 export default class Input extends React.Component<Props, State> {
 
-    private input:number
+    private input:HTMLInputElement
+
     keyPressHandler(e){
-        this.input = e.target.value
+
         switch(e.key){
             case 'Enter' :
                 this.props.onEnter(e.target.value)
+                break
+            case 'Escape' :
+                this.props.onClose()
+                break
         }
     }
 
@@ -33,6 +38,7 @@ export default class Input extends React.Component<Props, State> {
                     style={{top, left}}>
                     <input type="number"
                         defaultValue={''+this.props.defaultValue}
+                        ref={input=>this.input=input}
                         onKeyUp={this.keyPressHandler.bind(this)}
                         autoFocus
                     />

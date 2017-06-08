@@ -10,3 +10,4 @@ open http://localhost:3000
 
 ### ToDo:
 зачение "type" неверно sale_point => sale-point
+can we create sale-point-item with zero values while we create new salesplan?

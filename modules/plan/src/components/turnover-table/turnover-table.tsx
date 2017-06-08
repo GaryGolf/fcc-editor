@@ -9,6 +9,7 @@ const {connect} = require('react-redux')
 import Input from '../modals/input'
 
 interface Props {
+    salesplan?: SalesPlan
     planitems?: PlanItem[]
     actions?: Actions.Interface
 }
@@ -18,6 +19,7 @@ interface State {
 
 @connect(
     state => ({
+        salesplan: state.salesplan as SalesPlan,
         planitems: state.planitems as PlanItem[]
     }),
     dispatch => ({
@@ -87,7 +89,7 @@ export default class ProductsTable extends React.Component <Props, State> {
     }
 
     render(){
-        if(!this.props.planitems) return null
+        if(!this.props.planitems || !this.props.salesplan) return null
         
         const item = this.props.planitems.find(v=> v.item_id==CONST.SALE_POINT_ID)
 
@@ -101,7 +103,7 @@ export default class ProductsTable extends React.Component <Props, State> {
                 ref={td=>this.tableCells[item.id+day.day]=td}
                 onClick={()=>this.showInputDialog(item, day.day)}
                 className={[styles['plan-item'], styles.hand].join(' ')}>
-                {day.plan}
+                {Number(day.plan).toFixed(2).toLocaleString()}
             </td>
         ))
         
@@ -128,11 +130,12 @@ export default class ProductsTable extends React.Component <Props, State> {
                     <tbody>
                          <tr>
                             <td className={[styles['product-name'], styles.hand].join(' ')}>
-                                {CONST.SALE_POINT_ID}
+                                {this.props.salesplan.sale_point_name}
                             </td>
                             <td className={[styles.number,styles.hand].join(' ')} 
+                                onClick={()=>this.showInputDialog(item)}
                                 ref={td=>this.tableCells[item.id]=td}>
-                                {item.plan}
+                                {Number(item.plan).toFixed(2).toLocaleString()}
                             </td>
                             {days}
                         </tr>
