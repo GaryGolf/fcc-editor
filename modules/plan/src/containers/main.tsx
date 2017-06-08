@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import * as API from '../api'
 const {connect} = require('react-redux')
 
+import TurnoverPlan from '../components/turnover-plan'
 import ProductsPlan from '../components/products-plan'
 
 interface Props {
@@ -41,9 +42,6 @@ export default class MainScreen extends React.Component<Props, null> {
         this.props.actions.planitems.fetchPlanItems(CONST.PLAN_ID, 'product')
         this.props.actions.products.fetchProducts()
         this.props.actions.salesreport.fetchSalesReport()
-
-
-
     }
 
     render(){    
@@ -51,7 +49,8 @@ export default class MainScreen extends React.Component<Props, null> {
         // console.log(this.props.salesreport)
         return (
             <div className={styles.container}>
-              <ProductsPlan/>
+                <TurnoverPlan/>
+                <ProductsPlan/>
             </div>
         )
     }

@@ -1,5 +1,5 @@
-export const SALE_POINT_ID = "babf9d2a-fea2-4702-a63a-a0f0222779ff"
-export const PLAN_ID = "32ca6183-341a-420d-a867-3742153bd2ad"
+export const SALE_POINT_ID = "3e9339a1-08a1-4baf-9324-311544c75eb1"
+export const PLAN_ID = "c287c2ee-3570-4dc8-9f17-3a4d54339b2a"
 export const PERIOD  = Date.now()
 
 

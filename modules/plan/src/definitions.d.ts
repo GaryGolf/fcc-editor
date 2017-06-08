@@ -36,7 +36,7 @@ declare interface PlanItem {
     item_id: string // product ID
     planning_document_id: string // plan id
     tenant_id?: string   // google_id
-    type: 'product' | 'tag'
+    type: 'product' | 'tag' | 'sale-point'
     plan: number // quantity
     percent: number // ?s
     price: number
