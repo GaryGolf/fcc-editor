@@ -9,6 +9,8 @@ export default function salesplan (state = initialState, action: Action): SalesP
     switch(action.type){
         case Actions.FETCH_SALES_PLAN :   
             return action.payload as SalesPlan
+        case Actions.UPDATE_SALES_PLAN :
+            return action.payload as SalesPlan
     }
     return state
 }

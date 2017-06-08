@@ -5,6 +5,8 @@ import salesplan from './salesplan'
 import planitems from './planitems'
 import products from './products'
 import salesreport from './salesreport'
+import salesplanlist from './salesplanlist'
+import salepointlist from './salepointlist'
 
 
 export interface RootState {
@@ -12,11 +14,15 @@ export interface RootState {
     planitems: Array<PlanItem>
     products: Array<Product>
     salesreport: Array<SalesReport>
+    salesplanlist: Array<SalesPlan>
+    salepointlist: Array<SalePoint>
 }
 
 export default combineReducers<RootState>({
     salesplan,
     planitems,
     products,
-    salesreport
+    salesreport,
+    salesplanlist,
+    salepointlist
 })

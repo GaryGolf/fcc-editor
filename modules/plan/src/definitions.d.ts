@@ -17,7 +17,8 @@ declare interface Product {
 
 declare interface SalesPlan {
     id: string
-    name: string
+    number?: string
+    name?: string
     period: number // data unix time
     comment: string
     is_register: boolean // could be null
@@ -53,6 +54,13 @@ declare interface SalesReport {
     total_cost: number
     discount_percent: string
     quantity: number
+}
+
+declare interface SalePoint {
+    id: string
+    name: string
+    address?: string
+    phone_number?: string
 }
 /*
 {

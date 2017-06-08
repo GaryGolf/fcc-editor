@@ -19,6 +19,23 @@ export function getDocumentView(id: string){
         .then(response => response.data)
         .catch(error => { throw error})
 }
+
+export function updateDocumentView(id: string, plan: SalesPlan){
+    console.log(plan)
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document/update/${id}`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        }, data: JSON.stringify(plan)
+    }
+    return axios(options)
+        .then(response => response.data)
+        .catch(error => { throw error})
+}
+
 export function getDocumentItems(id:string, type:string){
     console.log('fetchind plan items')
     const options = {
@@ -113,5 +130,36 @@ export function removeDocumentItem(item: PlanItem){
     }
     return axios(options)
         .then(_=>item)
+        .catch(error => { throw error})
+}
+
+
+export function getDocumentList(){
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document/list`,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        }
+    }
+    return axios(options)
+        .then(response=>response.data)
+        .catch(error => { throw error})
+}
+
+export function getSalePointList(){
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/structure/sale-point/list`,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        }
+    }
+    return axios(options)
+        .then(response=>response.data)
         .catch(error => { throw error})
 }

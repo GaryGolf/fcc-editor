@@ -13,6 +13,20 @@ function getDomain(){
 
 export const DOMAIN = getDomain()
 
+export const month = [
+    'Январь',
+    'Февраль',
+    'Март',
+    'Апрель',
+    'Май',
+    'Июнь',
+    'Июль',
+    'Август',
+    'Сентябрь',
+    'Октябрь',
+    'Ноябрь',
+    'Декабрь'
+]
 
 // strings
 export const TXT = {

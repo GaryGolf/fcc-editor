@@ -1,6 +1,4 @@
 .container{
-    width: 100%;
-    overflow: auto;
 }
 .product-name {
     min-width: 200px;
