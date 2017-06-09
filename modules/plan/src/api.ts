@@ -20,8 +20,8 @@ export function getDocumentView(id: string){
         .catch(error => { throw error})
 }
 
-export function updateDocumentView(id: string, plan: SalesPlan){
-    console.log(plan)
+export function updateDocumentView(plan: SalesPlan){
+    const id = plan.id
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/update/${id}`,
         method: 'POST',
@@ -35,6 +35,39 @@ export function updateDocumentView(id: string, plan: SalesPlan){
         .then(response => response.data)
         .catch(error => { throw error})
 }
+
+export function registerDocumentView(plan: SalesPlan){
+    const id = plan.id
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document/register/${id}`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        }
+    }
+    return axios(options)
+        .then(response => ({...plan, is_register: true}))
+        .catch(error => { throw error})
+}
+
+export function unregisterDocumentView(plan: SalesPlan){
+    const id = plan.id
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document/un-register/${id}`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        }
+    }
+    return axios(options)
+        .then(response => ({...plan, is_register: false}))
+        .catch(error => { throw error})
+}
+
 
 export function getDocumentItems(id:string, type:string){
     console.log('fetchind plan items')

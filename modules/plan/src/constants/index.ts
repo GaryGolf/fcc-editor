@@ -41,6 +41,17 @@ export const TXT = {
     SAVE: 'Сохранить',
     CANCEL: 'Отменить',
     REMOVE: 'Удалить',
-    ARRANGE_PRODUCTS: 'Распределить товар по дням'
+    ARRANGE_PRODUCTS: 'Распределить товар по дням',
+    NAME: 'Наименование',
+    PLANNING_PERIOD: 'Период планирования',
+    SALE_POINT: 'Торговая точка',
+    EMPLOYEE: 'Сотрудник создавший документ',
+    COMMENT: 'Комментарий',
+    STATUS: 'Статус документа',
+    ACTIVATE: 'Активировать',
+    REGISTER: 'Регистрировать',
+    RESTORE: 'Восстановить'
+
+
 
 }
