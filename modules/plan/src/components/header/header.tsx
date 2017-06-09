@@ -130,14 +130,14 @@ export default class Header extends React.Component <Props, State> {
             <div className="form-group">
                 
                 <button className="btn btn-primary btn-sm"
-                    onClick={this.handleRegister.bind(this)}>
-                    {this.state.showRegisterSpinner? sprinner:<span className="glyphicon glyphicon-check"/>}&nbsp;
-                    {is_register?CONST.TXT.RESTORE:CONST.TXT.REGISTER}
-                </button>&nbsp;
-                <button className="btn btn-primary btn-sm"
                     onClick={this.handleSubmit.bind(this)}>
                     {this.state.showSaveSpinner? sprinner:<span className="glyphicon glyphicon-ok"/>}&nbsp;
                     {CONST.TXT.SAVE}
+                </button>&nbsp;
+                <button className="btn btn-primary btn-sm"
+                    onClick={this.handleRegister.bind(this)}>
+                    {this.state.showRegisterSpinner? sprinner:<span className="glyphicon glyphicon-check"/>}&nbsp;
+                    {is_register?CONST.TXT.RESTORE:CONST.TXT.REGISTER}
                 </button>
             </div>
         </div>
