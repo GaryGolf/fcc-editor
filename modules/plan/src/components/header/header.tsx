@@ -7,10 +7,12 @@ interface Props {
     salepointlist: SalePoint[]
     onSubmit(salesPlan:SalesPlan): void
     onRegister(salesPlan:SalesPlan): void
+    onClean(): void
 }
 interface State {
     showSaveSpinner: boolean
     showRegisterSpinner: boolean
+    showCleanSpinner: boolean
 }
 
 export default class Header extends React.Component <Props, State> {
@@ -22,13 +24,15 @@ export default class Header extends React.Component <Props, State> {
         this.salesPlan = {}
         this.state = { 
             showSaveSpinner: false ,
-            showRegisterSpinner: false
+            showRegisterSpinner: false,
+            showCleanSpinner: false
         }
     }
 
     componentWillReceiveProps(nextProps){
         if(this.state.showSaveSpinner) this.setState({showSaveSpinner:false})
         if(this.state.showRegisterSpinner) this.setState({showRegisterSpinner:false})
+         if(this.state.showCleanSpinner) this.setState({showCleanSpinner:false})
     }
 
     getPeriodOptions(){   
@@ -55,6 +59,12 @@ export default class Header extends React.Component <Props, State> {
     handleRegister(){
         this.setState({showRegisterSpinner: true}, ()=>{
             this.props.onRegister(this.props.salesplan)
+        })
+    }
+
+    handleClean(){
+         this.setState({showCleanSpinner: true}, ()=>{
+            this.props.onClean()
         })
     }
    
@@ -138,6 +148,12 @@ export default class Header extends React.Component <Props, State> {
                     onClick={this.handleRegister.bind(this)}>
                     {this.state.showRegisterSpinner? sprinner:<span className="glyphicon glyphicon-check"/>}&nbsp;
                     {is_register?CONST.TXT.RESTORE:CONST.TXT.REGISTER}
+                </button>
+                &nbsp;
+                <button className="btn btn-danger btn-sm"
+                    onClick={this.handleClean.bind(this)}>
+                    {this.state.showCleanSpinner? sprinner:<span className="glyphicon glyphicon-remove"/>}&nbsp;
+                    {CONST.TXT.CLEAN}
                 </button>
             </div>
         </div>

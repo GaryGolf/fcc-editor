@@ -81,7 +81,6 @@ export default class Loader extends React.Component <Props, State> {
                 break
             }
             case CONST.TXT.LOAD_FROM_PERIOD : {
-                console.log('Load data from las month report')
                 this.setState({menu: monthMenu})
                 break
             }
@@ -89,10 +88,8 @@ export default class Loader extends React.Component <Props, State> {
                 if(documentMenu.includes(menuItem)){
                     const plan = this.props.salesplanlist.find(item=>item.number==menuItem) as SalesPlan
                     this.setState({showMenu:false, menu:this.mainMenu, showSpinner: true}, ()=>{
-                        console.log('---------', plan)
                         if(!plan) return
                         const id = plan.id
-                        console.log(id)
                         this.props.actions.planitems.loadFromDocument(id,'product')
                     })
                 } else if (monthMenu.includes(menuItem)){
