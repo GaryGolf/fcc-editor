@@ -200,7 +200,7 @@ export function getSalePointList(){
 
 export function loadDocumentItems(items: Array<PlanItem>){
     const method = 'POST'
-    const uri = `http://pekarni.dev.dooglys.com/api/v1/planning/document-item/create`
+    const uri = `http://pekarni.dev.dooglys.com/api/v1/planning/document-item/create` // ToDo !!
     const data = items.map(body=>({method, uri, body}))
     const options = {
         url: `${CONST.DOMAIN}api/v1/system/batch/execute`,

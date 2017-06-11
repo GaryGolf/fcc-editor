@@ -12,6 +12,7 @@ import Menu from '../modals/menu'
 
 
 interface Props {
+    planitems?: Array<PlanItem>
     salesplan?: SalesPlan
     salesreport?: Array<SalesReport>
     salesplanlist?: Array<SalesPlan>
@@ -21,13 +22,14 @@ interface Props {
 }
 interface State {
     showMenu: boolean
+    showSpinner: boolean
     menu: Array<string>
 }
 
 @connect(
     state => ({
         salesplan: state.salesplan as SalesPlan,
-        // planitems: state.planitems as PlanItem[],
+        planitems: state.planitems as PlanItem[],
         products: state.products as Product[],
         salesreport: state.salesreport as SalesReport[],
         salesplanlist: state.salesplanlist as SalesPlan[],
@@ -53,8 +55,13 @@ export default class Loader extends React.Component <Props, State> {
         this.mainMenu = [CONST.TXT.LOAD_FROM_SAVED,CONST.TXT.LOAD_FROM_PERIOD]
         this.state = {
             showMenu: false,
+            showSpinner: false,
             menu: this.mainMenu
         }
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(this.state.showSpinner) this.setState({showSpinner: false})
     }
 
     handleMenuSelect(menuItem: string){
@@ -100,19 +107,22 @@ export default class Loader extends React.Component <Props, State> {
                                 days: createDays(true, item.quantity)
                             } as PlanItem })
                         .filter(item=>!!item)
-                    console.log(report)
-                    this.props.actions.planitems.loadFromReport(report.slice(1,3))
+                    this.setState({showMenu:false,menu:this.mainMenu,showSpinner:true},()=>{
+                        this.props.actions.planitems.loadFromReport(report.slice(1,3)) // ToDo !!hard
+                    })
 
                 } else this.setState({showMenu:false, menu:this.mainMenu})
         }
     }
     render(){
         if(!this.props.salesplanlist || !this.props.salesreport.length) return null
+        const spinner = !this.state.showSpinner ? <span className="glyphicon glyphicon-cloud-download"/> 
+            : <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> 
         return (
             <span className={styles.container}>
                 <button className="btn btn-default btn-sm"
                     onClick={()=>this.setState({showMenu: true})}>
-                    {CONST.TXT.LOAD}&nbsp;
+                    {spinner}&nbsp;{CONST.TXT.LOAD}&nbsp; 
                     <span className="caret"/>
                 </button>
                 <Menu
