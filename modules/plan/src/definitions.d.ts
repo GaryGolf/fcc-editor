@@ -54,6 +54,7 @@ declare interface SalesReport {
     total_cost: number
     discount_percent: string
     quantity: number
+    date?: string
 }
 
 declare interface SalePoint {

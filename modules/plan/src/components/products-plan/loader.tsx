@@ -2,15 +2,17 @@ import * as React from 'react'
 import * as styles from './loader.css'
 import * as CONST from '../../constants'
 import * as Actions from '../../actions'
+
+import * as API from '../../api'
 import { bindActionCreators } from 'redux'
 const {connect} = require('react-redux')
-import {createDays} from '../utils'
+import {createDays, getPeriodPoints, getPeriods, getMonth} from '../utils'
 
 import Menu from '../modals/menu'
 
 
 interface Props {
-    // salesplan?: SalesPlan
+    salesplan?: SalesPlan
     salesreport?: Array<SalesReport>
     salesplanlist?: Array<SalesPlan>
     products?: Array<Product> 
@@ -24,7 +26,7 @@ interface State {
 
 @connect(
     state => ({
-        // salesplan: state.salesplan as SalesPlan,
+        salesplan: state.salesplan as SalesPlan,
         // planitems: state.planitems as PlanItem[],
         products: state.products as Product[],
         salesreport: state.salesreport as SalesReport[],
@@ -55,49 +57,57 @@ export default class Loader extends React.Component <Props, State> {
         }
     }
 
-    importPlanItemsFromReport(){
-        this.props.salesreport.forEach(reportItem => {
-            const product = this.props.products.find(item => item.id == reportItem.product_id)
-            if(!product) return
-            const body: PlanItem = {
-                item_id: product.id,
-                planning_document_id: CONST.PLAN_ID,
-                plan: reportItem.quantity,
-                type: 'product',
-                percent: 0,
-                price: product.price,
-                cost_price: product.cost_price,
-                days: createDays(true, reportItem.quantity)
-            }
-            this.props.actions.planitems.createPlanItem(body)
-        })
-    }
-
-
-    handleOnSelect(menuItem: string){
+    handleMenuSelect(menuItem: string){
+        const periods = this.props.salesreport
+            .reduce((acc,item) => {
+                if(acc.includes(item.date)) return acc
+                return [...acc,item.date]
+            },[])
+        const monthMenu = periods.map(date=>getMonth(new Date(date)))
 
         switch(menuItem){
-            case CONST.TXT.LOAD_FROM_SAVED :
-                console.log(' show saved plans')
-                console.log(this.props.salesplanlist)
-                const menu = this.props.salesplanlist.map(item=> item.number)
+            case CONST.TXT.LOAD_FROM_SAVED : {
+                const menu = this.props.salesplanlist
+                    .filter(item=>item.number!=this.props.salesplan.number)
+                    .map(item=> item.number)
                 this.setState({menu})
                 break
-            case CONST.TXT.LOAD_FROM_PERIOD :
+            }
+            case CONST.TXT.LOAD_FROM_PERIOD : {
                 console.log('Load data from las month report')
-                console.log(this.props.salesreport)
-                this.setState({showMenu:false, menu:this.mainMenu})
-                this.importPlanItemsFromReport()
+                this.setState({menu: monthMenu})
                 break
+            }
             default :
                 if(this.props.salesplanlist.some(item => item.number == menuItem)){
-                    console.log('Load: ',menuItem)
                     this.setState({showMenu:false, menu:this.mainMenu})
-                }
+                } else if (monthMenu.includes(menuItem)){
+                    const idx = monthMenu.findIndex(item=>item==menuItem)
+                    const month = periods[idx]
+                    const report = this.props.salesreport
+                        .filter(item=>item.date==month)
+                        .map(item => {
+                            const product = this.props.products.find(prod => prod.id == item.product_id)
+                            if(!product) return null
+                            return  {
+                                item_id: product.id,
+                                planning_document_id: CONST.PLAN_ID,
+                                plan: item.quantity,
+                                type: 'product',
+                                percent: 0,
+                                price: product.price,
+                                cost_price: product.cost_price,
+                                days: createDays(true, item.quantity)
+                            } as PlanItem })
+                        .filter(item=>!!item)
+                    console.log(report)
+                    this.props.actions.planitems.loadFromReport(report.slice(1,3))
+
+                } else this.setState({showMenu:false, menu:this.mainMenu})
         }
     }
     render(){
-        if(!this.props.salesplanlist) return null
+        if(!this.props.salesplanlist || !this.props.salesreport.length) return null
         return (
             <span className={styles.container}>
                 <button className="btn btn-default btn-sm"
@@ -108,7 +118,7 @@ export default class Loader extends React.Component <Props, State> {
                 <Menu
                     visible={this.state.showMenu}
                     onClose={()=>this.setState({showMenu:false, menu:this.mainMenu})}
-                    onSelect={this.handleOnSelect.bind(this)}
+                    onSelect={this.handleMenuSelect.bind(this)}
                     menu={this.state.menu}
                 />
             </span>

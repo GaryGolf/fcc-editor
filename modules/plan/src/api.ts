@@ -1,5 +1,6 @@
 import * as Actions from './constants/actions'
 import * as CONST from './constants'
+import {createDays} from './components/utils'
 import axios from 'axios'
 
 const accessToken = document.querySelector('meta[name=access-token]').getAttribute('content')
@@ -104,7 +105,7 @@ export function getNomenclature(){
 export function getSalesReport(){
 
     const dateFrom = '2016-01-01'
-    const dateTo = '2017-03-30'
+    const dateTo = '2017-06-30'
     const options = {
         url: `${CONST.DOMAIN}api/v1/sales/report/sale-point?date_accepted_from=${dateFrom}&date_accepted_to=${dateTo}&sale_point_ids[]=${CONST.SALE_POINT_ID}`,
         method: 'GET',
@@ -194,5 +195,24 @@ export function getSalePointList(){
     }
     return axios(options)
         .then(response=>response.data)
+        .catch(error => { throw error})
+}
+
+export function loadDocumentItems(items: Array<PlanItem>){
+    const method = 'POST'
+    const uri = `http://pekarni.dev.dooglys.com/api/v1/planning/document-item/create`
+    const data = items.map(body=>({method, uri, body}))
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/system/batch/execute`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        },
+        data: JSON.stringify(data)
+    }
+    return axios(options)
+        .then(response => response.data)
         .catch(error => { throw error})
 }

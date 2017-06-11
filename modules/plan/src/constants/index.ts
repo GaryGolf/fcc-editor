@@ -7,7 +7,7 @@ export const PERIOD  = Date.now()
 
 // API
 function getDomain(){
-    const proxy = PRODUCTION ? '' : 'localhost:1337/'
+    const proxy = PRODUCTION ? '' :  'localhost:1337/'
     const tenant = document.querySelector('meta[name=tenant-domain]').getAttribute('content')
     const domain = document.querySelector('#menu-visual').getAttribute('data-api-host')
     return `http://${proxy}${tenant}.${domain}`
