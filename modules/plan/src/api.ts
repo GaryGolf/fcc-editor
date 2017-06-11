@@ -72,7 +72,7 @@ export function unregisterDocumentView(plan: SalesPlan){
 export function getDocumentItems(id:string, type:string){
     console.log('fetchind plan items')
     const options = {
-        url: `${CONST.DOMAIN}api/v1/planning/document/${id}/document-item/${type}`,
+        url: `${CONST.DOMAIN}api/v1/planning/document/${id}/document-item/${type}?per-page=10000`,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

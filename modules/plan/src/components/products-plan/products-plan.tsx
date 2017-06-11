@@ -6,6 +6,7 @@ import NewItemModal from '../modals/new-product-item'
 import EditProductItem from '../modals/edit-product-item'
 import ProductsTable from '../products-table'
 import Menu from '../modals/menu'
+import Loader from './loader'
 
 interface Props {}
 interface State {
@@ -48,18 +49,7 @@ export default class ProductsPlan extends React.Component<Props, State> {
                         <span className="glyphicon glyphicon-plus"/>&nbsp;
                         {CONST.TXT.ADD_PRODUCT}
                     </button>&nbsp;
-                    <span>
-                    <button className="btn btn-default btn-sm"
-                        onClick={()=>this.setState({showLoadMenu: true})}>
-                       {CONST.TXT.LOAD}&nbsp;
-                        <span className="caret"/>
-                    </button>
-                         <Menu
-                            visible={this.state.showLoadMenu}
-                            onClose={()=>this.setState({showLoadMenu:false})}
-                            menu={[CONST.TXT.LOAD_FROM_SAVED,CONST.TXT.LOAD_FROM_PERIOD]}
-                        />
-                    </span>
+                    <Loader/>
                 </div>
                 <ProductsTable 
                     onEdit={this.editProductItemHandler.bind(this)}

@@ -1,5 +1,7 @@
 export const SALE_POINT_ID = "3e9339a1-08a1-4baf-9324-311544c75eb1"
-export const PLAN_ID = "c287c2ee-3570-4dc8-9f17-3a4d54339b2a"
+export const PLAN_ID = "bcc03868-bee4-4998-aa2f-1f66ccce126a"
+//"c3697ef0-00e4-4ebf-814d-e16c84f3e15a"
+// "c287c2ee-3570-4dc8-9f17-3a4d54339b2a"
 export const PERIOD  = Date.now()
 
 
