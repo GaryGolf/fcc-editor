@@ -67,6 +67,7 @@ export default class MainScreen extends React.Component<Props, null> {
         // console.log(this.props.salesreport)
         // console.log(this.props.salesplanlist)
         // console.log(this.props.salepointlist)
+        // console.log(new Date(2017,11,1).toISOString().substr(0,10))
         return (
             <div className={styles.container}>
                 <Header 

@@ -104,8 +104,11 @@ export function getNomenclature(){
 
 export function getSalesReport(){
 
-    const dateFrom = '2016-01-01'
-    const dateTo = '2017-06-30'
+    const today = new Date()
+    const y = today.getFullYear()
+    const m = today.getMonth()
+    const dateFrom = new Date(y,m-6,1).toISOString().substr(0,10)
+    const dateTo = new Date(y,m+1,0).toISOString().substr(0,10)
     const options = {
         url: `${CONST.DOMAIN}api/v1/sales/report/sale-point?date_accepted_from=${dateFrom}&date_accepted_to=${dateTo}&sale_point_ids[]=${CONST.SALE_POINT_ID}`,
         method: 'GET',
