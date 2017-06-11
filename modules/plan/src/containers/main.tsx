@@ -68,7 +68,6 @@ export default class MainScreen extends React.Component<Props, null> {
     render(){    
         const {salesplan, salepointlist} = this.props
         if(!salesplan || !salepointlist) return null
-        const {registerSalesPlan, unregisterSalesPlan} = this.props.actions.salesplan
         // console.log(this.props.salesplan)
         // console.log(this.props.salesreport)
         // console.log(this.props.salesplanlist)
@@ -79,9 +78,8 @@ export default class MainScreen extends React.Component<Props, null> {
                 <Header 
                     salesplan={this.props.salesplan}
                     salepointlist={this.props.salepointlist}
-                    onSubmit={this.props.actions.salesplan.updateSalesPlan}
-                    onRegister={!salesplan.is_register?registerSalesPlan:unregisterSalesPlan}
-                    onClean={this.cleanAllPlanItems.bind(this)}
+                    planitems={this.props.planitems}
+                    actions={this.props.actions}
                 />
                 <TurnoverPlan/>
                 <ProductsPlan/>

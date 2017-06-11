@@ -1,18 +1,21 @@
 import * as React from 'react'
 import * as styles from './header.css'
+import * as Actions from '../../actions'
 import * as CONST from '../../constants'
+
+import {createDays} from '../utils'
 
 interface Props {
     salesplan: SalesPlan
     salepointlist: SalePoint[]
-    onSubmit(salesPlan:SalesPlan): void
-    onRegister(salesPlan:SalesPlan): void
-    onClean(): void
+    planitems: PlanItem[]
+    actions?: Actions.Interface
 }
 interface State {
     showSaveSpinner: boolean
     showRegisterSpinner: boolean
     showCleanSpinner: boolean
+    showTurnoverSpinner: boolean
 }
 
 export default class Header extends React.Component <Props, State> {
@@ -25,14 +28,16 @@ export default class Header extends React.Component <Props, State> {
         this.state = { 
             showSaveSpinner: false ,
             showRegisterSpinner: false,
-            showCleanSpinner: false
+            showCleanSpinner: false,
+            showTurnoverSpinner: false
         }
     }
 
     componentWillReceiveProps(nextProps){
         if(this.state.showSaveSpinner) this.setState({showSaveSpinner:false})
         if(this.state.showRegisterSpinner) this.setState({showRegisterSpinner:false})
-         if(this.state.showCleanSpinner) this.setState({showCleanSpinner:false})
+        if(this.state.showCleanSpinner) this.setState({showCleanSpinner:false})
+        if(this.state.showTurnoverSpinner) this.setState({showTurnoverSpinner:false})
     }
 
     getPeriodOptions(){   
@@ -58,24 +63,46 @@ export default class Header extends React.Component <Props, State> {
 
     handleRegister(){
         this.setState({showRegisterSpinner: true}, ()=>{
-            this.props.onRegister(this.props.salesplan)
+            if(this.props.salesplan.is_register) {
+                this.props.actions.salesplan.unregisterSalesPlan(this.props.salesplan)
+            } else {
+                this.props.actions.salesplan.registerSalesPlan(this.props.salesplan)
+            }
         })
     }
 
     handleClean(){
          this.setState({showCleanSpinner: true}, ()=>{
-            this.props.onClean()
+            const ids = this.props.planitems.map(item=>item.id)
+            this.props.actions.planitems.cleanPlanItems(ids)
         })
     }
    
     handleSubmit() {
         this.setState({showSaveSpinner: true}, ()=>{
             const salesPlan = {...this.props.salesplan, ...this.salesPlan}
-            this.props.onSubmit(salesPlan)
+            this.props.actions.salesplan.updateSalesPlan(salesPlan)
+        })
+    }
+
+    handleAddTurnoverItem(){
+        this.setState({showTurnoverSpinner: true}, ()=>{
+            const item: PlanItem = {
+                item_id: CONST.SALE_POINT_ID,
+                planning_document_id: CONST.PLAN_ID,
+                plan: 0,
+                type: 'sale-point',
+                percent: 0,
+                price: 0,
+                cost_price: 0,
+                days: createDays(true, 0)
+            }
+            this.props.actions.planitems.createPlanItem(item)
         })
     }
 
     render(){
+        console.log(this.props.planitems)
         if(!this.props.salesplan || !this.props.salepointlist) return null
         const {id, period, number, comment, is_register} = this.props.salesplan
 
@@ -143,6 +170,11 @@ export default class Header extends React.Component <Props, State> {
                     onClick={this.handleSubmit.bind(this)}>
                     {this.state.showSaveSpinner? sprinner:<span className="glyphicon glyphicon-ok"/>}&nbsp;
                     {CONST.TXT.SAVE}
+                </button>&nbsp;
+                <button className="btn btn-default btn-sm"
+                    onClick={this.handleAddTurnoverItem.bind(this)}>
+                    {this.state.showTurnoverSpinner? sprinner:<span className="glyphicon glyphicon-plus"/>}&nbsp;
+                    {CONST.TXT.ADD_TURNOVER_ITEM}
                 </button>&nbsp;
                 <button className="btn btn-primary btn-sm"
                     onClick={this.handleRegister.bind(this)}>
