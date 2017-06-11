@@ -201,7 +201,7 @@ export function getSalePointList(){
         .catch(error => { throw error})
 }
 
-export function loadDocumentItems(items: Array<PlanItem>){
+export function loadReportItems(items: Array<PlanItem>){
     const method = 'POST'
     const uri = `http://pekarni.dev.dooglys.com/api/v1/planning/document-item/create` // ToDo !!
     const data = items.map(body=>({method, uri, body}))
@@ -219,3 +219,15 @@ export function loadDocumentItems(items: Array<PlanItem>){
         .then(response => response.data)
         .catch(error => { throw error})
 }
+
+export function loadDocumenttItems(id: string, type='product') {
+    return getDocumentItems(id,type)
+        .then(items=>loadReportItems(items
+            .filter(item=>item.type==type)
+            .map(({ item_id, plan, price, cost_price, type, percent, days })=>
+            ({ item_id, planning_document_id:CONST.PLAN_ID, plan, price, cost_price, type, percent, days }))
+        ))
+        .catch(error => { throw error})
+}
+
+

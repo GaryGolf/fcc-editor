@@ -71,13 +71,13 @@ export default class Loader extends React.Component <Props, State> {
                 return [...acc,item.date]
             },[])
         const monthMenu = periods.map(date=>getMonth(new Date(date)))
+        const documentMenu = this.props.salesplanlist
+                    .filter(item=>item.number!=this.props.salesplan.number)
+                    .map(item=> item.number)
 
         switch(menuItem){
             case CONST.TXT.LOAD_FROM_SAVED : {
-                const menu = this.props.salesplanlist
-                    .filter(item=>item.number!=this.props.salesplan.number)
-                    .map(item=> item.number)
-                this.setState({menu})
+                this.setState({menu: documentMenu})
                 break
             }
             case CONST.TXT.LOAD_FROM_PERIOD : {
@@ -86,8 +86,15 @@ export default class Loader extends React.Component <Props, State> {
                 break
             }
             default :
-                if(this.props.salesplanlist.some(item => item.number == menuItem)){
-                    this.setState({showMenu:false, menu:this.mainMenu})
+                if(documentMenu.includes(menuItem)){
+                    const plan = this.props.salesplanlist.find(item=>item.number==menuItem) as SalesPlan
+                    this.setState({showMenu:false, menu:this.mainMenu, showSpinner: true}, ()=>{
+                        console.log('---------', plan)
+                        if(!plan) return
+                        const id = plan.id
+                        console.log(id)
+                        this.props.actions.planitems.loadFromDocument(id,'product')
+                    })
                 } else if (monthMenu.includes(menuItem)){
                     const idx = monthMenu.findIndex(item=>item==menuItem)
                     const month = periods[idx]
