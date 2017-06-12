@@ -102,7 +102,6 @@ export default class Header extends React.Component <Props, State> {
     }
 
     render(){
-        console.log(this.props.planitems)
         if(!this.props.salesplan || !this.props.salepointlist) return null
         const {id, period, number, comment, is_register} = this.props.salesplan
 
