@@ -58,8 +58,8 @@ export default class ProductsTable extends React.Component <Props, State> {
         const cell = !day ? this.tableCells[item.id] : this.tableCells[item.id+day] as HTMLTableDataCellElement
         this.inputValue = !day ? item.plan : item.days.find(v=> v.day == day).plan
         const cellRect = cell.getBoundingClientRect()
-        this.inputTop = cellRect.bottom
-        this.inputLeft = cellRect.right - 97
+        this.inputTop = cellRect.bottom + window.pageYOffset
+        this.inputLeft = cellRect.right - 97 + window.pageXOffset
         this.setState({showInput: true})
     }
 
