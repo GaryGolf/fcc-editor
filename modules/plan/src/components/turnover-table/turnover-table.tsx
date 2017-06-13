@@ -106,7 +106,7 @@ export default class ProductsTable extends React.Component <Props, State> {
                     <colgroup span={31} className={styles.days}/>
                     <thead>
                         <tr>
-                            <th>sale point</th>
+                            <th>{CONST.TXT.SALE_POINT}</th>
                             <th>{CONST.TXT.AMOUNT}</th>
                             {new Array(31).fill(1).map((_,i)=>(<th key={i}>{i+1}</th>))}
                         </tr>
@@ -116,7 +116,7 @@ export default class ProductsTable extends React.Component <Props, State> {
                             <td className={[styles['product-name'], styles.hand].join(' ')}>
                                 {this.props.salesplan.sale_point_name}
                             </td>
-                            <td className={[styles.number,styles.hand].join(' ')} 
+                            <td className={[styles.number,styles.hand,styles.amount].join(' ')} 
                                 onClick={()=>this.showInputDialog(item)}
                                 ref={td=>this.tableCells[item.id]=td}>
                                 <Money>{item.plan}</Money>

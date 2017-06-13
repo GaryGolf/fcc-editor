@@ -16,8 +16,6 @@ interface Props {
     actions?: Actions.Interface
 }
 interface State {
-    id: string
-    amount: number
     arrange: boolean
     showSaveSpinner: boolean
     showRemoveSpinner: boolean
@@ -40,11 +38,13 @@ interface State {
     })
 )
 export default class EditProductItem extends React.Component <Props, State> {
+
+    private id: string
+    private amount: number
+
     constructor(props:Props){
         super(props)
         this.state = {
-            id: '',
-            amount: 0,
             arrange: true,
             showSaveSpinner: false,
             showRemoveSpinner: false
@@ -52,23 +52,33 @@ export default class EditProductItem extends React.Component <Props, State> {
     }
     componentWillReceiveProps(nextProps:Props){
         if(this.state.showSaveSpinner || this.state.showRemoveSpinner) this.props.onClose()
-        if(!!nextProps.planItem) this.setState({id:nextProps.planItem.item_id, amount: nextProps.planItem.plan})
         this.setState({showSaveSpinner: false, showRemoveSpinner: false})
+        if(!!nextProps.planItem) {
+            this.id = nextProps.planItem.item_id
+            this.amount = nextProps.planItem.plan
+        }
     }
-    productChangeHandler(e){
-        this.setState({id: e.target.value})
-    }
-    
+   
+   handleKeyPress(e){
+        switch(e.key){
+            case 'Enter' :
+                this.submitHandler()
+                break
+            case 'Escape' :
+                this.props.onClose()
+                break
+        }
+   }
    
     submitHandler(){
         this.setState({showSaveSpinner: true},
             () => {
-                const {amount, arrange} = this.state
-                const plan = amount
-                const days = arrange || amount != this.props.planItem.plan ? 
-                    createDays(this.props.salesplan.period,arrange, amount) :
+                const item_id = this.id
+                const plan = this.amount
+                const days = this.state.arrange || this.amount != this.props.planItem.plan ? 
+                    createDays(this.props.salesplan.period, this.state.arrange, this.amount) :
                     this.props.planItem.days
-                const item = {...this.props.planItem, plan, days}
+                const item = {...this.props.planItem, plan, days, item_id}
                 this.props.actions.planitems.updatePlanItem(item)
         })
     }
@@ -79,11 +89,11 @@ export default class EditProductItem extends React.Component <Props, State> {
     }
 
     render(){
-        const {planItem, products, visible} = this.props
-        if(!visible || !planItem) return null
-        const {id, amount, arrange, showSaveSpinner, showRemoveSpinner} = this.state
+        const {planItem, planitems, visible} = this.props
+        if(!visible || !planItem || !planitems.length) return null
+        const products  = this.props.products.filter(p=>!planitems.some(v=>v.item_id==p.id && v.item_id!=this.id))
+        const {showSaveSpinner, showRemoveSpinner} = this.state
         const options = products.map(item=>(<option key={item.id} value={item.id}>{item.name}</option>))
-        
         const saveSpinner = !showSaveSpinner ? <span className="glyphicon glyphicon-ok"/> 
             : <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> 
         const removeSpinner = !showRemoveSpinner ? <span className="glyphicon glyphicon-trash"/> 
@@ -108,8 +118,8 @@ export default class EditProductItem extends React.Component <Props, State> {
                         <div className="checkbox">
                             <label>
                                 <input type="checkbox"
-                                    checked={arrange}
-                                    onChange={e=>this.setState({arrange: e.target.checked})}
+                                    checked={this.state.arrange}
+                                    onChange={()=>this.setState(state=>({arrange:!state.arrange}))}
                                 />
                                 {CONST.TXT.ARRANGE_PRODUCTS}
                             </label>
@@ -117,8 +127,8 @@ export default class EditProductItem extends React.Component <Props, State> {
                         <div className="form-group">
                             <label>{CONST.TXT.PRODUCT}</label>
                             <select className="form-control"
-                                defaultValue={id}
-                                onChange={e=>this.setState({id: e.target.value})}>
+                                defaultValue={this.id}
+                                onChange={e=>this.id=e.target.value}>
                                 {options}
                             </select>
                         </div>
@@ -126,8 +136,10 @@ export default class EditProductItem extends React.Component <Props, State> {
                             <label>{CONST.TXT.AMOUNT}</label>
                             <input className="form-control"
                                 type="number"
-                                defaultValue={''+amount}
-                                onChange={e=>this.setState({amount: Number(e.target.value)})}/>
+                                autoFocus
+                                defaultValue={this.amount.toString()}
+                                onKeyUp={this.handleKeyPress.bind(this)}
+                                onChange={e=>this.amount=Number(e.target.value)}/>
                         </div>
                     </div>
                     <div className="modal-footer">

@@ -84,21 +84,11 @@ export default class ProductsTable extends React.Component <Props, State> {
     render(){
 
         const {planitems, products, salesplan} =this.props
-        if(!planitems || !products || !salesplan) return null
+        if(!planitems.length || !products.length || !salesplan) return null
+        const plangoods = planitems.filter(v=>v.type!='sale-point')
+        if(!plangoods.length) return null
         const daysCount = getDaysCount(salesplan.period)
-
-        const toMoney = num => {
-            const amount = Number(num).toFixed(2)
-            const i =amount.indexOf('.')
-            const dimes = amount.substr(i)
-            const rubles = amount
-                .substr(0,i)
-                .replace(/./g, (c, i, a) => i && c !== "." && ((a.length - i) % 3 === 0) ? '\'' + c : c )
-            return<span>{rubles}<small>{dimes}</small></span>
-        }
-
-
-        const rows = planitems.map((item, idx) => {
+        const rows = plangoods.map((item, idx) => {
             const product = products.find(v=>v.id == item.item_id)
             if(!product) return null
             const days = item.days.map(day=> (
@@ -111,12 +101,12 @@ export default class ProductsTable extends React.Component <Props, State> {
             ))
             return (
                 <tr key={item.id}>
-                    <td className={styles.number}>{idx+1}</td>
+                    <td className={[styles.number, styles.serial].join(' ')}>{idx+1}</td>
                     <td className={[styles['product-name'], styles.hand].join(' ')}
                         onClick={()=>this.props.onEdit(item)}>
                         {product.name}
                     </td>
-                    <td className={[styles.number,styles.hand].join(' ')} 
+                    <td className={[styles.number,styles.hand,styles.amount].join(' ')} 
                         ref={td=>this.tableCells[item.id]=td}
                         onClick={()=>this.showInputDialog(item)}>
                         <Money>{item.plan}</Money>

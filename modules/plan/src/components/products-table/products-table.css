@@ -18,8 +18,23 @@ table {
     text-align: right;
 } 
 .product-name{
+    max-width: 350px;
+    min-width: 350px;
+    overflow: hidden;
     white-space: nowrap;
 }
+.amount {
+    max-width: 100px;
+    min-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.serial{
+    max-width: 40px;
+    min-width: 40px;
+    overflow: hidden;
+}
+
 .hand {
     cursor: pointer;
 }
