@@ -39,9 +39,9 @@ declare interface PlanItem {
     tenant_id?: string   // google_id
     type: 'product' | 'tag' | 'sale-point'
     plan: number // quantity
-    percent: number // ?s
-    price: number
-    cost_price: number
+    percent?: number // ?s
+    price?: number
+    cost_price?: number
     days: Array<Days> // ? date, quantity
     created_at?: number
     updated_at?: number

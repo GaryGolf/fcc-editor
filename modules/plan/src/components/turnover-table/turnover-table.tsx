@@ -7,6 +7,7 @@ import {getAmount, getProfit, createDays} from '../utils'
 const {connect} = require('react-redux')
 
 import Input from '../modals/input'
+import Money from '../common/money'
 
 interface Props {
     salesplan?: SalesPlan
@@ -86,7 +87,7 @@ export default class ProductsTable extends React.Component <Props, State> {
                 ref={td=>this.tableCells[item.id+day.day]=td}
                 onClick={()=>this.showInputDialog(item, day.day)}
                 className={[styles['plan-item'], styles.hand].join(' ')}>
-                {Number(day.plan).toFixed(2).toLocaleString()}
+                <Money>{day.plan}</Money>
             </td>
         ))
         
@@ -118,7 +119,7 @@ export default class ProductsTable extends React.Component <Props, State> {
                             <td className={[styles.number,styles.hand].join(' ')} 
                                 onClick={()=>this.showInputDialog(item)}
                                 ref={td=>this.tableCells[item.id]=td}>
-                                {Number(item.plan).toFixed(2).toLocaleString()}
+                                <Money>{item.plan}</Money>
                             </td>
                             {days}
                         </tr>

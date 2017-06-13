@@ -3,7 +3,7 @@ import * as CONST from '../../constants'
 import * as Actions from '../../actions'
 import * as styles from './new-product-item.css'
 import { bindActionCreators } from 'redux'
-import {createDays, getAmount, getProfit} from '../utils'
+import {createDays} from '../utils'
 const {connect} = require('react-redux')
 
 
@@ -18,7 +18,7 @@ interface Props {
 
 interface State {
     id: string
-    qty: number
+    amount: number
     arrange: boolean
     showSpinner: boolean
 }
@@ -45,7 +45,7 @@ export default class NewItemModal extends React.Component <Props, State> {
         super(props)
         this.state={
             id: null,
-            qty: 1,
+            amount: 0,
             arrange: true,
             showSpinner: false
         }
@@ -60,7 +60,7 @@ export default class NewItemModal extends React.Component <Props, State> {
         this.setState({id: e.target.value})
     }
     quantityChangeHandler(e){
-        this.setState({qty: e.target.value})
+        this.setState({amount: e.target.value})
     }
     arrangeChangeHandler(e) {
         this.setState({arrange: e.target.checked})
@@ -72,12 +72,12 @@ export default class NewItemModal extends React.Component <Props, State> {
                 const body: PlanItem = {
                     item_id: this.state.id,
                     planning_document_id: CONST.PLAN_ID,
-                    plan: this.state.qty,
+                    plan: this.state.amount,
                     type: 'product',
                     percent: 0,
                     price: product.price,
                     cost_price: product.cost_price,
-                    days: createDays(this.props.salesplan.period,this.state.arrange, this.state.qty)
+                    days: createDays(this.props.salesplan.period,this.state.arrange, this.state.amount)
                 }
                 this.props.actions.planitems.createPlanItem(body)
         })
@@ -85,14 +85,9 @@ export default class NewItemModal extends React.Component <Props, State> {
     render(){
 
         const {visible, products} = this.props
-        const {id, qty, showSpinner} = this.state
+        const {id, amount, showSpinner} = this.state
         if(!visible || !products) return null
         const options = products.map(item=>(<option key={item.id} value={item.id}>{item.name}</option>))
-        const prod = products.find(item => item.id == id)
-        const price = !prod ? '' : prod.price.toString()
-        const cost_price = !prod ? '' : prod.cost_price.toString()
-        const amount = !qty ? '' : getAmount(qty, prod.price)
-        const profit = !qty ? '' : getProfit(qty, prod.price, prod.cost_price)
         const spinner = !showSpinner ? <span className="glyphicon glyphicon-ok"/> 
             : <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> 
         return (
@@ -129,39 +124,11 @@ export default class NewItemModal extends React.Component <Props, State> {
                             </select>
                         </div>
                         <div className="form-group">
-                            <label>{CONST.TXT.QUANTITY}</label>
-                            <input className="form-control"
-                                type="number"
-                                defaultValue={qty.toString()}
-                                onChange={this.quantityChangeHandler.bind(this)}/>
-                        </div>
-                        <div className="form-group">
-                            <label>{CONST.TXT.PRICE}</label>
-                            <input className="form-control"
-                                value={price}
-                                disabled
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>{CONST.TXT.COST}</label>
-                            <input className="form-control"
-                                value={cost_price}
-                                disabled
-                            />
-                        </div>
-                        <div className="form-group">
                             <label>{CONST.TXT.AMOUNT}</label>
                             <input className="form-control"
-                                value={amount}
-                                disabled
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>{CONST.TXT.PROFIT}</label>
-                            <input className="form-control"
-                                value={profit}
-                                disabled
-                            />
+                                type="number"
+                                defaultValue={amount.toString()}
+                                onChange={this.quantityChangeHandler.bind(this)}/>
                         </div>
                     </div>
                     <div className="modal-footer">

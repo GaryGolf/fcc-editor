@@ -3,10 +3,11 @@ import * as CONST from '../../constants'
 import * as Actions from '../../actions'
 import * as styles from './products-table.css'
 import { bindActionCreators } from 'redux'
-import {getAmount, getProfit, createDays, getDaysCount} from '../utils'
+import {createDays, getDaysCount} from '../utils'
 const {connect} = require('react-redux')
 
 import Input from '../modals/input'
+import Money from '../common/money'
 
 interface Props {
     onEdit(item:PlanItem):void
@@ -85,6 +86,18 @@ export default class ProductsTable extends React.Component <Props, State> {
         const {planitems, products, salesplan} =this.props
         if(!planitems || !products || !salesplan) return null
         const daysCount = getDaysCount(salesplan.period)
+
+        const toMoney = num => {
+            const amount = Number(num).toFixed(2)
+            const i =amount.indexOf('.')
+            const dimes = amount.substr(i)
+            const rubles = amount
+                .substr(0,i)
+                .replace(/./g, (c, i, a) => i && c !== "." && ((a.length - i) % 3 === 0) ? '\'' + c : c )
+            return<span>{rubles}<small>{dimes}</small></span>
+        }
+
+
         const rows = planitems.map((item, idx) => {
             const product = products.find(v=>v.id == item.item_id)
             if(!product) return null
@@ -93,7 +106,7 @@ export default class ProductsTable extends React.Component <Props, State> {
                     ref={td=>this.tableCells[item.id+day.day]=td}
                     onClick={()=>this.showInputDialog(item, day.day)}
                     className={[styles['plan-item'], styles.hand].join(' ')}>
-                    {day.plan}
+                    <Money>{day.plan}</Money>
                 </td>
             ))
             return (
@@ -106,13 +119,8 @@ export default class ProductsTable extends React.Component <Props, State> {
                     <td className={[styles.number,styles.hand].join(' ')} 
                         ref={td=>this.tableCells[item.id]=td}
                         onClick={()=>this.showInputDialog(item)}>
-                        {item.plan}
+                        <Money>{item.plan}</Money>
                     </td>
-                    <td className={styles.number}>{item.price}</td>
-                    <td className={styles.number}>{item.cost_price}</td>
-                    <td className={styles.number}>{getAmount(item.plan,item.price)}</td>
-                    <td className={styles.number}>{getProfit(item.plan, item.price,item.cost_price)}</td>
-                    
                     {days}
                     
                 </tr>
@@ -135,11 +143,7 @@ export default class ProductsTable extends React.Component <Props, State> {
                         <tr>
                             <th>#</th>
                             <th>{CONST.TXT.PRODUCT}</th>
-                            <th>{CONST.TXT.QUANTITY}</th>
-                            <th>{CONST.TXT.PRICE}</th>
-                            <th>{CONST.TXT.COST}</th>
                             <th>{CONST.TXT.AMOUNT}</th>
-                            <th>{CONST.TXT.PROFIT}</th>
                             {new Array(daysCount).fill(1).map((_,i)=>(<th key={i}>{i+1}</th>))}
                         </tr>
                     </thead>
