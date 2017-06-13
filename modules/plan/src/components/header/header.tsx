@@ -57,10 +57,28 @@ export default class Header extends React.Component <Props, State> {
     }
 
     onSalePointChange(e){
-        const id = e.target.value
+        const sale_point_id = e.target.value
         const sp = this.props.salepointlist.find(point=>point.id == e.target.value)
-        this.salesPlan.sale_point_id = id
-        if (!!sp) this.salesPlan.sale_point_name = sp.name
+        const sale_point_name = !sp ? '' : sp.name
+        const plan = {...this.props.salesplan, sale_point_id, sale_point_name}
+        this.props.actions.salesplan.updateSalesPlan(plan)
+    }
+    onPeriodChange(e){
+        const period = e.target.value
+        const plan = {...this.props.salesplan, period}
+        this.props.actions.salesplan.updateSalesPlan(plan)
+    }
+
+    onPlanNumberChange(e){
+        const number = e.target.value
+        const plan = {...this.props.salesplan, number}
+        this.props.actions.salesplan.updateSalesPlan(plan)
+    }
+
+    onCommentChange(e){
+        const comment = e.target.value
+        const plan = {...this.props.salesplan, comment}
+        this.props.actions.salesplan.updateSalesPlan(plan)
     }
 
     handleRegister(){
@@ -82,9 +100,7 @@ export default class Header extends React.Component <Props, State> {
    
     handleSubmit() {
         this.setState({showSaveSpinner: true}, ()=>{
-            // const period = new Date().getTime()/1000
-            const salesPlan = {...this.props.salesplan, ...this.salesPlan}
-            this.props.actions.salesplan.updateSalesPlan(salesPlan)
+            this.props.actions.salesplan.saveSalesPlan(this.props.salesplan)
         })
     }
 
@@ -123,7 +139,7 @@ export default class Header extends React.Component <Props, State> {
                         <label>{CONST.TXT.NAME}:&nbsp;</label>
                         <input type="text"
                             className="form-control"
-                            onChange={e=>this.salesPlan.number=e.target.value}
+                            onChange={this.onPlanNumberChange.bind(this)}
                             defaultValue={number}
                         />
                     </div>
@@ -131,7 +147,7 @@ export default class Header extends React.Component <Props, State> {
                         <label>{CONST.TXT.PLANNING_PERIOD}&nbsp;</label>
                          <select 
                             className="form-control"
-                            onChange={e=>this.salesPlan.period=e.target.value}
+                            onChange={this.onPeriodChange.bind(this)}
                             defaultValue={''+period}>
                             {periodOptions}
                         </select>
@@ -155,7 +171,7 @@ export default class Header extends React.Component <Props, State> {
                         <label>{CONST.TXT.COMMENT}:&nbsp;</label>
                          <input type="text"
                             className="form-control"
-                            onChange={e=>this.salesPlan.comment=e.target.value}
+                            onChange={this.onCommentChange.bind(this)}
                             defaultValue={comment}
                         />
                     </div>

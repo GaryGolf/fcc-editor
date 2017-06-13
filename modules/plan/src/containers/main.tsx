@@ -8,6 +8,7 @@ const {connect} = require('react-redux')
 
 import TurnoverPlan from '../components/turnover-plan'
 import ProductsPlan from '../components/products-plan'
+import TurnoverTable from '../components/turnover-table'
 import Header from '../components/header'
 
 interface Props {
@@ -18,6 +19,8 @@ interface Props {
     salepointlist?: Array<SalePoint>
     actions?: Actions.Interface
 }
+
+interface State {}
 
 @connect(
     state => ({
@@ -39,11 +42,11 @@ interface Props {
         } 
     })
 )
-export default class MainScreen extends React.Component<Props, null> {
+export default class MainScreen extends React.Component<Props, State> {
 
     constructor(props: Props){
         super(props)
-    }
+     }
 
     componentDidMount(){
         this.props.actions.salesplanlist.fetchSalesPlanList()
@@ -82,7 +85,7 @@ export default class MainScreen extends React.Component<Props, null> {
                     planitems={this.props.planitems}
                     actions={this.props.actions}
                 />
-                <TurnoverPlan/>
+                <TurnoverTable/>
                 <ProductsPlan/>
             </div>
         )

@@ -27,7 +27,7 @@ export function createDays(period:number, arrange:boolean, amount:number): Array
     const date = new Date(period*1000)
     const year = date.getFullYear()
     const month = date.getMonth()+1
-    const daysCount = new Date(year, month+1, 0).getDate()
+    const daysCount = new Date(year, month, 0).getDate()
     const rem = amount%daysCount
     const div = Math.floor(amount/daysCount)
     const  days = new Array(daysCount).fill({})
@@ -70,9 +70,8 @@ export function getMonth(date:Date): string{
 }
 
 export function getDaysCount(period:number) {
-    const today = new Date()
-    const y = today.getFullYear()
-    const month = today.getMonth()
-    const year = month>9 && period< 2? y+1:y
-    return new Date(year, period+1, 0).getDate()
+    const date = new Date(period*1000)
+    const year = date.getFullYear()
+    const month = date.getMonth()
+    return new Date(year, month+1, 0).getDate()
 }

@@ -5,6 +5,7 @@ import * as styles from './new-product-item.css'
 import { bindActionCreators } from 'redux'
 import {createDays} from '../utils'
 const {connect} = require('react-redux')
+const uuid = require('uuid')
 
 
 interface Props {
@@ -73,7 +74,8 @@ export default class NewItemModal extends React.Component <Props, State> {
         this.setState({showSpinner: true},
             () => {
                 const product = this.props.products.find(item => item.id == this.id)
-                const body: PlanItem = {
+                const item: PlanItem = {
+                    id: uuid(),
                     item_id: this.id,
                     planning_document_id: CONST.PLAN_ID,
                     plan: Number(this.amount),
@@ -83,7 +85,7 @@ export default class NewItemModal extends React.Component <Props, State> {
                     cost_price: product.cost_price,
                     days: createDays(this.props.salesplan.period,this.state.arrange, this.amount)
                 }
-                this.props.actions.planitems.createPlanItem(body)
+               this.props.actions.planitems.createPlanItem(item)
         })
     }
     render(){
