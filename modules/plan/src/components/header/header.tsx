@@ -40,14 +40,16 @@ export default class Header extends React.Component <Props, State> {
         if(this.state.showTurnoverSpinner) this.setState({showTurnoverSpinner:false})
     }
 
-    getPeriodOptions(){   
-        let month:number = new Date().getMonth(),
-            year:number= new Date().getFullYear()
+    getPeriodOptions(){
+        const date = new Date()   
+        let month:number = date.getMonth(),
+            year:number= date.getFullYear()
         return new Array(12)
             .fill(' ')
             .map(_=>{
                 const name =`${CONST.month[month]} ${year}`
-                const option = <option key={name} value={month}>{name}</option>
+                const period = Math.floor(new Date(year,month,1).getTime()/1000)
+                const option = <option key={period} value={period}>{name}</option>
                 if(month == 11) { month = 0; year += 1 }
                 else month++
                 return option
@@ -80,6 +82,7 @@ export default class Header extends React.Component <Props, State> {
    
     handleSubmit() {
         this.setState({showSaveSpinner: true}, ()=>{
+            // const period = new Date().getTime()/1000
             const salesPlan = {...this.props.salesplan, ...this.salesPlan}
             this.props.actions.salesplan.updateSalesPlan(salesPlan)
         })

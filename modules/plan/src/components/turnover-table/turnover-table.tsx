@@ -76,7 +76,8 @@ export default class ProductsTable extends React.Component <Props, State> {
     }
 
     render(){
-        if(!this.props.planitems || !this.props.salesplan) return null
+        if(!this.props.planitems.length || !this.props.salesplan) return null
+
         
         const item = this.props.planitems.find(v=> v.item_id==CONST.SALE_POINT_ID)
 

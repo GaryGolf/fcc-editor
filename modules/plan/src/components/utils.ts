@@ -1,5 +1,6 @@
 import * as CONST from '../constants'
 
+/*
 export function createDays(period:number, arrange:boolean, qty:number): Array<Days>{
     const y = new Date().getFullYear()
     const month = new Date().getMonth()+1
@@ -20,6 +21,29 @@ export function createDays(period:number, arrange:boolean, qty:number): Array<Da
             return {day,plan}
         })
 }
+*/
+
+export function createDays(period:number, arrange:boolean, amount:number): Array<Days>{
+    const date = new Date(period*1000)
+    const year = date.getFullYear()
+    const month = date.getMonth()+1
+    const daysCount = new Date(year, month+1, 0).getDate()
+    const rem = amount%daysCount
+    const div = Math.floor(amount/daysCount)
+    const  days = new Array(daysCount).fill({})
+    
+     if (arrange) return  days.map((item, idx) => {
+            const plan = idx < rem ? div + 1 : div
+            const day = new Date(year, month, idx).getTime()
+            return {day,plan}
+        })
+    return  days.map((item, idx) => {
+            const plan = idx == 0  ? amount : 0
+            const day = new Date(year, month, idx).getTime()
+            return {day,plan}
+        })
+}
+
 
 export function getAmount(qty:number, price:number):string{
     return Math.floor(qty*price)+'.00'
