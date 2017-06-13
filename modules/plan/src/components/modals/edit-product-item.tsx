@@ -10,6 +10,7 @@ interface Props {
     planItem: PlanItem
     visible: boolean
     onClose():void
+    salesplan?: SalesPlan
     planitems?: PlanItem[]
     products?: Product[]
     actions?: Actions.Interface
@@ -24,7 +25,7 @@ interface State {
 
 @connect(
     state => ({
-        // salesplan: state.salesplan as SalesPlan,
+        salesplan: state.salesplan as SalesPlan,
         planitems: state.planitems as PlanItem[],
         products: state.products as Product[]
         // salesreport: state.salesreport as SalesReport[]
@@ -64,7 +65,9 @@ export default class EditProductItem extends React.Component <Props, State> {
             () => {
                 const {qty, arrange} = this.state
                 const plan = qty
-                const days = arrange || qty != this.props.planItem.plan ? createDays(arrange, qty) : this.props.planItem.days
+                const days = arrange || qty != this.props.planItem.plan ? 
+                    createDays(this.props.salesplan.period,arrange, qty) :
+                    this.props.planItem.days
                 const item = {...this.props.planItem, plan, days}
                 this.props.actions.planitems.updatePlanItem(item)
         })
