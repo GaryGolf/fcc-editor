@@ -112,7 +112,7 @@ export default class Loader extends React.Component <Props, State> {
                             } as PlanItem })
                         .filter(item=>!!item)
                     this.setState({showMenu:false,menu:this.mainMenu,showSpinner:true},()=>{
-                        this.props.actions.planitems.loadFromReport(report.slice(1,20)) // ToDo !!hard
+                        this.props.actions.planitems.loadFromReport(report)
                     })
 
                 } else this.setState({showMenu:false, menu:this.mainMenu})

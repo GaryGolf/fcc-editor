@@ -8,7 +8,6 @@ export default function planitems (state = initialState, action: Action): Array<
     
     switch(action.type){
         case Actions.FETCH_PLAN_ITEMS :
-        case Actions.CLEAN_PLAN_ITEMS :
         case Actions.CREATE_PLAN_ITEM : 
             return [...state,...action.payload]
         case Actions.FETCH_TURNOVER_ITEM :
@@ -22,6 +21,8 @@ export default function planitems (state = initialState, action: Action): Array<
             return [...state, ...action.payload
                 .filter(item=>!item.error_description)
                 .map(item=>item.content)]
+        case Actions.CLEAN_PLAN_ITEMS :
+            return []
     }
     return state
 }
