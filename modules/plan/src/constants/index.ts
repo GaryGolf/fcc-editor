@@ -1,5 +1,6 @@
 export const SALE_POINT_ID = "3e9339a1-08a1-4baf-9324-311544c75eb1"
-export const PLAN_ID = "349c4840-e6b2-44df-a8b1-bbee8b857e14"
+export const PLAN_ID = "18a4a7cd-214a-4e89-8b20-551a67bef840" // #9
+// export const PLAN_ID = "349c4840-e6b2-44df-a8b1-bbee8b857e14" //#8
 //export const PLAN_ID = "7440adb0-5c09-4fe7-8b3d-2f8c51e136bf"
 //export const PLAN_ID = "bcc03868-bee4-4998-aa2f-1f66ccce126a"
 //export const PLAN_ID = "c3697ef0-00e4-4ebf-814d-e16c84f3e15a"

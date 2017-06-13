@@ -6,7 +6,7 @@ import * as Actions from '../../actions'
 import * as API from '../../api'
 import { bindActionCreators } from 'redux'
 const {connect} = require('react-redux')
-import {createDays, getPeriodPoints, getPeriods, getMonth} from '../utils'
+import {createDays, getPeriods, getMonth} from '../utils'
 
 import Menu from '../modals/menu'
 
@@ -108,11 +108,11 @@ export default class Loader extends React.Component <Props, State> {
                                 percent: 0,
                                 price: product.price,
                                 cost_price: product.cost_price,
-                                days: createDays(true, item.quantity)
+                                days: createDays(this.props.salesplan.period,true, item.quantity)
                             } as PlanItem })
                         .filter(item=>!!item)
                     this.setState({showMenu:false,menu:this.mainMenu,showSpinner:true},()=>{
-                        this.props.actions.planitems.loadFromReport(report.slice(1,20)) // ToDo !!hard
+                        this.props.actions.planitems.loadFromReport(report)
                     })
 
                 } else this.setState({showMenu:false, menu:this.mainMenu})

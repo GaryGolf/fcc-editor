@@ -10,6 +10,7 @@ const {connect} = require('react-redux')
 interface Props {
     onClose():void
     visible: boolean
+    salesplan?: SalesPlan
     planitems?: PlanItem[]
     products?: Product[]
     actions?: Actions.Interface
@@ -24,7 +25,7 @@ interface State {
 
 @connect(
     state => ({
-        // salesplan: state.salesplan as SalesPlan,
+        salesplan: state.salesplan as SalesPlan,
         planitems: state.planitems as PlanItem[],
         products: state.products as Product[]
         // salesreport: state.salesreport as SalesReport[]
@@ -76,7 +77,7 @@ export default class NewItemModal extends React.Component <Props, State> {
                     percent: 0,
                     price: product.price,
                     cost_price: product.cost_price,
-                    days: createDays(this.state.arrange, this.state.qty)
+                    days: createDays(this.props.salesplan.period,this.state.arrange, this.state.qty)
                 }
                 this.props.actions.planitems.createPlanItem(body)
         })

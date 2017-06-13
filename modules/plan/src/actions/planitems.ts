@@ -3,7 +3,8 @@ import * as API from '../api'
 import * as CONST from '../constants'
 
 export interface Interface {
-    fetchPlanItems(id: string, type: string): Action
+    fetchPlanItems(id: string): Action
+    fetchTurnoverItem(id:string): Action
     createPlanItem(item: PlanItem): Action
     updatePlanItem(item: PlanItem): Action
     removePlanItem(item: PlanItem): Action
@@ -12,10 +13,11 @@ export interface Interface {
     cleanPlanItems(ids: Array<string>): Action
 }
 
-export const fetchPlanItems = (id:string, type: string) => ({ type: Actions.FETCH_PLAN_ITEMS, payload: API.getDocumentItems(id, type)})
-export const createPlanItem = (item:PlanItem) => ({type: Actions.CREATE_PLAN_ITEM, payload: API.createDocumentItem(item)}) 
-export const updatePlanItem = (item:PlanItem) => ({type: Actions.UPDATE_PLAN_ITEM, payload: API.updateDocumentItem(item)})
-export const removePlanItem = (item:PlanItem) => ({type: Actions.REMOVE_PLAN_ITEM, payload: API.removeDocumentItem(item)})
+export const fetchPlanItems = id => ({ type: Actions.FETCH_PLAN_ITEMS, payload: API.getDocumentItems(id, 'product')})
+export const fetchTurnoverItem = id => ({ type: Actions.FETCH_TURNOVER_ITEM, payload: API.getDocumentItems(id, 'sale-point')})
+export const createPlanItem = item => ({type: Actions.CREATE_PLAN_ITEM, payload: API.createDocumentItem(item)}) 
+export const updatePlanItem = item => ({type: Actions.UPDATE_PLAN_ITEM, payload: API.updateDocumentItem(item)})
+export const removePlanItem = item => ({type: Actions.REMOVE_PLAN_ITEM, payload: API.removeDocumentItem(item)})
 export const loadFromReport = items => ({type: Actions.LOAD_PLAN_ITEMS_FROM_REPORT, payload: API.loadReportItems(items)})
 export const loadFromDocument = id => ({type: Actions.LOAD_PLAN_ITEMS_FROM_DOCUMENT, payload: API.loadDocumenttItems(id)})
 export const cleanPlanItems = ids => ({type: Actions.CLEAN_PLAN_ITEMS, payload: API.cleanDocumenttItems(ids)})

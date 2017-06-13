@@ -95,7 +95,7 @@ export default class Header extends React.Component <Props, State> {
                 percent: 0,
                 price: 0,
                 cost_price: 0,
-                days: createDays(true, 0)
+                days: createDays(this.props.salesplan.period,true, 0)
             }
             this.props.actions.planitems.createPlanItem(item)
         })

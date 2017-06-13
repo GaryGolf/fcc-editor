@@ -3,13 +3,14 @@ import * as CONST from '../../constants'
 import * as Actions from '../../actions'
 import * as styles from './products-table.css'
 import { bindActionCreators } from 'redux'
-import {getAmount, getProfit, createDays} from '../utils'
+import {getAmount, getProfit, createDays, getDaysCount} from '../utils'
 const {connect} = require('react-redux')
 
 import Input from '../modals/input'
 
 interface Props {
     onEdit(item:PlanItem):void
+    salesplan?: SalesPlan
     planitems?: PlanItem[]
     products?: Product[]
     actions?: Actions.Interface
@@ -20,6 +21,7 @@ interface State {
 
 @connect(
     state => ({
+        salesplan: state.salesplan as SalesPlan,
         planitems: state.planitems as PlanItem[],
         products: state.products as Product[]
     }),
@@ -39,6 +41,7 @@ export default class ProductsTable extends React.Component <Props, State> {
     private tableCells: any
     private currentItem: PlanItem
     private currentDay: number
+    
     constructor(props:Props){
         super(props)
         this.state = {
@@ -66,7 +69,7 @@ export default class ProductsTable extends React.Component <Props, State> {
     onEnterHandler(plan: number) {
         let item: PlanItem
         if(!this.currentDay){
-            const days = createDays(true,plan)
+            const days = createDays(this.props.salesplan.period,true,plan)
             item = {...this.currentItem, plan, days}
         } else {
             const days = this.currentItem.days.map(day=> day.day != this.currentDay ? day : ({...day, plan}))
@@ -78,8 +81,10 @@ export default class ProductsTable extends React.Component <Props, State> {
     }
 
     render(){
-        const {planitems, products} =this.props
-        if(!planitems || !products) return null
+
+        const {planitems, products, salesplan} =this.props
+        if(!planitems || !products || !salesplan) return null
+        const daysCount = getDaysCount(salesplan.period)
         const rows = planitems.map((item, idx) => {
             const product = products.find(v=>v.id == item.item_id)
             if(!product) return null
@@ -135,7 +140,7 @@ export default class ProductsTable extends React.Component <Props, State> {
                             <th>{CONST.TXT.COST}</th>
                             <th>{CONST.TXT.AMOUNT}</th>
                             <th>{CONST.TXT.PROFIT}</th>
-                            {new Array(31).fill(1).map((_,i)=>(<th key={i}>{i+1}</th>))}
+                            {new Array(daysCount).fill(1).map((_,i)=>(<th key={i}>{i+1}</th>))}
                         </tr>
                     </thead>
                     <tbody>

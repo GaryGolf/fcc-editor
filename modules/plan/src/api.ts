@@ -1,6 +1,5 @@
 import * as Actions from './constants/actions'
 import * as CONST from './constants'
-import {createDays} from './components/utils'
 import axios from 'axios'
 
 const accessToken = document.querySelector('meta[name=access-token]').getAttribute('content')

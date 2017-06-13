@@ -49,20 +49,6 @@ export default class ProductsTable extends React.Component <Props, State> {
         this.currentDay = null
     }
 
-    createTurnoverPlanItem(){
-        const item: PlanItem = {
-            item_id: CONST.SALE_POINT_ID,
-            planning_document_id: CONST.PLAN_ID,
-            plan: 0,
-            type: 'sale-point',
-            percent: 0,
-            price: 0,
-            cost_price: 0,
-            days: createDays(true, 0)
-        }
-        this.props.actions.planitems.createPlanItem(item)
-    }
-
     showInputDialog(item:PlanItem, day?: number){
         this.currentItem = item
         this.currentDay = day
@@ -77,7 +63,7 @@ export default class ProductsTable extends React.Component <Props, State> {
     onEnterHandler(plan: number) {
         let item: PlanItem
         if(!this.currentDay){
-            const days = createDays(true,plan)
+            const days = createDays(this.props.salesplan.period,true,plan)
             item = {...this.currentItem, plan, days}
         } else {
             const days = this.currentItem.days.map(day=> day.day != this.currentDay ? day : ({...day, plan}))
@@ -93,10 +79,7 @@ export default class ProductsTable extends React.Component <Props, State> {
         
         const item = this.props.planitems.find(v=> v.item_id==CONST.SALE_POINT_ID)
 
-        if(!item) {
-           // this.createTurnoverPlanItem()
-            return null
-        }
+        if(!item) return null
 
         const days = item.days.map(day=> (
             <td key={item.id + day.day}
