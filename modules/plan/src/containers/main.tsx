@@ -54,24 +54,20 @@ export default class MainScreen extends React.Component<Props, State> {
         this.props.actions.planitems.fetchTurnoverItem(CONST.PLAN_ID)
         this.props.actions.planitems.fetchPlanItems(CONST.PLAN_ID)
         this.props.actions.products.fetchProducts()
-        this.props.actions.salesreport.fetchSalesReport()
-        this.props.actions.salepointlist.fetchSalesPointList()
+        
     }
 
-    getDocumentNumber(){
-        const {salesplanlist} = this.props
-        if(!salesplanlist) return 0
-        return salesplanlist.findIndex(plan => plan.id == CONST.PLAN_ID) + 1000
+    componentWillReceiveProps(nextProps){
+        if(!!nextProps.salesplan && !this.props.salesplan) {
+            this.props.actions.salesreport.fetchSalesReport(nextProps.salesplan.sale_point_id)
+            this.props.actions.salepointlist.fetchSalesPointList()
+        }
     }
+
 
     render(){    
         const {salesplan, salepointlist} = this.props
         if(!salesplan || !salepointlist) return null
-        // console.log(this.props.salesplan)
-        // console.log(this.props.salesreport)
-        // console.log(this.props.salesplanlist)
-        // console.log(this.props.salepointlist)
-        // console.log(new Date(2017,11,1).toISOString().substr(0,10))
         return (
             <div className={styles.container}>
                 <Header 

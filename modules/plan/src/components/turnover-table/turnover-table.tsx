@@ -80,7 +80,8 @@ export default class ProductsTable extends React.Component <Props, State> {
         } as PlanItem
 
         const turnoverItem = this.props.planitems
-            .find(v=> v.item_id==CONST.SALE_POINT_ID) || newPlan
+            // .find(v=> v.item_id==this.props.salesplan.sale_point_id) || newPlan
+            .find(item=>item.type=='sale-point') || newPlan
             
         const productItems = this.props.planitems.filter(item=>item.type=='product')
         
