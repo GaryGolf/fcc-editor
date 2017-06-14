@@ -8,6 +8,7 @@ const {connect} = require('react-redux')
 
 import Input from '../modals/input'
 import Money from '../common/money'
+import DayHead from '../common/dayhead'
 
 interface Props {
     onEdit(item:PlanItem):void
@@ -88,6 +89,10 @@ export default class ProductsTable extends React.Component <Props, State> {
         const plangoods = planitems.filter(v=>v.type!='sale-point')
         if(!plangoods.length) return null
         const daysCount = getDaysCount(salesplan.period)
+
+        const dayHeaders= plangoods[0].days
+            .map(d=><th key={d.day}><DayHead value={d.day}/></th>)
+
         const rows = plangoods.map((item, idx) => {
             const product = products.find(v=>v.id == item.item_id)
             if(!product) return null
@@ -134,7 +139,7 @@ export default class ProductsTable extends React.Component <Props, State> {
                             <th>#</th>
                             <th>{CONST.TXT.PRODUCT}</th>
                             <th>{CONST.TXT.AMOUNT}</th>
-                            {new Array(daysCount).fill(1).map((_,i)=>(<th key={i}>{i+1}</th>))}
+                            {dayHeaders}
                         </tr>
                     </thead>
                     <tbody>

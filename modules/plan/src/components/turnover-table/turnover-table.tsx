@@ -9,6 +9,7 @@ const uuid = require('uuid')
 
 import Input from '../modals/input'
 import Money from '../common/money'
+import DayHead from '../common/dayhead'
 
 interface Props {
     salesplan?: SalesPlan
@@ -49,6 +50,13 @@ export default class ProductsTable extends React.Component <Props, State> {
         this.tableCells = {}
         this.currentItem = null
         this.currentDay = null
+    }
+
+    componentWillReceiveProps(nextProps){
+        // if(nextProps.planitems) {  // danger
+        //     if(!this.props.planitems.find(v=> v.item_id==CONST.SALE_POINT_ID))
+        //         this.props.actions.planitems.createPlanItem(this.createPlanItem())
+        // }
     }
 
     showInputDialog(item:PlanItem, day?: number){
@@ -99,8 +107,8 @@ export default class ProductsTable extends React.Component <Props, State> {
             item = {...this.currentItem, plan, days}
         } else {
             const days = this.currentItem.days.map(day=> day.day != this.currentDay ? day : ({...day, plan}))
-            const qty = days.reduce((acc, day)=> acc + Number(day.plan), 0)
-            item = {...this.currentItem, plan: qty, days}
+            const plan = days.reduce((acc, day)=> acc + Number(day.plan), 0)
+            item = {...this.currentItem, plan, days}
         }
         this.props.actions.planitems.updatePlanItem(item)
         this.setState({showInput: false})
@@ -109,7 +117,7 @@ export default class ProductsTable extends React.Component <Props, State> {
     render(){
         if(!this.props.planitems || !this.props.salesplan) return null
 
-        const item =  this.createPlanItem()
+        const item = this.createPlanItem()
 
         const days = item.days.map(day=> (
             <td key={item.id + day.day}
@@ -119,6 +127,8 @@ export default class ProductsTable extends React.Component <Props, State> {
                 <Money>{day.plan}</Money>
             </td>
         ))
+
+        const dayHeaders = item.days.map(d=><th key={d.day}><DayHead value={d.day}/></th>) 
         
         return (
             <div className={styles.container}>
@@ -137,7 +147,7 @@ export default class ProductsTable extends React.Component <Props, State> {
                         <tr>
                             <th>{CONST.TXT.SALE_POINT}</th>
                             <th>{CONST.TXT.AMOUNT}</th>
-                            {new Array(31).fill(1).map((_,i)=>(<th key={i}>{i+1}</th>))}
+                            {dayHeaders}
                         </tr>
                     </thead>
                     <tbody>

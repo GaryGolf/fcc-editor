@@ -28,6 +28,9 @@ export const month = [
     'Декабрь'
 ]
 
+export const shortMonth = ['ЯНВ','ФЕВ','МАР','АПР','МАЙ','ИЮН','ИЮЛ','АВГ','СЕН','ОКТ','НОЯ','ДЕК']
+export const weekDays = ['вс','пн','вт','ср','чт','пт','сб']
+
 // strings
 export const TXT = {
     ADD_PRODUCT: 'Добавить товар',
