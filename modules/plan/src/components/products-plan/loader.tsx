@@ -6,6 +6,7 @@ import * as Actions from '../../actions'
 import * as API from '../../api'
 import { bindActionCreators } from 'redux'
 const {connect} = require('react-redux')
+const uuid = require('uuid')
 import {createDays, getPeriods, getMonth} from '../utils'
 
 import Menu from '../modals/menu'
@@ -99,16 +100,18 @@ export default class Loader extends React.Component <Props, State> {
                         .filter(item=>item.date==month)
                         .map(item => {
                             const product = this.props.products.find(prod => prod.id == item.product_id)
+                            const amount = item.quantity*product.price
                             if(!product) return null
                             return  {
+                                id: uuid(),
                                 item_id: product.id,
                                 planning_document_id: CONST.PLAN_ID,
-                                plan: item.quantity,
+                                plan: amount,
                                 type: 'product',
                                 percent: 0,
                                 price: product.price,
                                 cost_price: product.cost_price,
-                                days: createDays(this.props.salesplan.period,true, item.quantity)
+                                days: createDays(this.props.salesplan.period,true, amount)
                             } as PlanItem })
                         .filter(item=>!!item)
                     this.setState({showMenu:false,menu:this.mainMenu,showSpinner:true},()=>{

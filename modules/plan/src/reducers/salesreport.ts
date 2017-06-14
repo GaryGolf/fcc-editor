@@ -20,6 +20,7 @@ export default function salesreport (state = initialState, action: Action): Arra
         //         },[])
         // }
         case Actions.FETCH_SALES_REPORT : 
+            console.log(action.payload)
             return Object.getOwnPropertyNames(action.payload)
                 .map(date=>action.payload[date].map(item=>({
                         ...item, 
