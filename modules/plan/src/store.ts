@@ -4,7 +4,7 @@ import ReduxThunk from 'redux-thunk'
 import * as ReduxPromise from 'redux-promise'
 import rootReducer, { RootState } from './reducers'
 
-export default function configureStore(initialState?: RootState): Store<RootState> {
+ function configureStore(initialState?: RootState): Store<RootState> {
   const create = window.devToolsExtension && !PRODUCTION
     ? window.devToolsExtension()(createStore) : createStore
 
@@ -22,3 +22,5 @@ export default function configureStore(initialState?: RootState): Store<RootStat
 
   return store
 }
+
+export default configureStore() 

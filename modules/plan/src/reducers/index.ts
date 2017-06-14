@@ -10,7 +10,7 @@ import salepointlist from './salepointlist'
 
 
 export interface RootState {
-    saleplan: SalesPlan
+    salesplan: SalesPlan
     planitems: Array<PlanItem>
     products: Array<Product>
     salesreport: Array<SalesReport>
