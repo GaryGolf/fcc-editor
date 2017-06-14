@@ -12,6 +12,7 @@
 .container {
     position: absolute;
     box-shadow: 1px 1px 15px silver;
+    z-index: 3;
 }
 .container input {
     width: 100px;

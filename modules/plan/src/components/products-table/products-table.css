@@ -1,5 +1,6 @@
 .container {
-    
+    /*max-height: 300px;*/
+    /*overflow-y: auto;*/
 }
 
 table {
@@ -12,14 +13,29 @@ table {
     text-align: right;
 }
 .plan-item {
-    max-width: 24px;
-    min-width: 24px;
+    max-width: 85px;
+    min-width: 85px;
     overflow: hidden;
     text-align: right;
 } 
 .product-name{
+    max-width: 350px;
+    min-width: 350px;
+    overflow: hidden;
     white-space: nowrap;
 }
+.amount {
+    max-width: 100px;
+    min-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.serial{
+    max-width: 40px;
+    min-width: 40px;
+    overflow: hidden;
+}
+
 .hand {
     cursor: pointer;
 }

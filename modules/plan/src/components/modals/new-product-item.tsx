@@ -3,8 +3,9 @@ import * as CONST from '../../constants'
 import * as Actions from '../../actions'
 import * as styles from './new-product-item.css'
 import { bindActionCreators } from 'redux'
-import {createDays, getAmount, getProfit} from '../utils'
+import {createDays} from '../utils'
 const {connect} = require('react-redux')
+const uuid = require('uuid')
 
 
 interface Props {
@@ -17,8 +18,6 @@ interface Props {
 }
 
 interface State {
-    id: string
-    qty: number
     arrange: boolean
     showSpinner: boolean
 }
@@ -41,58 +40,62 @@ interface State {
 )
 export default class NewItemModal extends React.Component <Props, State> {
 
+    private id: string
+    private amount: number
+
     constructor(props:Props){
         super(props)
-        this.state={
-            id: null,
-            qty: 1,
+        this.state = {
             arrange: true,
             showSpinner: false
         }
+        this.id = null
+        this.amount = 100
     }
 
     componentWillReceiveProps(nextProps){
         if(this.state.showSpinner) this.props.onClose()
         this.setState({showSpinner: false})
-        if(!this.state.id && nextProps.products.length) this.setState({id: nextProps.products[0].id})
+        if(nextProps.products.length) this.id = nextProps.products[0].id
     }
-    productChangeHandler(e){
-        this.setState({id: e.target.value})
-    }
-    quantityChangeHandler(e){
-        this.setState({qty: e.target.value})
-    }
-    arrangeChangeHandler(e) {
-        this.setState({arrange: e.target.checked})
-    }
+
+     handleKeyPress(e){
+        switch(e.key){
+            case 'Enter' :
+                this.submitHandler()
+                break
+            case 'Escape' :
+                this.props.onClose()
+                break
+        }
+   }
+    
     submitHandler(){
         this.setState({showSpinner: true},
             () => {
-                const product = this.props.products.find(item => item.id == this.state.id)
-                const body: PlanItem = {
-                    item_id: this.state.id,
+                const product = this.props.products.find(item => item.id == this.id)
+                const item: PlanItem = {
+                    id: uuid(),
+                    item_id: this.id,
                     planning_document_id: CONST.PLAN_ID,
-                    plan: this.state.qty,
+                    plan: Number(this.amount),
                     type: 'product',
                     percent: 0,
                     price: product.price,
                     cost_price: product.cost_price,
-                    days: createDays(this.props.salesplan.period,this.state.arrange, this.state.qty)
+                    days: createDays(this.props.salesplan.period,this.state.arrange, this.amount)
                 }
-                this.props.actions.planitems.createPlanItem(body)
+               this.props.actions.planitems.createPlanItem(item)
         })
     }
     render(){
 
-        const {visible, products} = this.props
-        const {id, qty, showSpinner} = this.state
-        if(!visible || !products) return null
-        const options = products.map(item=>(<option key={item.id} value={item.id}>{item.name}</option>))
-        const prod = products.find(item => item.id == id)
-        const price = !prod ? '' : prod.price.toString()
-        const cost_price = !prod ? '' : prod.cost_price.toString()
-        const amount = !qty ? '' : getAmount(qty, prod.price)
-        const profit = !qty ? '' : getProfit(qty, prod.price, prod.cost_price)
+        const {visible, planitems} = this.props
+        const {showSpinner} = this.state
+        const products = this.props.products.filter(p=>!planitems.some(v=>v.item_id==p.id))
+        if(!visible || !products.length || !planitems) return null
+        this.id = products[0].id
+        const options = products.map((item,idx)=><option key={item.id} value={item.id}>{item.name}</option>)
         const spinner = !showSpinner ? <span className="glyphicon glyphicon-ok"/> 
             : <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> 
         return (
@@ -116,7 +119,7 @@ export default class NewItemModal extends React.Component <Props, State> {
                             <label>
                                 <input type="checkbox"
                                     checked={this.state.arrange}
-                                    onChange={this.arrangeChangeHandler.bind(this)}
+                                    onChange={e=>this.setState(state=>({arrange:!state.arrange}))}
                                 />
                                 {CONST.TXT.ARRANGE_PRODUCTS}
                             </label>
@@ -124,44 +127,19 @@ export default class NewItemModal extends React.Component <Props, State> {
                         <div className="form-group">
                             <label>{CONST.TXT.PRODUCT}</label>
                             <select className="form-control"
-                                onChange={this.productChangeHandler.bind(this)}>
+                                defaultValue={this.id}
+                                onChange={e=>this.id=e.target.value}>
                                 {options}
                             </select>
                         </div>
                         <div className="form-group">
-                            <label>{CONST.TXT.QUANTITY}</label>
-                            <input className="form-control"
-                                type="number"
-                                defaultValue={qty.toString()}
-                                onChange={this.quantityChangeHandler.bind(this)}/>
-                        </div>
-                        <div className="form-group">
-                            <label>{CONST.TXT.PRICE}</label>
-                            <input className="form-control"
-                                value={price}
-                                disabled
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>{CONST.TXT.COST}</label>
-                            <input className="form-control"
-                                value={cost_price}
-                                disabled
-                            />
-                        </div>
-                        <div className="form-group">
                             <label>{CONST.TXT.AMOUNT}</label>
                             <input className="form-control"
-                                value={amount}
-                                disabled
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>{CONST.TXT.PROFIT}</label>
-                            <input className="form-control"
-                                value={profit}
-                                disabled
-                            />
+                                type="number"
+                                autoFocus
+                                defaultValue={this.amount.toString()}
+                                onKeyUp={this.handleKeyPress.bind(this)}
+                                onChange={e=>this.amount=Number(e.target.value)}/>
                         </div>
                     </div>
                     <div className="modal-footer">

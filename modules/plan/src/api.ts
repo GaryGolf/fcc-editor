@@ -247,3 +247,8 @@ export function cleanDocumenttItems(ids: Array<string>) {
         .catch(error => { throw error})
 }
 
+export function saveDocument(plan:SalesPlan) {
+
+    updateDocumentView(plan)
+
+}

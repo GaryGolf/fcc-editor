@@ -40,14 +40,16 @@ export default class Header extends React.Component <Props, State> {
         if(this.state.showTurnoverSpinner) this.setState({showTurnoverSpinner:false})
     }
 
-    getPeriodOptions(){   
-        let month:number = new Date().getMonth(),
-            year:number= new Date().getFullYear()
+    getPeriodOptions(){
+        const date = new Date()   
+        let month:number = date.getMonth(),
+            year:number= date.getFullYear()
         return new Array(12)
             .fill(' ')
             .map(_=>{
                 const name =`${CONST.month[month]} ${year}`
-                const option = <option key={name} value={month}>{name}</option>
+                const period = Math.floor(new Date(year,month,1).getTime()/1000)
+                const option = <option key={period} value={period}>{name}</option>
                 if(month == 11) { month = 0; year += 1 }
                 else month++
                 return option
@@ -55,10 +57,28 @@ export default class Header extends React.Component <Props, State> {
     }
 
     onSalePointChange(e){
-        const id = e.target.value
+        const sale_point_id = e.target.value
         const sp = this.props.salepointlist.find(point=>point.id == e.target.value)
-        this.salesPlan.sale_point_id = id
-        if (!!sp) this.salesPlan.sale_point_name = sp.name
+        const sale_point_name = !sp ? '' : sp.name
+        const plan = {...this.props.salesplan, sale_point_id, sale_point_name}
+        this.props.actions.salesplan.updateSalesPlan(plan)
+    }
+    onPeriodChange(e){
+        const period = e.target.value
+        const plan = {...this.props.salesplan, period}
+        this.props.actions.salesplan.updateSalesPlan(plan)
+    }
+
+    onPlanNumberChange(e){
+        const number = e.target.value
+        const plan = {...this.props.salesplan, number}
+        this.props.actions.salesplan.updateSalesPlan(plan)
+    }
+
+    onCommentChange(e){
+        const comment = e.target.value
+        const plan = {...this.props.salesplan, comment}
+        this.props.actions.salesplan.updateSalesPlan(plan)
     }
 
     handleRegister(){
@@ -70,18 +90,10 @@ export default class Header extends React.Component <Props, State> {
             }
         })
     }
-
-    handleClean(){
-         this.setState({showCleanSpinner: true}, ()=>{
-            const ids = this.props.planitems.map(item=>item.id)
-            this.props.actions.planitems.cleanPlanItems(ids)
-        })
-    }
    
     handleSubmit() {
         this.setState({showSaveSpinner: true}, ()=>{
-            const salesPlan = {...this.props.salesplan, ...this.salesPlan}
-            this.props.actions.salesplan.updateSalesPlan(salesPlan)
+            this.props.actions.salesplan.saveSalesPlan(this.props.salesplan)
         })
     }
 
@@ -103,8 +115,8 @@ export default class Header extends React.Component <Props, State> {
 
     render(){
         if(!this.props.salesplan || !this.props.salepointlist) return null
-        const {id, period, number, comment, is_register} = this.props.salesplan
-
+        const {id, period, sale_point_id, number, comment, is_register} = this.props.salesplan
+        
         const salePointOptions = this.props.salepointlist.map(item => (
             <option key={item.id} value={item.id}>{item.name}</option>
         ))
@@ -120,7 +132,7 @@ export default class Header extends React.Component <Props, State> {
                         <label>{CONST.TXT.NAME}:&nbsp;</label>
                         <input type="text"
                             className="form-control"
-                            onChange={e=>this.salesPlan.number=e.target.value}
+                            onChange={this.onPlanNumberChange.bind(this)}
                             defaultValue={number}
                         />
                     </div>
@@ -128,7 +140,7 @@ export default class Header extends React.Component <Props, State> {
                         <label>{CONST.TXT.PLANNING_PERIOD}&nbsp;</label>
                          <select 
                             className="form-control"
-                            onChange={e=>this.salesPlan.period=e.target.value}
+                            onChange={this.onPeriodChange.bind(this)}
                             defaultValue={''+period}>
                             {periodOptions}
                         </select>
@@ -138,7 +150,7 @@ export default class Header extends React.Component <Props, State> {
                         <select 
                             className="form-control"
                             onChange={this.onSalePointChange.bind(this)}
-                            defaultValue={this.props.salesplan.sale_point_id}>
+                            value={sale_point_id}>
                             {salePointOptions}
                         </select>
                     </div>
@@ -152,7 +164,7 @@ export default class Header extends React.Component <Props, State> {
                         <label>{CONST.TXT.COMMENT}:&nbsp;</label>
                          <input type="text"
                             className="form-control"
-                            onChange={e=>this.salesPlan.comment=e.target.value}
+                            onChange={this.onCommentChange.bind(this)}
                             defaultValue={comment}
                         />
                     </div>
@@ -163,7 +175,7 @@ export default class Header extends React.Component <Props, State> {
                     </div>
                 </div>
             </div>
-            <div className="form-group">
+            <div className="form-group" style={{display:'none'}}>
                 
                 <button className="btn btn-primary btn-sm"
                     onClick={this.handleSubmit.bind(this)}>
@@ -179,12 +191,6 @@ export default class Header extends React.Component <Props, State> {
                     onClick={this.handleRegister.bind(this)}>
                     {this.state.showRegisterSpinner? sprinner:<span className="glyphicon glyphicon-check"/>}&nbsp;
                     {is_register?CONST.TXT.RESTORE:CONST.TXT.REGISTER}
-                </button>
-                &nbsp;
-                <button className="btn btn-danger btn-sm"
-                    onClick={this.handleClean.bind(this)}>
-                    {this.state.showCleanSpinner? sprinner:<span className="glyphicon glyphicon-remove"/>}&nbsp;
-                    {CONST.TXT.CLEAN}
                 </button>
             </div>
         </div>

@@ -9,6 +9,7 @@ const {connect} = require('react-redux')
 import TurnoverPlan from '../components/turnover-plan'
 import ProductsPlan from '../components/products-plan'
 import Header from '../components/header'
+import Footer from '../components/footer'
 
 interface Props {
     salesplan?: SalesPlan
@@ -18,6 +19,8 @@ interface Props {
     salepointlist?: Array<SalePoint>
     actions?: Actions.Interface
 }
+
+interface State {}
 
 @connect(
     state => ({
@@ -39,11 +42,11 @@ interface Props {
         } 
     })
 )
-export default class MainScreen extends React.Component<Props, null> {
+export default class MainScreen extends React.Component<Props, State> {
 
     constructor(props: Props){
         super(props)
-    }
+     }
 
     componentDidMount(){
         this.props.actions.salesplanlist.fetchSalesPlanList()
@@ -59,11 +62,6 @@ export default class MainScreen extends React.Component<Props, null> {
         const {salesplanlist} = this.props
         if(!salesplanlist) return 0
         return salesplanlist.findIndex(plan => plan.id == CONST.PLAN_ID) + 1000
-    }
-
-    cleanAllPlanItems(){
-        const ids = this.props.planitems.map(item=>item.id)
-        this.props.actions.planitems.cleanPlanItems(ids)
     }
 
     render(){    
@@ -84,6 +82,11 @@ export default class MainScreen extends React.Component<Props, null> {
                 />
                 <TurnoverPlan/>
                 <ProductsPlan/>
+                <Footer
+                    salesplan={this.props.salesplan}
+                    planitems={this.props.planitems}
+                    actions={this.props.actions}
+                />
             </div>
         )
     }

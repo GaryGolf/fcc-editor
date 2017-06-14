@@ -5,8 +5,11 @@ import * as styles from './turnover-table.css'
 import { bindActionCreators } from 'redux'
 import {getAmount, getProfit, createDays} from '../utils'
 const {connect} = require('react-redux')
+const uuid = require('uuid')
 
 import Input from '../modals/input'
+import Money from '../common/money'
+import DayHead from '../common/dayhead'
 
 interface Props {
     salesplan?: SalesPlan
@@ -49,6 +52,7 @@ export default class ProductsTable extends React.Component <Props, State> {
         this.currentDay = null
     }
 
+
     showInputDialog(item:PlanItem, day?: number){
         this.currentItem = item
         this.currentDay = day
@@ -60,6 +64,36 @@ export default class ProductsTable extends React.Component <Props, State> {
         this.setState({showInput: true})
     }
 
+    createPlanItem(): PlanItem{
+       
+        const amount = 0
+        const newPlan = {
+            id: uuid(),
+            item_id: this.props.salesplan.sale_point_id,
+            planning_document_id: CONST.PLAN_ID,
+            plan: amount,
+            type: 'sale-point',
+            percent: 0,
+            price: 0,
+            cost_price: 0,
+            days: createDays(this.props.salesplan.period,true, amount)
+        } as PlanItem
+
+        const turnoverItem = this.props.planitems
+            .find(v=> v.item_id==CONST.SALE_POINT_ID) || newPlan
+            
+        const productItems = this.props.planitems.filter(item=>item.type=='product')
+        
+        if(productItems.length){
+            const days = productItems
+                .map(item=> item.days)
+                .reduce((acc,item) => acc.map((ac,i)=>({...ac, plan:ac.plan+item[i].plan})))
+            const plan = productItems.reduce((acc,item)=>acc+=Number(item.plan),0)
+            return {...turnoverItem, days, plan}
+        } 
+        return turnoverItem
+    }
+
     onEnterHandler(plan: number) {
         let item: PlanItem
         if(!this.currentDay){
@@ -67,8 +101,8 @@ export default class ProductsTable extends React.Component <Props, State> {
             item = {...this.currentItem, plan, days}
         } else {
             const days = this.currentItem.days.map(day=> day.day != this.currentDay ? day : ({...day, plan}))
-            const qty = days.reduce((acc, day)=> acc + Number(day.plan), 0)
-            item = {...this.currentItem, plan: qty, days}
+            const plan = days.reduce((acc, day)=> acc + Number(day.plan), 0)
+            item = {...this.currentItem, plan, days}
         }
         this.props.actions.planitems.updatePlanItem(item)
         this.setState({showInput: false})
@@ -76,19 +110,19 @@ export default class ProductsTable extends React.Component <Props, State> {
 
     render(){
         if(!this.props.planitems || !this.props.salesplan) return null
-        
-        const item = this.props.planitems.find(v=> v.item_id==CONST.SALE_POINT_ID)
 
-        if(!item) return null
+        const item = this.createPlanItem()
 
         const days = item.days.map(day=> (
             <td key={item.id + day.day}
                 ref={td=>this.tableCells[item.id+day.day]=td}
-                onClick={()=>this.showInputDialog(item, day.day)}
+                //onClick={()=>this.showInputDialog(item, day.day)}
                 className={[styles['plan-item'], styles.hand].join(' ')}>
-                {Number(day.plan).toFixed(2).toLocaleString()}
+                <Money>{day.plan}</Money>
             </td>
         ))
+
+        const dayHeaders = item.days.map(d=><th key={d.day}><DayHead value={d.day}/></th>) 
         
         return (
             <div className={styles.container}>
@@ -105,9 +139,9 @@ export default class ProductsTable extends React.Component <Props, State> {
                     <colgroup span={31} className={styles.days}/>
                     <thead>
                         <tr>
-                            <th>sale point</th>
+                            <th>{CONST.TXT.SALE_POINT}</th>
                             <th>{CONST.TXT.AMOUNT}</th>
-                            {new Array(31).fill(1).map((_,i)=>(<th key={i}>{i+1}</th>))}
+                            {dayHeaders}
                         </tr>
                     </thead>
                     <tbody>
@@ -115,10 +149,10 @@ export default class ProductsTable extends React.Component <Props, State> {
                             <td className={[styles['product-name'], styles.hand].join(' ')}>
                                 {this.props.salesplan.sale_point_name}
                             </td>
-                            <td className={[styles.number,styles.hand].join(' ')} 
+                            <td className={[styles.number,styles.hand,styles.amount].join(' ')} 
                                 onClick={()=>this.showInputDialog(item)}
                                 ref={td=>this.tableCells[item.id]=td}>
-                                {Number(item.plan).toFixed(2).toLocaleString()}
+                                <Money>{item.plan}</Money>
                             </td>
                             {days}
                         </tr>
