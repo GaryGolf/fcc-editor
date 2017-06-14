@@ -25,7 +25,6 @@ export default function planitems (state = initialState, action: Action): Array<
         case Actions.FETCH_PLAN_ITEMS :
             return action.payload
         case Actions.FETCH_TURNOVER_ITEM :
-            console.log(action.payload)
             return Array.isArray(action.payload)?[...state,...action.payload]:[...state,action.payload]
         case Actions.UPDATE_PLAN_ITEM :
             return state.map(item => item.id != action.payload.id ? item : action.payload)

@@ -95,7 +95,7 @@ export default class ProductsTable extends React.Component <Props, State> {
         if(productItems.length){
             const days = productItems
                 .map(item=> item.days)
-                .reduce((acc,item) => acc.map((ac,i)=>({...ac, plan:ac.plan+item[i].plan})))
+                .reduce((acc,item) => acc.map((ac,i)=>({...ac, plan:Number(ac.plan)+Number(item[i].plan)})))
             const plan = productItems.reduce((acc,item)=>acc+=Number(item.plan),0)
             return {...turnoverItem, days, plan}
         } 
