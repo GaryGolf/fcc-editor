@@ -8,8 +8,8 @@ const {connect} = require('react-redux')
 
 import TurnoverPlan from '../components/turnover-plan'
 import ProductsPlan from '../components/products-plan'
-import TurnoverTable from '../components/turnover-table'
 import Header from '../components/header'
+import Footer from '../components/footer'
 
 interface Props {
     salesplan?: SalesPlan
@@ -85,8 +85,13 @@ export default class MainScreen extends React.Component<Props, State> {
                     planitems={this.props.planitems}
                     actions={this.props.actions}
                 />
-                <TurnoverTable/>
+                <TurnoverPlan/>
                 <ProductsPlan/>
+                <Footer
+                    salesplan={this.props.salesplan}
+                    planitems={this.props.planitems}
+                    actions={this.props.actions}
+                />
             </div>
         )
     }

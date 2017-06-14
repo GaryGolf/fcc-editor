@@ -182,7 +182,7 @@ export default class Header extends React.Component <Props, State> {
                     </div>
                 </div>
             </div>
-            <div className="form-group">
+            <div className="form-group" style={{display:'none'}}>
                 
                 <button className="btn btn-primary btn-sm"
                     onClick={this.handleSubmit.bind(this)}>

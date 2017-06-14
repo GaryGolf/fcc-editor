@@ -64,6 +64,26 @@ export default class Loader extends React.Component <Props, State> {
     componentWillReceiveProps(nextProps){
         if(this.state.showSpinner) this.setState({showSpinner: false})
     }
+    createPlanItemsFromReport(month){
+        return this.props.salesreport
+            .filter(item=>item.date==month)
+            .map(item => {
+                const product = this.props.products.find(prod => prod.id == item.product_id)
+                const amount = item.quantity*product.price
+                if(!product) return null
+                return  {
+                    id: uuid(),
+                    item_id: product.id,
+                    planning_document_id: CONST.PLAN_ID,
+                    plan: amount,
+                    type: 'product',
+                    percent: 0,
+                    price: product.price,
+                    cost_price: product.cost_price,
+                    days: createDays(this.props.salesplan.period,true, amount)
+                } as PlanItem })
+            .filter(item=>!!item)
+    }
 
     handleMenuSelect(menuItem: string){
         const periods = this.props.salesreport
@@ -96,24 +116,7 @@ export default class Loader extends React.Component <Props, State> {
                 } else if (monthMenu.includes(menuItem)){
                     const idx = monthMenu.findIndex(item=>item==menuItem)
                     const month = periods[idx]
-                    const report = this.props.salesreport
-                        .filter(item=>item.date==month)
-                        .map(item => {
-                            const product = this.props.products.find(prod => prod.id == item.product_id)
-                            const amount = item.quantity*product.price
-                            if(!product) return null
-                            return  {
-                                id: uuid(),
-                                item_id: product.id,
-                                planning_document_id: CONST.PLAN_ID,
-                                plan: amount,
-                                type: 'product',
-                                percent: 0,
-                                price: product.price,
-                                cost_price: product.cost_price,
-                                days: createDays(this.props.salesplan.period,true, amount)
-                            } as PlanItem })
-                        .filter(item=>!!item)
+                    const report = this.createPlanItemsFromReport(month)
                     this.setState({showMenu:false,menu:this.mainMenu,showSpinner:true},()=>{
                         this.props.actions.planitems.loadFromReport(report)
                     })
