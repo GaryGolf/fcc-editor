@@ -1,6 +1,6 @@
 .container {
-    height: 400px;
-    overflow: auto;
+    /*max-height: 300px;*/
+    /*overflow-y: auto;*/
 }
 
 table {

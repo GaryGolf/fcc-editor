@@ -63,10 +63,11 @@ export default class ProductsTable extends React.Component <Props, State> {
     }
 
     createPlanItem(): PlanItem{
-        const amount = 1000
-        return {
+       
+        const amount = 0
+        const newPlan = {
             id: uuid(),
-            item_id: this.props.salesplan.sale_point_id, //CONST.SALE_POINT_ID,
+            item_id: this.props.salesplan.sale_point_id,
             planning_document_id: CONST.PLAN_ID,
             plan: amount,
             type: 'sale-point',
@@ -76,6 +77,19 @@ export default class ProductsTable extends React.Component <Props, State> {
             days: createDays(this.props.salesplan.period,true, amount)
         } as PlanItem
 
+        const turnoverItem = this.props.planitems
+            .find(v=> v.item_id==CONST.SALE_POINT_ID) || newPlan
+            
+        const productItems = this.props.planitems.filter(item=>item.type=='product')
+        
+        if(productItems.length){
+            const days = productItems
+                .map(item=> item.days)
+                .reduce((acc,item) => acc.map((ac,i)=>({...ac, plan:ac.plan+item[i].plan})))
+            const plan = productItems.reduce((acc,item)=>acc+=Number(item.plan),0)
+            return {...turnoverItem, days, plan}
+        } 
+        return turnoverItem
     }
 
     onEnterHandler(plan: number) {
@@ -95,11 +109,7 @@ export default class ProductsTable extends React.Component <Props, State> {
     render(){
         if(!this.props.planitems || !this.props.salesplan) return null
 
-        
-        const item = this.props.planitems
-            .find(v=> v.item_id==CONST.SALE_POINT_ID) || this.createPlanItem()
-
-        if(!item) return null
+        const item =  this.createPlanItem()
 
         const days = item.days.map(day=> (
             <td key={item.id + day.day}
