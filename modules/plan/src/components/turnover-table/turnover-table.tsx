@@ -52,12 +52,6 @@ export default class ProductsTable extends React.Component <Props, State> {
         this.currentDay = null
     }
 
-    componentWillReceiveProps(nextProps){
-        // if(nextProps.planitems) {  // danger
-        //     if(!this.props.planitems.find(v=> v.item_id==CONST.SALE_POINT_ID))
-        //         this.props.actions.planitems.createPlanItem(this.createPlanItem())
-        // }
-    }
 
     showInputDialog(item:PlanItem, day?: number){
         this.currentItem = item
@@ -122,7 +116,7 @@ export default class ProductsTable extends React.Component <Props, State> {
         const days = item.days.map(day=> (
             <td key={item.id + day.day}
                 ref={td=>this.tableCells[item.id+day.day]=td}
-                onClick={()=>this.showInputDialog(item, day.day)}
+                //onClick={()=>this.showInputDialog(item, day.day)}
                 className={[styles['plan-item'], styles.hand].join(' ')}>
                 <Money>{day.plan}</Money>
             </td>

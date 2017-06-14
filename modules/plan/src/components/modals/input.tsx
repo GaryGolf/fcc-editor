@@ -31,18 +31,16 @@ export default class Input extends React.Component<Props, State> {
         if(!this.props.visible) return null
         const { top, left} = this.props
         return (
-            <div className={styles.overlay} 
-                onClick={this.props.onClose}>
-                <div className={styles.container} 
-                    onClick={e=>e.stopPropagation()}
-                    style={{top, left}}>
-                    <input type="number"
-                        defaultValue={''+this.props.defaultValue}
-                        ref={input=>this.input=input}
-                        onKeyUp={this.keyPressHandler.bind(this)}
-                        autoFocus
-                    />
-                </div>
+            <div className={styles.container} 
+                onClick={e=>e.stopPropagation()}
+                style={{top, left}}>
+                <input type="number"
+                    defaultValue={''+this.props.defaultValue}
+                    ref={input=>this.input=input}
+                    onKeyUp={this.keyPressHandler.bind(this)}
+                    onBlur={this.props.onClose}
+                    autoFocus={true}
+                />
             </div>
         )
     }
