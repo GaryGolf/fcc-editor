@@ -41,7 +41,9 @@ export default class Footer extends React.Component<Props, State> {
    
     handleSubmit() {
         this.setState({showSaveSpinner: true}, ()=>{
-            this.props.actions.salesplan.saveSalesPlan(this.props.salesplan)
+            const {actions, salesplan, planitems} = this.props
+            actions.salesplan.saveSalesPlan(salesplan)
+            if(planitems.length) actions.planitems.savePlanItems(planitems)
         })
     }
 

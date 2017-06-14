@@ -247,8 +247,18 @@ export function cleanDocumenttItems(ids: Array<string>) {
         .catch(error => { throw error})
 }
 
-export function saveDocument(plan:SalesPlan) {
-
-    updateDocumentView(plan)
-
+export function batchCreateDocumentItem(items: PlanItem[]){
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document-item/batch-create`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        },
+        data: JSON.stringify({items})
+    }
+    return axios(options)
+        .then(response => response.data)
+        .catch(error => { throw error})
 }
