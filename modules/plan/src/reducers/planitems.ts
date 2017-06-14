@@ -19,6 +19,8 @@ export default function planitems (state = initialState, action: Action): Array<
             return []
         case Actions.BATCH_CREATE_PLAN_ITEMS :
             return action.payload 
+        case Actions.CLEAN_PLAN_ITEMS :
+            return action.payload
                 
         case Actions.FETCH_PLAN_ITEMS :
             return action.payload

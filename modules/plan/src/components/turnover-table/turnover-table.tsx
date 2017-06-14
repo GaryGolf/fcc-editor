@@ -3,7 +3,7 @@ import * as CONST from '../../constants'
 import * as Actions from '../../actions'
 import * as styles from './turnover-table.css'
 import { bindActionCreators } from 'redux'
-import {getAmount, getProfit, createDays} from '../utils'
+import {getDaysCount, createDays} from '../utils'
 const {connect} = require('react-redux')
 const uuid = require('uuid')
 
@@ -52,6 +52,14 @@ export default class ProductsTable extends React.Component <Props, State> {
         this.currentDay = null
     }
 
+    componentDidUpdate(){
+        const {planitems, salesplan} = this.props
+        if(!planitems || !salesplan) return
+        const item = this.props.planitems.find(item=>item.type=='sale-point')
+        if(!item){
+            // this.props.actions.planitems.updatePlanItem(this.createPlanItem())
+        }
+    }
 
     showInputDialog(item:PlanItem, day?: number){
         this.currentItem = item
@@ -74,17 +82,16 @@ export default class ProductsTable extends React.Component <Props, State> {
             plan: amount,
             type: 'sale-point',
             percent: 0,
-            price: 0,
-            cost_price: 0,
             days: createDays(this.props.salesplan.period,true, amount)
         } as PlanItem
+
 
         const turnoverItem = this.props.planitems
             // .find(v=> v.item_id==this.props.salesplan.sale_point_id) || newPlan
             .find(item=>item.type=='sale-point') || newPlan
             
         const productItems = this.props.planitems.filter(item=>item.type=='product')
-        
+
         if(productItems.length){
             const days = productItems
                 .map(item=> item.days)

@@ -36,13 +36,13 @@ declare interface PlanItem {
     id?: string  // 
     item_id: string // product ID
     planning_document_id: string // plan id
-    tenant_id?: string   // google_id
     type: 'product' | 'tag' | 'sale-point'
     plan: number // quantity
-    percent?: number // ?s
-    price?: number
-    cost_price?: number
     days: Array<Days> // ? date, quantity
+    percent?: number // ?s
+    // price?: number
+    // cost_price?: number
+    tenant_id?: string   // google_id
     created_at?: number
     updated_at?: number
     status?: 'enabled' | 'disabled'

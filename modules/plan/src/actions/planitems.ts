@@ -22,4 +22,4 @@ export const updatePlanItem = item => ({type: Actions.UPDATE_PLAN_ITEM, payload:
 export const removePlanItem = item => ({type: Actions.REMOVE_PLAN_ITEM, payload: item }) //API.removeDocumentItem(item)})
 export const loadFromReport = items => ({type: Actions.LOAD_PLAN_ITEMS_FROM_REPORT, payload: items }) //API.loadReportItems(items)})
 export const loadFromDocument = id => ({type: Actions.LOAD_PLAN_ITEMS_FROM_DOCUMENT, payload: API.loadDocumenttItems(id)})
-export const cleanPlanItems = () => ({type: Actions.CLEAN_PLAN_ITEMS }) //API.cleanDocumenttItems(ids)})
+export const cleanPlanItems = () => ({type: Actions.CLEAN_PLAN_ITEMS , payload: API.clearDocumentItems()})

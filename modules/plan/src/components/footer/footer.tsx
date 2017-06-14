@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as styles from './footer.css'
 import * as Actions from '../../actions'
 import * as CONST from '../../constants'
+import {createDays} from '../utils'
 
 interface Props {
     salesplan: SalesPlan
@@ -40,10 +41,19 @@ export default class Footer extends React.Component<Props, State> {
     }
    
     handleSubmit() {
+        
         this.setState({showSaveSpinner: true}, ()=>{
             const {actions, salesplan, planitems} = this.props
+            const newPlan = {
+                item_id: salesplan.sale_point_id,
+                planning_document_id: CONST.PLAN_ID,
+                plan: 0, type: 'sale-point', percent: 0,
+                days: createDays(this.props.salesplan.period,false, 0)
+            } as PlanItem
+            const turnover = planitems.find(item=>item.type=='sale-point')
             actions.salesplan.saveSalesPlan(salesplan)
-            if(planitems.length) actions.planitems.savePlanItems(planitems)
+            const items = !turnover ? [...planitems, newPlan]:planitems
+            actions.planitems.savePlanItems(items)
         })
     }
 

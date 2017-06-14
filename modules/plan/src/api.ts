@@ -247,6 +247,21 @@ export function cleanDocumenttItems(ids: Array<string>) {
         .catch(error => { throw error})
 }
 
+export function clearDocumentItems(){
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document/clear/${CONST.PLAN_ID}`,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        }
+    }
+    return axios(options)
+        .then(response => [])
+        .catch(error => { throw error})
+}
+
 export function batchCreateDocumentItem(items: PlanItem[]){
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document-item/batch-create`,
@@ -258,7 +273,8 @@ export function batchCreateDocumentItem(items: PlanItem[]){
         },
         data: JSON.stringify({items})
     }
-    return axios(options)
+    return clearDocumentItems()
+        .then(_=>axios(options))
         .then(response => response.data)
         .catch(error => { throw error})
 }
