@@ -115,15 +115,21 @@ export default class Header extends React.Component <Props, State> {
 
     render(){
         if(!this.props.salesplan || !this.props.salepointlist) return null
-        const {id, period, number, comment, is_register} = this.props.salesplan
-
+        const {id, period, sale_point_id, number, comment, is_register} = this.props.salesplan
+        
         const salePointOptions = this.props.salepointlist.map(item => (
-            <option key={item.id} value={item.id}>{item.name}</option>
+            <option key={item.id} 
+                {...(item.id==sale_point_id ? {selected:true} : {})} 
+                value={item.id}>
+                {item.name}
+                </option>
         ))
         const periodOptions = this.getPeriodOptions()
 
         const sprinner = <span className={"glyphicon glyphicon-refresh "+styles.spinner}/>
 
+        console.log(this.props.salesplan)
+        console.log(this.props.salepointlist)
         return (
         <div>
             <div className="row">
