@@ -124,7 +124,7 @@ export default class ProductsTable extends React.Component <Props, State> {
         const days = item.days.map(day=> (
             <td key={item.id + day.day}
                 ref={td=>this.tableCells[item.id+day.day]=td}
-                //onClick={()=>this.showInputDialog(item, day.day)}
+                onClick={()=>this.showInputDialog(item, day.day)}
                 className={[styles['plan-item'], styles.hand].join(' ')}>
                 <Money>{day.plan}</Money>
             </td>

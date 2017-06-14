@@ -51,9 +51,8 @@ export default class Footer extends React.Component<Props, State> {
                 days: createDays(this.props.salesplan.period,false, 0)
             } as PlanItem
             const turnover = planitems.find(item=>item.type=='sale-point')
-            actions.salesplan.saveSalesPlan(salesplan)
             const items = !turnover ? [...planitems, newPlan]:planitems
-            actions.planitems.savePlanItems(items)
+            actions.planitems.saveDocument(salesplan,items)
         })
     }
 

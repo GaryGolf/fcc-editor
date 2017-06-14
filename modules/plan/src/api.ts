@@ -278,3 +278,9 @@ export function batchCreateDocumentItem(items: PlanItem[]){
         .then(response => response.data)
         .catch(error => { throw error})
 }
+
+
+export function saveDocument(plan:SalesPlan, items:PlanItem[]){
+    updateDocumentView(plan)
+    return batchCreateDocumentItem(items)
+}

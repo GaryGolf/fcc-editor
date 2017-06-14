@@ -3,7 +3,7 @@ import * as styles from './header.css'
 import * as Actions from '../../actions'
 import * as CONST from '../../constants'
 
-import {createDays} from '../utils'
+import {createDays, shrinkTrimDays} from '../utils'
 
 interface Props {
     salesplan: SalesPlan
@@ -49,6 +49,8 @@ export default class Header extends React.Component <Props, State> {
     }
     onPeriodChange(e){
         const period = e.target.value
+        const items = shrinkTrimDays(this.props.planitems,period)
+        this.props.actions.planitems.updatePlanItems(items)
         const plan = {...this.props.salesplan, period}
         this.props.actions.salesplan.updateSalesPlan(plan)
     }
@@ -64,22 +66,6 @@ export default class Header extends React.Component <Props, State> {
         const plan = {...this.props.salesplan, comment}
         this.props.actions.salesplan.updateSalesPlan(plan)
     }
-
-    // handleAddTurnoverItem(){
-    //     this.setState({showTurnoverSpinner: true}, ()=>{
-    //         const item: PlanItem = {
-    //             item_id: this.props.salesplan.sale_point_id,
-    //             planning_document_id: CONST.PLAN_ID,
-    //             plan: 0,
-    //             type: 'sale-point',
-    //             percent: 0,
-    //             price: 0,
-    //             cost_price: 0,
-    //             days: createDays(this.props.salesplan.period,true, 0)
-    //         }
-    //         this.props.actions.planitems.createPlanItem(item)
-    //     })
-    // }
 
     render(){
         if(!this.props.salesplan || !this.props.salepointlist) return null
