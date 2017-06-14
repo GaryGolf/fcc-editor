@@ -90,13 +90,6 @@ export default class Header extends React.Component <Props, State> {
             }
         })
     }
-
-    handleClean(){
-         this.setState({showCleanSpinner: true}, ()=>{
-            const ids = this.props.planitems.map(item=>item.id)
-            this.props.actions.planitems.cleanPlanItems(ids)
-        })
-    }
    
     handleSubmit() {
         this.setState({showSaveSpinner: true}, ()=>{
@@ -198,12 +191,6 @@ export default class Header extends React.Component <Props, State> {
                     onClick={this.handleRegister.bind(this)}>
                     {this.state.showRegisterSpinner? sprinner:<span className="glyphicon glyphicon-check"/>}&nbsp;
                     {is_register?CONST.TXT.RESTORE:CONST.TXT.REGISTER}
-                </button>
-                &nbsp;
-                <button className="btn btn-danger btn-sm"
-                    onClick={this.handleClean.bind(this)}>
-                    {this.state.showCleanSpinner? sprinner:<span className="glyphicon glyphicon-remove"/>}&nbsp;
-                    {CONST.TXT.CLEAN}
                 </button>
             </div>
         </div>

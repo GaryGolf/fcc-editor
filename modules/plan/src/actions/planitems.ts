@@ -12,7 +12,7 @@ export interface Interface {
     removePlanItem(item: PlanItem): Action
     loadFromReport(items:Array<PlanItem>): Action
     loadFromDocument(id:string, type?:string): Action
-    cleanPlanItems(ids: Array<string>): Action
+    cleanPlanItems(): Action
 }
 
 export const fetchPlanItems = id => ({ type: Actions.FETCH_PLAN_ITEMS, payload: API.getDocumentItems(id, 'product')})
@@ -23,4 +23,4 @@ export const updatePlanItem = item => ({type: Actions.UPDATE_PLAN_ITEM, payload:
 export const removePlanItem = item => ({type: Actions.REMOVE_PLAN_ITEM, payload: item }) //API.removeDocumentItem(item)})
 export const loadFromReport = items => ({type: Actions.LOAD_PLAN_ITEMS_FROM_REPORT, payload: items }) //API.loadReportItems(items)})
 export const loadFromDocument = id => ({type: Actions.LOAD_PLAN_ITEMS_FROM_DOCUMENT, payload: API.loadDocumenttItems(id)})
-export const cleanPlanItems = ids => ({type: Actions.CLEAN_PLAN_ITEMS, payload: API.cleanDocumenttItems(ids)})
+export const cleanPlanItems = () => ({type: Actions.CLEAN_PLAN_ITEMS }) //API.cleanDocumenttItems(ids)})

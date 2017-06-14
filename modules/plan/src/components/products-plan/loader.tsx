@@ -69,8 +69,8 @@ export default class Loader extends React.Component <Props, State> {
             .filter(item=>item.date==month)
             .map(item => {
                 const product = this.props.products.find(prod => prod.id == item.product_id)
-                const amount = item.quantity*product.price
                 if(!product) return null
+                const amount = item.quantity*product.price
                 return  {
                     id: uuid(),
                     item_id: product.id,

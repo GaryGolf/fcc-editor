@@ -15,6 +15,8 @@ export default function planitems (state = initialState, action: Action): Array<
             return state.filter(item => item.id != action.payload.id)
         case Actions.LOAD_PLAN_ITEMS_FROM_REPORT :
             return [...state, ...action.payload]
+        case Actions.CLEAN_PLAN_ITEMS :
+            return []
                 
 
 
@@ -28,8 +30,6 @@ export default function planitems (state = initialState, action: Action): Array<
             return [...state, ...action.payload
                 .filter(item=>!item.error_description)
                 .map(item=>item.content)]
-        case Actions.CLEAN_PLAN_ITEMS :
-            return []
     }
     return state
 }

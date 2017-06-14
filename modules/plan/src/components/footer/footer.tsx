@@ -11,7 +11,6 @@ interface Props {
 interface State {
     showSaveSpinner: boolean
     showRegisterSpinner: boolean
-    showCleanSpinner: boolean
 }
 
 export default class Footer extends React.Component<Props, State> {
@@ -21,15 +20,13 @@ export default class Footer extends React.Component<Props, State> {
 
         this.state = {
             showSaveSpinner: false,
-            showRegisterSpinner: false,
-            showCleanSpinner: false
+            showRegisterSpinner: false
         }
     }
     
      componentWillReceiveProps(nextProps){
         if(this.state.showSaveSpinner) this.setState({showSaveSpinner:false})
         if(this.state.showRegisterSpinner) this.setState({showRegisterSpinner:false})
-        if(this.state.showCleanSpinner) this.setState({showCleanSpinner:false})
     }
 
     handleRegister(){
@@ -39,13 +36,6 @@ export default class Footer extends React.Component<Props, State> {
             } else {
                 this.props.actions.salesplan.registerSalesPlan(this.props.salesplan)
             }
-        })
-    }
-
-    handleClean(){
-         this.setState({showCleanSpinner: true}, ()=>{
-            const ids = this.props.planitems.map(item=>item.id)
-            this.props.actions.planitems.cleanPlanItems(ids)
         })
     }
    
@@ -64,8 +54,8 @@ export default class Footer extends React.Component<Props, State> {
                 <div className="row">
                     <div className="col-md-2">
                         <button className="btn btn-danger btn-sm"
-                            onClick={this.handleClean.bind(this)}>
-                            {this.state.showCleanSpinner? sprinner:<span className="glyphicon glyphicon-remove"/>}&nbsp;
+                            onClick={this.props.actions.planitems.cleanPlanItems}>
+                            <span className="glyphicon glyphicon-remove"/>&nbsp;
                             {CONST.TXT.CLEAN}
                         </button>
                     </div>

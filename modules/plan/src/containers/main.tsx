@@ -64,11 +64,6 @@ export default class MainScreen extends React.Component<Props, State> {
         return salesplanlist.findIndex(plan => plan.id == CONST.PLAN_ID) + 1000
     }
 
-    cleanAllPlanItems(){
-        const ids = this.props.planitems.map(item=>item.id)
-        this.props.actions.planitems.cleanPlanItems(ids)
-    }
-
     render(){    
         const {salesplan, salepointlist} = this.props
         if(!salesplan || !salepointlist) return null
