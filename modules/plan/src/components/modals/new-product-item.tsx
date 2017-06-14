@@ -81,8 +81,6 @@ export default class NewItemModal extends React.Component <Props, State> {
                     plan: Number(this.amount),
                     type: 'product',
                     percent: 0,
-                    price: product.price,
-                    cost_price: product.cost_price,
                     days: createDays(this.props.salesplan.period,this.state.arrange, this.amount)
                 }
                this.props.actions.planitems.createPlanItem(item)

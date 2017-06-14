@@ -12,10 +12,7 @@ interface Props {
     actions?: Actions.Interface
 }
 interface State {
-    showSaveSpinner: boolean
-    showRegisterSpinner: boolean
-    showCleanSpinner: boolean
-    showTurnoverSpinner: boolean
+   
 }
 
 export default class Header extends React.Component <Props, State> {
@@ -25,19 +22,6 @@ export default class Header extends React.Component <Props, State> {
     constructor(props:Props){
         super(props)
         this.salesPlan = {}
-        this.state = { 
-            showSaveSpinner: false ,
-            showRegisterSpinner: false,
-            showCleanSpinner: false,
-            showTurnoverSpinner: false
-        }
-    }
-
-    componentWillReceiveProps(nextProps){
-        if(this.state.showSaveSpinner) this.setState({showSaveSpinner:false})
-        if(this.state.showRegisterSpinner) this.setState({showRegisterSpinner:false})
-        if(this.state.showCleanSpinner) this.setState({showCleanSpinner:false})
-        if(this.state.showTurnoverSpinner) this.setState({showTurnoverSpinner:false})
     }
 
     getPeriodOptions(){
@@ -81,37 +65,21 @@ export default class Header extends React.Component <Props, State> {
         this.props.actions.salesplan.updateSalesPlan(plan)
     }
 
-    handleRegister(){
-        this.setState({showRegisterSpinner: true}, ()=>{
-            if(this.props.salesplan.is_register) {
-                this.props.actions.salesplan.unregisterSalesPlan(this.props.salesplan)
-            } else {
-                this.props.actions.salesplan.registerSalesPlan(this.props.salesplan)
-            }
-        })
-    }
-   
-    handleSubmit() {
-        this.setState({showSaveSpinner: true}, ()=>{
-            this.props.actions.salesplan.saveSalesPlan(this.props.salesplan)
-        })
-    }
-
-    handleAddTurnoverItem(){
-        this.setState({showTurnoverSpinner: true}, ()=>{
-            const item: PlanItem = {
-                item_id: CONST.SALE_POINT_ID,
-                planning_document_id: CONST.PLAN_ID,
-                plan: 0,
-                type: 'sale-point',
-                percent: 0,
-                price: 0,
-                cost_price: 0,
-                days: createDays(this.props.salesplan.period,true, 0)
-            }
-            this.props.actions.planitems.createPlanItem(item)
-        })
-    }
+    // handleAddTurnoverItem(){
+    //     this.setState({showTurnoverSpinner: true}, ()=>{
+    //         const item: PlanItem = {
+    //             item_id: this.props.salesplan.sale_point_id,
+    //             planning_document_id: CONST.PLAN_ID,
+    //             plan: 0,
+    //             type: 'sale-point',
+    //             percent: 0,
+    //             price: 0,
+    //             cost_price: 0,
+    //             days: createDays(this.props.salesplan.period,true, 0)
+    //         }
+    //         this.props.actions.planitems.createPlanItem(item)
+    //     })
+    // }
 
     render(){
         if(!this.props.salesplan || !this.props.salepointlist) return null
@@ -174,24 +142,6 @@ export default class Header extends React.Component <Props, State> {
                         <span>{is_register?'Проведен':'Редактируется'}</span>
                     </div>
                 </div>
-            </div>
-            <div className="form-group" style={{display:'none'}}>
-                
-                <button className="btn btn-primary btn-sm"
-                    onClick={this.handleSubmit.bind(this)}>
-                    {this.state.showSaveSpinner? sprinner:<span className="glyphicon glyphicon-ok"/>}&nbsp;
-                    {CONST.TXT.SAVE}
-                </button>&nbsp;
-                <button className="btn btn-default btn-sm"
-                    onClick={this.handleAddTurnoverItem.bind(this)}>
-                    {this.state.showTurnoverSpinner? sprinner:<span className="glyphicon glyphicon-plus"/>}&nbsp;
-                    {CONST.TXT.ADD_TURNOVER_ITEM}
-                </button>&nbsp;
-                <button className="btn btn-primary btn-sm"
-                    onClick={this.handleRegister.bind(this)}>
-                    {this.state.showRegisterSpinner? sprinner:<span className="glyphicon glyphicon-check"/>}&nbsp;
-                    {is_register?CONST.TXT.RESTORE:CONST.TXT.REGISTER}
-                </button>
             </div>
         </div>
         )

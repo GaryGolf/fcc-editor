@@ -100,7 +100,7 @@ export function getNomenclature(){
         .catch(error => { throw error})
 }
 
-export function getSalesReport(){
+export function getSalesReport(sale_point_id: string){
 
     const today = new Date()
     const y = today.getFullYear()
@@ -108,7 +108,7 @@ export function getSalesReport(){
     const dateFrom = new Date(y,m-6,1).toISOString().substr(0,10)
     const dateTo = new Date(y,m+1,0).toISOString().substr(0,10)
     const options = {
-        url: `${CONST.DOMAIN}api/v1/sales/report/sale-point?date_accepted_from=${dateFrom}&date_accepted_to=${dateTo}&sale_point_ids[]=${CONST.SALE_POINT_ID}`,
+        url: `${CONST.DOMAIN}api/v1/sales/report/sale-point?date_accepted_from=${dateFrom}&date_accepted_to=${dateTo}&sale_point_ids[]=${sale_point_id}`,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ export function getSalesReport(){
         }
     }
     return axios(options)
-        .then(response => response.data[CONST.SALE_POINT_ID])
+        .then(response => response.data[sale_point_id])
         .catch(error => { throw error})
 }
 
@@ -247,8 +247,34 @@ export function cleanDocumenttItems(ids: Array<string>) {
         .catch(error => { throw error})
 }
 
-export function saveDocument(plan:SalesPlan) {
+export function clearDocumentItems(){
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document/clear/${CONST.PLAN_ID}`,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        }
+    }
+    return axios(options)
+        .then(response => [])
+        .catch(error => { throw error})
+}
 
-    updateDocumentView(plan)
-
+export function batchCreateDocumentItem(items: PlanItem[]){
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document-item/batch-create`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        },
+        data: JSON.stringify({items})
+    }
+    return clearDocumentItems()
+        .then(_=>axios(options))
+        .then(response => response.data)
+        .catch(error => { throw error})
 }

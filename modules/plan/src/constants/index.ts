@@ -1,5 +1,5 @@
-export const SALE_POINT_ID = "3e9339a1-08a1-4baf-9324-311544c75eb1"
-export const PLAN_ID = "74f4ab3b-a675-4787-82e6-7613614ad29b" // #1
+// export const SALE_POINT_ID = "3e9339a1-08a1-4baf-9324-311544c75eb1"
+// export const PLAN_ID = "74f4ab3b-a675-4787-82e6-7613614ad29b" // #1
 // export const PERIOD  = Date.now()
 
 
@@ -10,8 +10,8 @@ function getDomain(){
     const domain = document.querySelector('#menu-visual').getAttribute('data-api-host')
     return `http://${proxy}${tenant}.${domain}`
 }
-
 export const DOMAIN = getDomain()
+export const PLAN_ID = document.querySelector('#menu-visual').getAttribute('data-document-id')
 
 export const month = [
     'Январь',
