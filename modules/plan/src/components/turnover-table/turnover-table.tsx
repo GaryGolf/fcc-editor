@@ -52,23 +52,14 @@ export default class ProductsTable extends React.Component <Props, State> {
         this.currentDay = null
     }
 
-    componentDidUpdate(){
-        const {planitems, salesplan} = this.props
-        if(!planitems || !salesplan) return
-        const item = this.props.planitems.find(item=>item.type=='sale-point')
-        if(!item){
-            // this.props.actions.planitems.updatePlanItem(this.createPlanItem())
-        }
-    }
-
     showInputDialog(item:PlanItem, day?: number){
         this.currentItem = item
         this.currentDay = day
         const cell = !day ? this.tableCells[item.id] : this.tableCells[item.id+day] as HTMLTableDataCellElement
         this.inputValue = !day ? item.plan : item.days.find(v=> v.day == day).plan
         const cellRect = cell.getBoundingClientRect()
-        this.inputTop = cellRect.bottom + + window.pageYOffset
-        this.inputLeft = cellRect.right - 97 + + window.pageXOffset
+        this.inputTop = cellRect.bottom + window.pageYOffset
+        this.inputLeft = cellRect.right - 97 + window.pageXOffset
         this.setState({showInput: true})
     }
 
@@ -109,8 +100,8 @@ export default class ProductsTable extends React.Component <Props, State> {
             item = {...this.currentItem, plan, days}
         } else {
             const days = this.currentItem.days.map(day=> day.day != this.currentDay ? day : ({...day, plan}))
-            const plan = days.reduce((acc, day)=> acc + Number(day.plan), 0)
-            item = {...this.currentItem, plan, days}
+            const amount = days.reduce((acc, day)=> acc + Number(day.plan), 0)
+            item = {...this.currentItem, plan: amount, days}
         }
         this.props.actions.planitems.updatePlanItem(item)
         this.setState({showInput: false})
