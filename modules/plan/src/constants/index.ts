@@ -58,5 +58,6 @@ export const TXT = {
     LOAD_FROM_SAVED: 'Загрузить из сохраненных',
     LOAD_FROM_PERIOD: 'Загрузить из результатов прошлого периода',
     CLEAN: 'Очистить',
-    ADD_TURNOVER_ITEM: 'Добавить план по обороту'
+    ADD_TURNOVER_ITEM: 'Добавить план по обороту',
+    NUMBER: '№'
 }

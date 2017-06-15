@@ -83,7 +83,7 @@ export default class Header extends React.Component <Props, State> {
             <div className="row">
                 <div className="col-md-5">
                      <div className="form-group form-inline">
-                        <label>{CONST.TXT.NAME}:&nbsp;</label>
+                        <label>{CONST.TXT.NUMBER}:&nbsp;</label>
                         <input type="text"
                             className="form-control"
                             onChange={this.onPlanNumberChange.bind(this)}
