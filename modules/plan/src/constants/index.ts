@@ -7,11 +7,11 @@
 function getDomain(){
     const proxy = PRODUCTION ? '' :  'localhost:1337/'
     const tenant = document.querySelector('meta[name=tenant-domain]').getAttribute('content')
-    const domain = document.querySelector('#menu-visual').getAttribute('data-api-host')
+    const domain = document.querySelector("#planning-document-wrapper").getAttribute('data-api-host')
     return `http://${proxy}${tenant}.${domain}`
 }
 export const DOMAIN = getDomain()
-export const PLAN_ID = document.querySelector('#menu-visual').getAttribute('data-document-id')
+export const PLAN_ID = document.querySelector("#planning-document-wrapper").getAttribute('data-id')
 
 export const month = [
     'Январь',

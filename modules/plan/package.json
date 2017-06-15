@@ -10,7 +10,7 @@
     "dev": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
     "proxy": "corsproxy",
     "build": "webpack -p --progress --colors && npm run copy",
-    "copy": "cpx ./dist/bundle.js ../../backend_pages/menu/public/js && cpx ./dist/styles.css ../../backend_pages/menu/public/css"
+    "copy": "cpx ./dist/plan_bundle.js ../../backend_pages/backend/public/js && cpx ./dist/plan.css ../../backend_pages/backend/public/css"
   },
   "license": "MIT",
   "devDependencies": {

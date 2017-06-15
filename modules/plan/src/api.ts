@@ -49,7 +49,7 @@ export function registerDocumentView(plan: SalesPlan){
     }
     return axios(options)
         .then(response => ({...plan, is_register: true}))
-        .catch(error => { throw error})
+        .catch(error => ({...plan, is_register: true}))
 }
 
 export function unregisterDocumentView(plan: SalesPlan){

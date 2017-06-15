@@ -13,5 +13,5 @@ ReactDOM.render(
   <Provider store={store} key="provider">
     <MainScreen/>
   </Provider>,
-  document.querySelector('#menu-visual') 
+  document.querySelector('#planning-document-wrapper') 
 )
