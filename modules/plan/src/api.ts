@@ -20,6 +20,21 @@ export function getDocumentView(id: string){
         .catch(error => { throw error})
 }
 
+export function createDocumentView(plan: SalesPlan){
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/planning/document/create`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Tenant-Domain': tenantDomain,
+            'Access-Token': accessToken
+        }, data: JSON.stringify(plan)
+    }
+    return axios(options)
+        .then(response => response.data)
+        .catch(error => { throw error})
+}
+
 export function updateDocumentView(plan: SalesPlan){
     const id = plan.id
     const options = {
@@ -222,8 +237,8 @@ export function loadDocumenttItems(id: string, type='product') {
     return getDocumentItems(id,type)
         .then(items=>loadReportItems(items
             .filter(item=>item.type==type)
-            .map(({ item_id, plan, price, cost_price, type, percent, days })=>
-            ({ item_id, planning_document_id:CONST.PLAN_ID, plan, price, cost_price, type, percent, days }))
+            .map(({ id, item_id, plan, price, cost_price, type, percent, days })=>
+            ({ item_id, planning_document_id:id, plan, price, cost_price, type, percent, days }))
         ))
         .catch(error => { throw error})
 }
@@ -247,9 +262,10 @@ export function cleanDocumenttItems(ids: Array<string>) {
         .catch(error => { throw error})
 }
 
-export function clearDocumentItems(){
+export function clearDocumentItems(id:string){
+    if(!id) return new Promise(resolve=>resolve([]))
     const options = {
-        url: `${CONST.DOMAIN}api/v1/planning/document/clear/${CONST.PLAN_ID}`,
+        url: `${CONST.DOMAIN}api/v1/planning/document/clear/${id}`,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -263,6 +279,8 @@ export function clearDocumentItems(){
 }
 
 export function batchCreateDocumentItem(items: PlanItem[]){
+
+    const id = !items.length ? '':items[0].planning_document_id
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document-item/batch-create`,
         method: 'POST',
@@ -273,7 +291,7 @@ export function batchCreateDocumentItem(items: PlanItem[]){
         },
         data: JSON.stringify({items})
     }
-    return clearDocumentItems()
+    return clearDocumentItems(id)
         .then(_=>axios(options))
         .then(response => response.data)
         .catch(error => { throw error})

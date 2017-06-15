@@ -74,7 +74,7 @@ export default class Loader extends React.Component <Props, State> {
                 return  {
                     id: uuid(),
                     item_id: product.id,
-                    planning_document_id: CONST.PLAN_ID,
+                    planning_document_id: this.props.salesplan.id,
                     plan: amount,
                     type: 'product',
                     percent: 0,

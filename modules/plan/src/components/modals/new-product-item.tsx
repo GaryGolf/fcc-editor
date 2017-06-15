@@ -77,7 +77,7 @@ export default class NewItemModal extends React.Component <Props, State> {
                 const item: PlanItem = {
                     id: uuid(),
                     item_id: this.id,
-                    planning_document_id: CONST.PLAN_ID,
+                    planning_document_id: this.props.salesplan.id,
                     plan: Number(this.amount),
                     type: 'product',
                     percent: 0,

@@ -14,8 +14,9 @@ export default function planitems (state = initialState, action: Action): Array<
             return state.map(item => item.id != action.payload.id ? item : action.payload)
         case Actions.REMOVE_PLAN_ITEM :
             return state.filter(item => item.id != action.payload.id)
-        case Actions.CLEAN_PLAN_ITEMS :
-            return []
+        case Actions.CLEAN_PLAN_ITEMS : 
+            return state.filter(item=>item.type=='sale-point').slice(0,1)
+
         case Actions.BATCH_CREATE_PLAN_ITEMS :
         case Actions.BATCH_UPDATE_PLAN_ITEMS :
             return [...action.payload]
