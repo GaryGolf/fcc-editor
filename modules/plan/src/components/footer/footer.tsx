@@ -60,6 +60,7 @@ export default class Footer extends React.Component<Props, State> {
         if(!this.props.salesplan || !this.props.planitems) return null
         const{is_register} = this.props.salesplan
         const sprinner = <span className={"glyphicon glyphicon-refresh "+styles.spinner}/>
+        const regButtonStyle = !is_register? "btn btn-primary btn-sm" : styles.invisible 
         return (
             <div className={styles.container}>
                 <div className="row">
@@ -72,8 +73,8 @@ export default class Footer extends React.Component<Props, State> {
                     </div>
                     <div className="col-md-6" />
                     <div className="col-md-4">
-                         <div className="form-group">
-                              <button className="btn btn-primary btn-sm"
+                         <div className="form-group"> 
+                              <button className={regButtonStyle}
                                 onClick={this.handleRegister.bind(this)}>
                                 {this.state.showRegisterSpinner? sprinner:<span className="glyphicon glyphicon-check"/>}&nbsp;
                                 {is_register?CONST.TXT.RESTORE:CONST.TXT.REGISTER}

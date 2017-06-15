@@ -83,7 +83,7 @@ export default class Header extends React.Component <Props, State> {
             <div className="row">
                 <div className="col-md-5">
                      <div className="form-group form-inline">
-                        <label>{CONST.TXT.NAME}:&nbsp;</label>
+                        <label>{CONST.TXT.NUMBER}:&nbsp;</label>
                         <input type="text"
                             className="form-control"
                             onChange={this.onPlanNumberChange.bind(this)}
@@ -122,10 +122,9 @@ export default class Header extends React.Component <Props, State> {
                             defaultValue={comment}
                         />
                     </div>
-                    
                     <div className="form-group">
                         <label>{CONST.TXT.STATUS}:&nbsp;</label>
-                        <span>{is_register?'Проведен':'Редактируется'}</span>
+                        <span>{!is_register? CONST.TXT.NOT_REG:'Проведен'}</span>
                     </div>
                 </div>
             </div>
