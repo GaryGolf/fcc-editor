@@ -39,6 +39,13 @@ table {
 .hand {
     cursor: pointer;
 }
+
+.input{
+    border: none;
+    outline: none;
+    max-height: 18px;
+    max-width: 85px;
+}
 .main{
 }
 .days{
