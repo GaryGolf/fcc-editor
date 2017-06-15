@@ -19,7 +19,7 @@ module.exports = {
   output: {
     path: outPath,
     publicPath: '/',
-    filename: 'bundle.js',
+    filename: 'plan_bundle.js',
   },
   target: 'web',
   resolve: {
@@ -83,7 +83,7 @@ module.exports = {
       }
     }),
     new ExtractTextPlugin({
-      filename: 'styles.css',
+      filename: 'plan.css',
       disable: !PRODUCTION
     }),
     new HtmlWebpackPlugin({
