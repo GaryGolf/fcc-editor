@@ -122,10 +122,9 @@ export default class Header extends React.Component <Props, State> {
                             defaultValue={comment}
                         />
                     </div>
-                    
                     <div className="form-group">
                         <label>{CONST.TXT.STATUS}:&nbsp;</label>
-                        <span>{is_register?'Проведен':'Редактируется'}</span>
+                        <span>{!is_register? CONST.TXT.NOT_REG:'Проведен'}</span>
                     </div>
                 </div>
             </div>
