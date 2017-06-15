@@ -7,7 +7,7 @@ import {createDays, getDaysCount} from '../utils'
 const {connect} = require('react-redux')
 
 import DayHead from '../common/dayhead'
-import ProductTableCell from './product-table-cell'
+import Cell from '../common/cell'
 
 interface Props {
     onEdit(item:PlanItem):void
@@ -51,11 +51,10 @@ export default class ProductsTable extends React.Component <Props, State> {
             if(!product) return null
             const days = item.days.map(day=> (
                 <td key={item.id+day.day}>
-                <ProductTableCell
-                    planItem={item}
-                    date={day.day}
-                    onSubmit={actions.planitems.updatePlanItem}
-                />
+                    <Cell planItem={item}
+                        date={day.day}
+                        onSubmit={actions.planitems.updatePlanItem}
+                    />
                 </td>
             ))
             return (
@@ -66,8 +65,7 @@ export default class ProductsTable extends React.Component <Props, State> {
                         {product.name}
                     </td>
                     <td className={[styles.number,styles.hand,styles.amount].join(' ')} >
-                        <ProductTableCell
-                            planItem={item}
+                        <Cell planItem={item}
                             onSubmit={actions.planitems.updatePlanItem}
                         />
                     </td>
