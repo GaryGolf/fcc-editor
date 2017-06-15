@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as styles from './cell.css'
 
 import Money from '../common/money'
-import {createDays} from '../utils'
+import {createDays, toSeconds} from '../utils'
 
 interface Props{
     planItem: PlanItem
@@ -33,7 +33,7 @@ export default class Cell extends React.Component <Props, State> {
 
     setValue(value:number):PlanItem{
         const item = {...this.props.planItem}
-        const period =Math.floor(item.days[0].day/1000)
+        const period = item.days[0].day
         if(!this.props.date) {
             item.plan = value
             item.days = createDays(period,true,value)

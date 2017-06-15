@@ -3,7 +3,7 @@ import * as styles from './header.css'
 import * as Actions from '../../actions'
 import * as CONST from '../../constants'
 
-import {createDays, shrinkTrimDays} from '../utils'
+import {createDays, shrinkTrimDays, toSeconds} from '../utils'
 
 interface Props {
     salesplan: SalesPlan
@@ -32,7 +32,7 @@ export default class Header extends React.Component <Props, State> {
             .fill(' ')
             .map(_=>{
                 const name =`${CONST.month[month]} ${year}`
-                const period = Math.floor(new Date(year,month,1).getTime()/1000)
+                const period = toSeconds(new Date(year,month,1).getTime())
                 const option = <option key={period} value={period}>{name}</option>
                 if(month == 11) { month = 0; year += 1 }
                 else month++

@@ -1,28 +1,5 @@
 import * as CONST from '../constants'
 
-/*
-export function createDays(period:number, arrange:boolean, qty:number): Array<Days>{
-    const y = new Date().getFullYear()
-    const month = new Date().getMonth()+1
-    const year = month>9 && period< 2? y+1:y
-    const daysCount = new Date(year, period+1, 0).getDate()
-    const rem = qty%daysCount
-    const div = Math.floor(qty/daysCount)
-    const days = new Array(daysCount).fill({})
-    
-     if (arrange) return  days.map((item, idx) => {
-            const plan = idx < rem ? div + 1 : div
-            const day = new Date(year, month, idx).getTime()
-            return {day,plan}
-        })
-    return  days.map((item, idx) => {
-            const plan = idx == 0  ? qty : 0
-            const day = new Date(year, month, idx).getTime()
-            return {day,plan}
-        })
-}
-*/
-
 export function createDays(period:number, arrange:boolean, amount:number): Array<Days>{
     const date = new Date(period*1000)
     const year = date.getFullYear()
@@ -34,16 +11,15 @@ export function createDays(period:number, arrange:boolean, amount:number): Array
     
      if (arrange) return  days.map((item, idx) => {
             const plan = idx < rem ? div + 1 : div
-            const day = new Date(year, month, idx+1).getTime()
+            const day = toSeconds(new Date(year, month, idx+1).getTime())
             return {day,plan}
         })
     return  days.map((item, idx) => {
             const plan = idx == 0  ? amount : 0
-            const day = new Date(year, month, idx+1).getTime()
+            const day = toSeconds(new Date(year, month, idx+1).getTime())
             return {day,plan}
         })
 }
-
 
 export function getAmount(qty:number, price:number):string{
     return Math.floor(qty*price)+'.00'
@@ -86,10 +62,12 @@ export function shrinkTrimDays(items:PlanItem[],period:number){
         
         const days = new Array(daysCount).fill({})
             .map((d,i)=>({
-                day: new Date(year,month,i+1).getTime(),
+                day: toSeconds(new Date(year,month,i+1).getTime()),
                 plan: !item.days[i]? 0: Number(item.days[i].plan)
             }))
         const plan = days.reduce((acc,item)=>acc+=Number(item.plan),0)
         return {...item, days, plan}
     })
 }
+
+export function toSeconds(time:number): number{ return Math.floor(time/1000)}

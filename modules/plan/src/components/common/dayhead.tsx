@@ -9,7 +9,7 @@ interface State {}
 
 export default class DayHead extends React.Component<Props, State> {
     render(){
-        const date = new Date(this.props.value)
+        const date = new Date(this.props.value*1000)
         const day = date.getDate()
         const month = CONST.shortMonth[date.getMonth()]
         const year = date.getFullYear()
