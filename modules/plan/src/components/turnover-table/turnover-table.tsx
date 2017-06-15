@@ -7,18 +7,15 @@ import {getDaysCount, createDays} from '../utils'
 const {connect} = require('react-redux')
 const uuid = require('uuid')
 
-import Input from '../modals/input'
-import Money from '../common/money'
 import DayHead from '../common/dayhead'
+import Cell from '../common/cell'
 
 interface Props {
     salesplan?: SalesPlan
     planitems?: PlanItem[]
     actions?: Actions.Interface
 }
-interface State {
-    showInput: boolean
-}
+interface State {}
 
 @connect(
     state => ({
@@ -32,36 +29,6 @@ interface State {
     })
 )
 export default class ProductsTable extends React.Component <Props, State> {
-    private inputValue: number
-    private inputTop: number
-    private inputLeft: number 
-    private tableCells: any
-    private currentItem: PlanItem
-    private currentDay: number
-
-    constructor(props:Props){
-        super(props)
-        this.state = {
-            showInput: false,
-        }
-        this.inputValue = 0
-        this.inputTop = 0
-        this.inputLeft = 0
-        this.tableCells = {}
-        this.currentItem = null
-        this.currentDay = null
-    }
-
-    showInputDialog(item:PlanItem, day?: number){
-        this.currentItem = item
-        this.currentDay = day
-        const cell = !day ? this.tableCells[item.id] : this.tableCells[item.id+day] as HTMLTableDataCellElement
-        this.inputValue = !day ? item.plan : item.days.find(v=> v.day == day).plan
-        const cellRect = cell.getBoundingClientRect()
-        this.inputTop = cellRect.bottom + window.pageYOffset
-        this.inputLeft = cellRect.right - 97 + window.pageXOffset
-        this.setState({showInput: true})
-    }
 
     createPlanItem(): PlanItem{
        
@@ -78,7 +45,6 @@ export default class ProductsTable extends React.Component <Props, State> {
 
 
         const turnoverItem = this.props.planitems
-            // .find(v=> v.item_id==this.props.salesplan.sale_point_id) || newPlan
             .find(item=>item.type=='sale-point') || newPlan
             
         const productItems = this.props.planitems.filter(item=>item.type=='product')
@@ -93,31 +59,17 @@ export default class ProductsTable extends React.Component <Props, State> {
         return turnoverItem
     }
 
-    onEnterHandler(plan: number) {
-        let item: PlanItem
-        if(!this.currentDay){
-            const days = createDays(this.props.salesplan.period,true,plan)
-            item = {...this.currentItem, plan, days}
-        } else {
-            const days = this.currentItem.days.map(day=> day.day != this.currentDay ? day : ({...day, plan}))
-            const amount = days.reduce((acc, day)=> acc + Number(day.plan), 0)
-            item = {...this.currentItem, plan: amount, days}
-        }
-        this.props.actions.planitems.updatePlanItem(item)
-        this.setState({showInput: false})
-    }
-
     render(){
         if(!this.props.planitems || !this.props.salesplan) return null
 
         const item = this.createPlanItem()
 
         const days = item.days.map(day=> (
-            <td key={item.id + day.day}
-                ref={td=>this.tableCells[item.id+day.day]=td}
-                onClick={()=>this.showInputDialog(item, day.day)}
-                className={[styles['plan-item'], styles.hand].join(' ')}>
-                <Money>{day.plan}</Money>
+            <td key={item.id + day.day}>
+                <Cell planItem={item}
+                    date={day.day}
+                    onSubmit={this.props.actions.planitems.updatePlanItem}
+                />
             </td>
         ))
 
@@ -125,14 +77,6 @@ export default class ProductsTable extends React.Component <Props, State> {
         
         return (
             <div className={styles.container}>
-                <Input
-                    defaultValue={this.inputValue}
-                    onEnter={this.onEnterHandler.bind(this)}
-                    onClose={()=>this.setState({showInput:false})}
-                    visible={this.state.showInput}
-                    top={this.inputTop}
-                    left={this.inputLeft}
-                />
                 <table className="table table-hover table-bordered table-condensed">
                     <colgroup span={2} className={styles.main}/>
                     <colgroup span={31} className={styles.days}/>
@@ -148,10 +92,10 @@ export default class ProductsTable extends React.Component <Props, State> {
                             <td className={[styles['product-name'], styles.hand].join(' ')}>
                                 {this.props.salesplan.sale_point_name}
                             </td>
-                            <td className={[styles.number,styles.hand,styles.amount].join(' ')} 
-                                onClick={()=>this.showInputDialog(item)}
-                                ref={td=>this.tableCells[item.id]=td}>
-                                <Money>{item.plan}</Money>
+                            <td className={[styles.number,styles.hand,styles.amount].join(' ')} >
+                                <Cell planItem={item}
+                                    onSubmit={this.props.actions.planitems.updatePlanItem}
+                                />
                             </td>
                             {days}
                         </tr>
