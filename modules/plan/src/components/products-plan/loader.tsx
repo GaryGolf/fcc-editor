@@ -78,8 +78,6 @@ export default class Loader extends React.Component <Props, State> {
                     plan: amount,
                     type: 'product',
                     percent: 0,
-                    price: product.price,
-                    cost_price: product.cost_price,
                     days: createDays(this.props.salesplan.period,true, amount)
                 } as PlanItem })
             .filter(item=>!!item)
