@@ -13,7 +13,7 @@ export default class Menu extends React.Component <Props, State> {
     render(){
         if(!this.props.visible) return null
         const menu= this.props.menu.map(item=>(
-            <li key={item}>
+            <li key={Math.random()}>
                 <a href="#" onClick={()=>this.props.onSelect(item)}>
                     {item}
                 </a>

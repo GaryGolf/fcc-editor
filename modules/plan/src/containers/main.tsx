@@ -45,11 +45,13 @@ interface State {}
 )
 export default class MainScreen extends React.Component<Props, State> {
 
+    private id: string = null
+
     componentDidMount(){
 
-        const id = document.querySelector("#planning-document-wrapper").getAttribute('data-id')
+        this.id = document.querySelector("#planning-document-wrapper").getAttribute('data-id')
         
-        if(!!id) this.loadAll(id)
+        if(!!this.id) this.loadAll(this.id)
         
         this.props.actions.products.fetchProducts()
         this.props.actions.salesplanlist.fetchSalesPlanList()
@@ -58,7 +60,7 @@ export default class MainScreen extends React.Component<Props, State> {
     }
 
     componentWillReceiveProps(nextProps){
-        if(!!nextProps.salepointlist && !this.props.salepointlist.length){
+        if(!!nextProps.salepointlist && !this.props.salepointlist.length && !this.id){
             const sale_point = nextProps.salepointlist[0]
             if(!sale_point) return
             const plan = this.createSalesPlan(sale_point.id)
@@ -66,24 +68,17 @@ export default class MainScreen extends React.Component<Props, State> {
         }
         if(!!nextProps.salesplan && !this.props.salesplan) {
             const plan = nextProps.salesplan
+            this.loadAll(plan.id)
+            this.props.actions.salesreport.fetchSalesReport(plan.sale_point_id)
             const item = this.createPlanItem(plan)
             this.props.actions.planitems.createTurnoverItem(item)
-            this.props.actions.salesreport.fetchSalesReport(plan.sale_point_id)
-            this.loadAll(plan.id)
-            console.log('bingo')
         }
-        // if(!!nextProps.salesplan && !!nextProps.planitems && !this.props.planitems.length){
-        //     console.log(nextProps.planitems, this.props.planitems)
-        //     const plan = nextProps.salesplan
-        //     // console.log(plan.id)
-        //     // this.props.actions.planitems.createPlanItem(item)
-        // }
     }
 
      loadAll(id:string){
         this.props.actions.salesplan.fetchSalesPlan(id)
         this.props.actions.planitems.fetchPlanItems(id)
-        this.props.actions.planitems.fetchTurnoverItem(id)
+        //this.props.actions.planitems.fetchTurnoverItem(id)
      }
 
     createSalesPlan(sale_point_id): SalesPlan{
