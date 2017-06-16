@@ -17,8 +17,6 @@ interface Props {
 }
 interface State {
     arrange: boolean
-    showSaveSpinner: boolean
-    showRemoveSpinner: boolean
 }
 
 @connect(
@@ -46,13 +44,9 @@ export default class EditProductItem extends React.Component <Props, State> {
         super(props)
         this.state = {
             arrange: true,
-            showSaveSpinner: false,
-            showRemoveSpinner: false
         }
     }
     componentWillReceiveProps(nextProps:Props){
-        if(this.state.showSaveSpinner || this.state.showRemoveSpinner) this.props.onClose()
-        this.setState({showSaveSpinner: false, showRemoveSpinner: false})
         if(!!nextProps.planItem) {
             this.id = nextProps.planItem.item_id
             this.amount = nextProps.planItem.plan
@@ -71,33 +65,28 @@ export default class EditProductItem extends React.Component <Props, State> {
    }
    
     submitHandler(){
-        this.setState({showSaveSpinner: true},
-            () => {
-                const item_id = this.id
-                const plan = this.amount
-                const days = this.state.arrange || this.amount != this.props.planItem.plan ? 
-                    createDays(this.props.salesplan.period, this.state.arrange, this.amount) :
-                    this.props.planItem.days
-                const item = {...this.props.planItem, plan, days, item_id}
-                this.props.actions.planitems.updatePlanItem(item)
-        })
+       
+        const item_id = this.id
+        const plan = this.amount
+        const days = this.state.arrange || this.amount != this.props.planItem.plan ? 
+            createDays(this.props.salesplan.period, this.state.arrange, this.amount) :
+            this.props.planItem.days
+        const item = {...this.props.planItem, plan, days, item_id}
+        this.props.actions.planitems.updatePlanItem(item)
+        this.props.onClose()
+
     }
     removeHandler(){
-        this.setState({showRemoveSpinner: true}, ()=>{
-            this.props.actions.planitems.removePlanItem(this.props.planItem)
-        })
+        this.props.actions.planitems.removePlanItem(this.props.planItem)
+        this.props.onClose()
     }
 
     render(){
-        const {planItem, planitems, visible} = this.props
-        if(!visible || !planItem || !planitems.length) return null
-        const products  = this.props.products.filter(p=>!planitems.some(v=>v.item_id==p.id && v.item_id!=this.id))
-        const {showSaveSpinner, showRemoveSpinner} = this.state
-        const options = products.map(item=>(<option key={item.id} value={item.id}>{item.name}</option>))
-        const saveSpinner = !showSaveSpinner ? <span className="glyphicon glyphicon-ok"/> 
-            : <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> 
-        const removeSpinner = !showRemoveSpinner ? <span className="glyphicon glyphicon-trash"/> 
-            : <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> 
+        const {planItem, planitems, visible, products} = this.props
+        if(!visible || !planItem || !planitems.length || !products.length) return null
+        const options  = this.props.products
+            .filter(p=>!planitems.some(v=>v.item_id==p.id && v.item_id!=this.id))
+            .map(item=>(<option key={item.id} value={item.id}>{item.name}</option>))
         return (
             <div className={styles.overlay} onClick={this.props.onClose}>
              <div className="modal-dialog" 
@@ -148,7 +137,7 @@ export default class EditProductItem extends React.Component <Props, State> {
                             onClick={this.removeHandler.bind(this)}
                             style={{float:'left'}}
                             data-dismiss="modal">
-                            {removeSpinner}&nbsp;{CONST.TXT.REMOVE}
+                            <span className="glyphicon glyphicon-trash"/>&nbsp;{CONST.TXT.REMOVE}
                         </button>
                         <button type="button" 
                             className="btn btn-default" 
@@ -159,7 +148,7 @@ export default class EditProductItem extends React.Component <Props, State> {
                         <button type="button" 
                             className="btn btn-primary"
                             onClick={this.submitHandler.bind(this)}>
-                            {saveSpinner}&nbsp;{CONST.TXT.SAVE}
+                            <span className="glyphicon glyphicon-ok"/>&nbsp;{CONST.TXT.SAVE}
                         </button>
                     </div>
                 </div>
