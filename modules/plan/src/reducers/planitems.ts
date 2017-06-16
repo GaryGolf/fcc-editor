@@ -21,12 +21,13 @@ export default function planitems (state = initialState, action: Action): Array<
         case Actions.BATCH_UPDATE_PLAN_ITEMS :
             return [...action.payload]
 
+        case Actions.FETCH_TAG_ITEMS :
         case Actions.FETCH_PLAN_ITEMS :
-            return [...state, ...action.payload]
-
+        case Actions.FETCH_PRODUCT_ITEMS :
         case Actions.FETCH_TURNOVER_ITEM :
         case Actions.CREATE_TURNOVER_ITEM :
-            return Array.isArray(action.payload)?[...state,...action.payload]:[...state,action.payload]
+            return [...state,...action.payload]
+            //return Array.isArray(action.payload)?[...state,...action.payload]:[...state,action.payload]
 
         case Actions.LOAD_PLAN_ITEMS_FROM_DOCUMENT : 
         case Actions.LOAD_PLAN_ITEMS_FROM_REPORT : {
