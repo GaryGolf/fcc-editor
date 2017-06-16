@@ -3,6 +3,7 @@ import * as styles from './main.css'
 import * as Actions from '../actions'
 import * as CONST from '../constants'
 import { bindActionCreators } from 'redux'
+import {createDays, toSeconds} from '../components/utils'
 import * as API from '../api'
 const {connect} = require('react-redux')
 
@@ -44,26 +45,62 @@ interface State {}
 )
 export default class MainScreen extends React.Component<Props, State> {
 
-    constructor(props: Props){
-        super(props)
-     }
+    private id: string = null
 
     componentDidMount(){
-        this.props.actions.salesplanlist.fetchSalesPlanList()
-        this.props.actions.salesplan.fetchSalesPlan(CONST.PLAN_ID)
-        this.props.actions.planitems.fetchTurnoverItem(CONST.PLAN_ID)
-        this.props.actions.planitems.fetchPlanItems(CONST.PLAN_ID)
+
+        this.id = document.querySelector("#planning-document-wrapper").getAttribute('data-id')
+        
+        if(!!this.id) this.loadAll(this.id)
+        
         this.props.actions.products.fetchProducts()
+        this.props.actions.salesplanlist.fetchSalesPlanList()
+        this.props.actions.salepointlist.fetchSalesPointList()
         
     }
 
     componentWillReceiveProps(nextProps){
+        if(!!nextProps.salepointlist && !this.props.salepointlist.length && !this.id){
+            const sale_point = nextProps.salepointlist[0]
+            if(!sale_point) return
+            const plan = this.createSalesPlan(sale_point.id)
+            this.props.actions.salesplan.createSalesPlan(plan)
+        }
         if(!!nextProps.salesplan && !this.props.salesplan) {
-            this.props.actions.salesreport.fetchSalesReport(nextProps.salesplan.sale_point_id)
-            this.props.actions.salepointlist.fetchSalesPointList()
+            const plan = nextProps.salesplan
+            this.loadAll(plan.id)
+            this.props.actions.salesreport.fetchSalesReport(plan.sale_point_id)
+            const item = this.createPlanItem(plan)
+            this.props.actions.planitems.createTurnoverItem(item)
         }
     }
 
+     loadAll(id:string){
+        this.props.actions.salesplan.fetchSalesPlan(id)
+        this.props.actions.planitems.fetchPlanItems(id)
+        //this.props.actions.planitems.fetchTurnoverItem(id)
+     }
+
+    createSalesPlan(sale_point_id): SalesPlan{
+        return {
+            id:'',
+            number: '00000',
+            sale_point_id,
+            period: toSeconds(Date.now()),
+            comment: ''
+        }
+    }
+
+    createPlanItem(plan:SalesPlan): PlanItem{
+        return {
+            item_id: plan.sale_point_id,
+            planning_document_id: plan.id,
+            plan: 0,
+            type: 'sale-point',
+            percent:0,
+            days: createDays(plan.period,false,0)
+        }
+    }
 
     render(){    
         const {salesplan, salepointlist} = this.props
