@@ -11,7 +11,6 @@ interface Props {
 }
 interface State {
     showSaveSpinner: boolean
-    showRegisterSpinner: boolean
 }
 
 export default class Footer extends React.Component<Props, State> {
@@ -20,24 +19,12 @@ export default class Footer extends React.Component<Props, State> {
         super(props)
 
         this.state = {
-            showSaveSpinner: false,
-            showRegisterSpinner: false
+            showSaveSpinner: false
         }
     }
     
      componentWillReceiveProps(nextProps){
         if(this.state.showSaveSpinner) this.setState({showSaveSpinner:false})
-        if(this.state.showRegisterSpinner) this.setState({showRegisterSpinner:false})
-    }
-
-    handleRegister(){
-        this.setState({showRegisterSpinner: true}, ()=>{
-            if(this.props.salesplan.is_register) {
-                this.props.actions.salesplan.unregisterSalesPlan(this.props.salesplan)
-            } else {
-                this.props.actions.salesplan.registerSalesPlan(this.props.salesplan)
-            }
-        })
     }
    
     handleSubmit() {
@@ -60,35 +47,28 @@ export default class Footer extends React.Component<Props, State> {
         if(!this.props.salesplan || !this.props.planitems) return null
         const{is_register} = this.props.salesplan
         const sprinner = <span className={"glyphicon glyphicon-refresh "+styles.spinner}/>
-        const regButtonStyle = !is_register? "btn btn-primary btn-sm" : styles.invisible 
         return (
-            <div className={styles.container}>
+
+        <div className="content-footer" style={{width: '1200px', left:'40px'}}>
                 <div className="row">
-                    <div className="col-md-2">
-                        <button className="btn btn-danger btn-sm"
-                            onClick={this.props.actions.planitems.cleanPlanItems}>
-                            <span className="glyphicon glyphicon-remove"/>&nbsp;
-                            {CONST.TXT.CLEAN}
-                        </button>
-                    </div>
-                    <div className="col-md-6" />
-                    <div className="col-md-4">
-                         <div className="form-group"> 
-                              <button className={regButtonStyle}
-                                onClick={this.handleRegister.bind(this)}>
-                                {this.state.showRegisterSpinner? sprinner:<span className="glyphicon glyphicon-check"/>}&nbsp;
-                                {is_register?CONST.TXT.RESTORE:CONST.TXT.REGISTER}
-                            </button>
-                            &nbsp;
-                            <button className="btn btn-primary btn-sm"
-                                onClick={this.handleSubmit.bind(this)}>
-                                {this.state.showSaveSpinner? sprinner:<span className="glyphicon glyphicon-ok"/>}&nbsp;
-                                {CONST.TXT.SAVE}
-                            </button>
-                        </div>
-                    </div>
+                  <div className="col-xs-6">
+                    <button 
+                        className="btn btn-danger"
+                        onClick={this.props.actions.planitems.cleanPlanItems}>
+                        <span className="glyphicon glyphicon-trash"/>&nbsp;
+                        {CONST.TXT.CLEAN}
+                    </button>
+                  </div>
+                  <div className="col-xs-6">
+                    <button className="btn btn-primary pull-right"
+                        onClick={this.handleSubmit.bind(this)}>
+                        {this.state.showSaveSpinner? sprinner:<span className="glyphicon glyphicon-ok"/>}&nbsp;
+                        {CONST.TXT.SAVE}
+                    </button>
+                    <button className="btn btn-default sprite_delete pull-right m-r-sm">{CONST.TXT.CANCEL}</button>
+                  </div>
                 </div>
-            </div>
+              </div>
         )
     }
 

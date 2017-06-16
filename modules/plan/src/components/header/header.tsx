@@ -12,7 +12,7 @@ interface Props {
     actions?: Actions.Interface
 }
 interface State {
-   
+   showRegSpinner: boolean
 }
 
 export default class Header extends React.Component <Props, State> {
@@ -22,6 +22,19 @@ export default class Header extends React.Component <Props, State> {
     constructor(props:Props){
         super(props)
         this.salesPlan = {}
+        this.state = { showRegSpinner: false}
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(this.state.showRegSpinner) this.setState({showRegSpinner:false})
+    }
+
+    handleRegister(){
+        this.setState({showRegSpinner: true}, ()=>{
+       
+            this.props.actions.salesplan.registerSalesPlan(this.props.salesplan)
+
+        })
     }
 
     getPeriodOptions(){
@@ -124,7 +137,11 @@ export default class Header extends React.Component <Props, State> {
                     </div>
                 </div>
                 <div className="col-xs-3">
-                    <button className="btn btn-default btn-picture_field-error pull-right">{CONST.TXT.REGISTER}</button>
+                    <button className="btn btn-default pull-right"
+                        onClick={this.handleRegister.bind(this)}>
+                        {this.state.showRegSpinner? sprinner:<span className="glyphicon glyphicon-warning-sign"/>}&nbsp;
+                        {CONST.TXT.REGISTER}
+                    </button>
                     <div className="label label-danger pull-right m-t-sm m-r-lg">{CONST.TXT.NOT_REG}</div>
                 </div>
                 <br/>
