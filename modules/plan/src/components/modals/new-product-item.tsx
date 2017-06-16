@@ -19,7 +19,6 @@ interface Props {
 
 interface State {
     arrange: boolean
-    showSpinner: boolean
 }
 
 @connect(
@@ -47,16 +46,9 @@ export default class NewItemModal extends React.Component <Props, State> {
         super(props)
         this.state = {
             arrange: true,
-            showSpinner: false
         }
         this.id = null
         this.amount = 100
-    }
-
-    componentWillReceiveProps(nextProps){
-        if(this.state.showSpinner) this.props.onClose()
-        this.setState({showSpinner: false})
-        if(nextProps.products.length) this.id = nextProps.products[0].id
     }
 
      handleKeyPress(e){
@@ -71,31 +63,28 @@ export default class NewItemModal extends React.Component <Props, State> {
    }
     
     submitHandler(){
-        this.setState({showSpinner: true},
-            () => {
-                const product = this.props.products.find(item => item.id == this.id)
-                const item: PlanItem = {
-                    id: uuid(),
-                    item_id: this.id,
-                    planning_document_id: CONST.PLAN_ID,
-                    plan: Number(this.amount),
-                    type: 'product',
-                    percent: 0,
-                    days: createDays(this.props.salesplan.period,this.state.arrange, this.amount)
-                }
-               this.props.actions.planitems.createPlanItem(item)
-        })
+       
+        const product = this.props.products.find(item => item.id == this.id)
+        const item: PlanItem = {
+            id: uuid(),
+            item_id: this.id,
+            planning_document_id: this.props.salesplan.id,
+            plan: Number(this.amount),
+            type: 'product',
+            percent: 0,
+            days: createDays(this.props.salesplan.period,this.state.arrange, this.amount)
+        }
+        this.props.actions.planitems.createPlanItem(item)
+        this.props.onClose()
     }
     render(){
 
         const {visible, planitems} = this.props
-        const {showSpinner} = this.state
+        if(!visible || !this.props.products.length || !planitems) return null
         const products = this.props.products.filter(p=>!planitems.some(v=>v.item_id==p.id))
-        if(!visible || !products.length || !planitems) return null
+        if(!products.length) return null
         this.id = products[0].id
         const options = products.map((item,idx)=><option key={item.id} value={item.id}>{item.name}</option>)
-        const spinner = !showSpinner ? <span className="glyphicon glyphicon-ok"/> 
-            : <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> 
         return (
          <div className={styles.overlay} onClick={this.props.onClose}>
              <div className="modal-dialog" 
@@ -126,7 +115,11 @@ export default class NewItemModal extends React.Component <Props, State> {
                             <label>{CONST.TXT.PRODUCT}</label>
                             <select className="form-control"
                                 defaultValue={this.id}
-                                onChange={e=>this.id=e.target.value}>
+                                onChange={e=>{
+                                    console.log(this.id)
+                                    this.id=e.target.value
+                                    console.log(this.id)
+                                    }}>
                                 {options}
                             </select>
                         </div>
@@ -150,7 +143,8 @@ export default class NewItemModal extends React.Component <Props, State> {
                         <button type="button" 
                             className="btn btn-primary"
                             onClick={this.submitHandler.bind(this)}>
-                            {spinner}&nbsp;{CONST.TXT.SAVE}
+                            <span className="glyphicon glyphicon-ok"/> &nbsp;
+                            {CONST.TXT.SAVE}
                         </button>
                     </div>
                 </div>

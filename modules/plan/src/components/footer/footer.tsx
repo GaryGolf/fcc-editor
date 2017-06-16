@@ -46,7 +46,7 @@ export default class Footer extends React.Component<Props, State> {
             const {actions, salesplan, planitems} = this.props
             const newPlan = {
                 item_id: salesplan.sale_point_id,
-                planning_document_id: CONST.PLAN_ID,
+                planning_document_id: this.props.salesplan.id,
                 plan: 0, type: 'sale-point', percent: 0,
                 days: createDays(this.props.salesplan.period,false, 0)
             } as PlanItem

@@ -36,7 +36,7 @@ export default class ProductsTable extends React.Component <Props, State> {
         const newPlan = {
             id: uuid(),
             item_id: this.props.salesplan.sale_point_id,
-            planning_document_id: CONST.PLAN_ID,
+            planning_document_id: this.props.salesplan.id,
             plan: amount,
             type: 'sale-point',
             percent: 0,
