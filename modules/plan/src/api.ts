@@ -214,53 +214,55 @@ export function getSalePointList(){
         .catch(error => { throw error})
 }
 
-export function loadReportItems(items: Array<PlanItem>){
-    const method = 'POST'
-    const uri = `http://pekarni.dev.dooglys.com/api/v1/planning/document-item/create` // ToDo !!
-    const data = items.map(body=>({method, uri, body}))
-    const options = {
-        url: `${CONST.DOMAIN}api/v1/system/batch/execute`,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        },
-        data: JSON.stringify(data)
-    }
-    return axios(options)
-        .then(response => response.data)
-        .catch(error => { throw error})
-}
+// export function loadReportItems(items: Array<PlanItem>){
+    
+//     const method = 'POST'
+//     const uri = `http://pekarni.dev.dooglys.com/api/v1/planning/document-item/create` // ToDo !!
+//     const data = items.map(body=>({method, uri, body}))
+//     const options = {
+//         url: `${CONST.DOMAIN}api/v1/system/batch/execute`,
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Tenant-Domain': tenantDomain,
+//             'Access-Token': accessToken
+//         },
+//         data: JSON.stringify(data)
+//     }
+//     return axios(options)
+//         .then(response => response.data)
+//         .catch(error => { throw error})
+// }
 
-export function loadDocumenttItems(id: string, type='product') {
-    return getDocumentItems(id,type)
-        .then(items=>loadReportItems(items
-            .filter(item=>item.type==type)
-            .map(({ id, item_id, plan, price, cost_price, type, percent, days })=>
-            ({ item_id, planning_document_id:id, plan, price, cost_price, type, percent, days }))
-        ))
-        .catch(error => { throw error})
-}
+// export function loadDocumenttItems(id: string, type='product') {
+//     return getDocumentItems(id,type)
+//         .then(console.log)
+//         // .then(items=>loadReportItems(items
+//         //     .filter(item=>item.type==type)
+//         //     .map(({ id, item_id, plan, price, cost_price, type, percent, days })=>
+//         //     ({ item_id, planning_document_id:id, plan, price, cost_price, type, percent, days }))
+//         // ))
+//         .catch(error => { throw error})
+// }
 
-export function cleanDocumenttItems(ids: Array<string>) {
-    const method = 'POST'
-    const uri = `http://pekarni.dev.dooglys.com/api/v1/planning/document-item/delete/` // ToDo !!
-    const data = ids.map(id=>({method, uri: uri+id}))
-    const options = {
-        url: `${CONST.DOMAIN}api/v1/system/batch/execute`,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }, data: JSON.stringify(data)
+// export function cleanDocumenttItems(ids: Array<string>) {
+//     const method = 'POST'
+//     const uri = `http://pekarni.dev.dooglys.com/api/v1/planning/document-item/delete/` // ToDo !!
+//     const data = ids.map(id=>({method, uri: uri+id}))
+//     const options = {
+//         url: `${CONST.DOMAIN}api/v1/system/batch/execute`,
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Tenant-Domain': tenantDomain,
+//             'Access-Token': accessToken
+//         }, data: JSON.stringify(data)
         
-    }
-    return axios(options)
-        .then(response => [])
-        .catch(error => { throw error})
-}
+//     }
+//     return axios(options)
+//         .then(response => [])
+//         .catch(error => { throw error})
+// }
 
 export function clearDocumentItems(id:string){
     if(!id) return new Promise(resolve=>resolve([]))

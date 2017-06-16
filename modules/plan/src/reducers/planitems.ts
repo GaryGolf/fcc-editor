@@ -27,18 +27,11 @@ export default function planitems (state = initialState, action: Action): Array<
         case Actions.FETCH_TURNOVER_ITEM :
             return Array.isArray(action.payload)?[...state,...action.payload]:[...state,action.payload]
 
+        case Actions.LOAD_PLAN_ITEMS_FROM_DOCUMENT : 
         case Actions.LOAD_PLAN_ITEMS_FROM_REPORT : {
             const period = store.getState().salesplan.period
             const items = shrinkTrimDays(action.payload,period)
-            return [...state, ...items]
-        }
-
-        case Actions.LOAD_PLAN_ITEMS_FROM_DOCUMENT : {
-            const payload = action.payload
-                .filter(item=>!item.error_description)
-                .map(item=>item.content)
-            const period = store.getState().salesplan.period
-            const items = shrinkTrimDays(payload,period)
+                .filter(payload=>!state.some(item=>item.item_id==payload.item_id))
             return [...state, ...items]
         }
     }

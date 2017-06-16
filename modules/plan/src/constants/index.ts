@@ -11,7 +11,6 @@ function getDomain(){
     return `http://${proxy}${tenant}.${domain}`
 }
 export const DOMAIN = getDomain()
-export let PLAN_ID = document.querySelector("#planning-document-wrapper").getAttribute('data-id')
 
 export const month = [
     'Январь',
