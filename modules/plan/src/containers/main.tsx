@@ -55,8 +55,6 @@ export default class MainScreen extends React.Component<Props, State> {
         this.props.actions.salesplanlist.fetchSalesPlanList()
         this.props.actions.salepointlist.fetchSalesPointList()
 
-        // this.props.actions.planitems.fetchPlanItems(this.id)
-
         if(!this.id) return
         this.props.actions.planitems.fetchTurnoverItem(this.id)
         this.props.actions.salesplan.fetchSalesPlan(this.id)
