@@ -12,7 +12,7 @@ interface Props {
     actions?: Actions.Interface
 }
 interface State {
-   
+   showRegSpinner: boolean
 }
 
 export default class Header extends React.Component <Props, State> {
@@ -22,6 +22,19 @@ export default class Header extends React.Component <Props, State> {
     constructor(props:Props){
         super(props)
         this.salesPlan = {}
+        this.state = { showRegSpinner: false}
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(this.state.showRegSpinner) this.setState({showRegSpinner:false})
+    }
+
+    handleRegister(){
+        this.setState({showRegSpinner: true}, ()=>{
+       
+            this.props.actions.salesplan.registerSalesPlan(this.props.salesplan)
+
+        })
     }
 
     getPeriodOptions(){
@@ -72,63 +85,87 @@ export default class Header extends React.Component <Props, State> {
         const {id, period, sale_point_id, number, comment, is_register} = this.props.salesplan
         
         const salePointOptions = this.props.salepointlist.map(item => (
-            <option key={item.id} value={item.id}>{item.name}</option>
+            <option key={item.id} value={item.id}>{item.address}</option>
         ))
         const periodOptions = this.getPeriodOptions()
 
         const sprinner = <span className={"glyphicon glyphicon-refresh "+styles.spinner}/>
 
         return (
-        <div>
+    <div>
+        <div className="content-header">
             <div className="row">
-                <div className="col-md-5">
-                     <div className="form-group form-inline">
-                        <label>{CONST.TXT.NUMBER}:&nbsp;</label>
-                        <input type="text"
-                            className="form-control"
-                            onChange={this.onPlanNumberChange.bind(this)}
-                            defaultValue={number}
+                <div className="col-xs-3">
+                    <div className="row">
+
+                        <div className="col-xs-5">
+                            <h1 className="h1 m-none">{CONST.TXT.PLAN}</h1>
+                        </div>
+                        <div className="col-xs-7">
+                            <div className="input-group">
+                                <span className="input-group-addon">{CONST.TXT.NUMBER}</span>
+                                <input type="text" 
+                                    className="form-control" 
+                                    placeholder=""
+                                    onChange={this.onPlanNumberChange.bind(this)}
+                                    defaultValue={number}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-xs-3">
+                    <div className="input-group disabled">
+                        <span className="input-group-addon">{CONST.TXT.EMPLOYEE}:</span>
+                        <input type="text" 
+                            className="form-control" 
+                            placeholder="" 
+                            defaultValue={this.props.salesplan.user_fio}
+                            onChange={_=>null}
+                            disabled
                         />
                     </div>
-                    <div className="form-group form-inline">
-                        <label>{CONST.TXT.PLANNING_PERIOD}&nbsp;</label>
-                         <select 
+                </div>
+                <div className="col-xs-3">
+                    <div className="input-group"><span className="input-group-addon">{CONST.TXT.PERIOD}:</span>
+                        <select 
                             className="form-control"
                             onChange={this.onPeriodChange.bind(this)}
                             defaultValue={''+period}>
                             {periodOptions}
                         </select>
-                    </div> 
-                    <div className="form-group form-inline">
-                        <label>{CONST.TXT.SALE_POINT}: &nbsp;</label>
-                        <select 
-                            className="form-control"
-                            onChange={this.onSalePointChange.bind(this)}
-                            value={sale_point_id}>
-                            {salePointOptions}
-                        </select>
                     </div>
                 </div>
-                <div  className="col-md-5">
-                    <div className="form-group">
-                        <label>{CONST.TXT.EMPLOYEE}:&nbsp;</label>
-                        <span>{this.props.salesplan.user_fio}</span>
-                    </div>
-                    <div className="form-group form-inline">
-                        <label>{CONST.TXT.COMMENT}:&nbsp;</label>
-                         <input type="text"
-                            className="form-control"
-                            onChange={this.onCommentChange.bind(this)}
-                            defaultValue={comment}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>{CONST.TXT.STATUS}:&nbsp;</label>
-                        <span>{!is_register? CONST.TXT.NOT_REG:'Проведен'}</span>
-                    </div>
+                <div className="col-xs-3">
+                    <button className="btn btn-default pull-right"
+                        onClick={this.handleRegister.bind(this)}>
+                        {this.state.showRegSpinner? sprinner:<span className="glyphicon glyphicon-warning-sign"/>}&nbsp;
+                        {CONST.TXT.REGISTER}
+                    </button>
+                    <div className="label label-danger pull-right m-t-sm m-r-lg">{CONST.TXT.NOT_REG}</div>
                 </div>
+                <br/>
             </div>
         </div>
+        <div className="row m-t-lg">
+            <div className="col-xs-4">
+                <select 
+                    className="form-control"
+                    onChange={this.onSalePointChange.bind(this)}
+                    value={sale_point_id}>
+                    {salePointOptions}
+                </select>
+            </div>
+            <div className="col-xs-8">
+                <input type="text" 
+                    className="form-control" 
+                    placeholder={CONST.TXT.COMMENT}
+                    onChange={this.onCommentChange.bind(this)}
+                    defaultValue={comment}
+                />
+            </div>
+        </div>
+    </div>    
         )
     }
 }

@@ -106,20 +106,22 @@ export default class MainScreen extends React.Component<Props, State> {
         const {salesplan, salepointlist} = this.props
         if(!salesplan || !salepointlist) return null
         return (
-            <div className={styles.container}>
-                <Header 
-                    salesplan={this.props.salesplan}
-                    salepointlist={this.props.salepointlist}
-                    planitems={this.props.planitems}
-                    actions={this.props.actions}
-                />
-                <TurnoverPlan/>
-                <ProductsPlan/>
-                <Footer
-                    salesplan={this.props.salesplan}
-                    planitems={this.props.planitems}
-                    actions={this.props.actions}
-                />
+            <div className="main-content">
+                <div className="main-content__center">
+                    <Header 
+                        salesplan={this.props.salesplan}
+                        salepointlist={this.props.salepointlist}
+                        planitems={this.props.planitems}
+                        actions={this.props.actions}
+                    />
+                    <TurnoverPlan/>
+                    <ProductsPlan/>
+                    <Footer
+                        salesplan={this.props.salesplan}
+                        planitems={this.props.planitems}
+                        actions={this.props.actions}
+                    />
+                </div>
             </div>
         )
     }
