@@ -5,6 +5,7 @@ import * as CONST from '../constants'
 export interface Interface {
     fetchPlanItems(id: string): Action
     fetchTurnoverItem(id:string): Action
+    createTurnoverItem(item:PlanItem): Action
     savePlanItems(items:PlanItem[]): Action
     saveDocument(plan:SalesPlan,items:PlanItem[])
     createPlanItem(item: PlanItem): Action
@@ -18,6 +19,7 @@ export interface Interface {
 
 export const fetchPlanItems = id => ({ type: Actions.FETCH_PLAN_ITEMS, payload: API.getDocumentItems(id, 'product')})
 export const fetchTurnoverItem = id => ({ type: Actions.FETCH_TURNOVER_ITEM, payload: API.getDocumentItems(id, 'sale-point')})
+export const createTurnoverItem = item => ({ type: Actions.CREATE_TURNOVER_ITEM, payload: API.createTurnoverItem(item)}) 
 export const savePlanItems = items => ({type: Actions.BATCH_CREATE_PLAN_ITEMS, payload: API.batchCreateDocumentItem(items)}) 
 export const saveDocument = (plan,items) => ({type: Actions.BATCH_CREATE_PLAN_ITEMS, payload: API.saveDocument(plan,items)}) 
 export const createPlanItem = item => ({type: Actions.CREATE_PLAN_ITEM, payload: item }) //API.createDocumentItem(item)}) 

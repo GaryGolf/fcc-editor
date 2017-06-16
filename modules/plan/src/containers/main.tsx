@@ -58,25 +58,32 @@ export default class MainScreen extends React.Component<Props, State> {
     }
 
     componentWillReceiveProps(nextProps){
-        if(!!nextProps.salepointlist && !this.props.salepointlist){
-            const sale_point_id = this.props.salepointlist[0].id
-            const plan = this.createSalesPlan(sale_point_id)
+        if(!!nextProps.salepointlist && !this.props.salepointlist.length){
+            const sale_point = nextProps.salepointlist[0]
+            if(!sale_point) return
+            const plan = this.createSalesPlan(sale_point.id)
             this.props.actions.salesplan.createSalesPlan(plan)
         }
         if(!!nextProps.salesplan && !this.props.salesplan) {
-            this.props.actions.salesreport.fetchSalesReport(nextProps.salesplan.sale_point_id)
-        }
-        if(!!nextProps.salesplan && !!nextProps.planitems && !this.props.planitems){
-            const plan = this.props.salesplan
+            const plan = nextProps.salesplan
             const item = this.createPlanItem(plan)
-            this.props.actions.planitems.createPlanItem(item)
+            this.props.actions.planitems.createTurnoverItem(item)
+            this.props.actions.salesreport.fetchSalesReport(plan.sale_point_id)
+            this.loadAll(plan.id)
+            console.log('bingo')
         }
+        // if(!!nextProps.salesplan && !!nextProps.planitems && !this.props.planitems.length){
+        //     console.log(nextProps.planitems, this.props.planitems)
+        //     const plan = nextProps.salesplan
+        //     // console.log(plan.id)
+        //     // this.props.actions.planitems.createPlanItem(item)
+        // }
     }
 
      loadAll(id:string){
         this.props.actions.salesplan.fetchSalesPlan(id)
-        this.props.actions.planitems.fetchTurnoverItem(id)
         this.props.actions.planitems.fetchPlanItems(id)
+        this.props.actions.planitems.fetchTurnoverItem(id)
      }
 
     createSalesPlan(sale_point_id): SalesPlan{
