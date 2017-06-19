@@ -6,13 +6,14 @@ declare interface Action {
 declare interface Product {
     id: string
     name: string
-    short_name: string
-    product_category_id: string
-    description: string
-    price: number
-    cost_price: number
-    measure: string
-    status: 'enabled' | 'disabled'
+    price?: number
+    type?: 'product-tag' | 'product'
+    // short_name: string
+    // product_category_id: string
+    // description: string
+    // cost_price: number
+    // measure: string
+    // status: 'enabled' | 'disabled'
 }
 
 declare interface SalesPlan {
@@ -36,7 +37,7 @@ declare interface PlanItem {
     id?: string  // 
     item_id: string // product ID
     planning_document_id: string // plan id
-    type: 'product' | 'tag' | 'sale-point'
+    type: 'product' | 'product-tag' | 'sale-point'
     plan: number // quantity
     days: Array<Days> // ? date, quantity
     percent?: number // ?s

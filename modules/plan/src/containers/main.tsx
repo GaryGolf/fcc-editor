@@ -51,12 +51,15 @@ export default class MainScreen extends React.Component<Props, State> {
 
         this.id = document.querySelector("#planning-document-wrapper").getAttribute('data-id')
         
-        if(!!this.id) this.loadAll(this.id)
-        
         this.props.actions.products.fetchProducts()
         this.props.actions.salesplanlist.fetchSalesPlanList()
         this.props.actions.salepointlist.fetchSalesPointList()
-        
+
+        if(!this.id) return
+        this.props.actions.planitems.fetchTurnoverItem(this.id)
+        this.props.actions.salesplan.fetchSalesPlan(this.id)
+        this.props.actions.planitems.fetchTagItems(this.id)
+        this.props.actions.planitems.fetchProductItems(this.id)
     }
 
     componentWillReceiveProps(nextProps){
@@ -68,18 +71,16 @@ export default class MainScreen extends React.Component<Props, State> {
         }
         if(!!nextProps.salesplan && !this.props.salesplan) {
             const plan = nextProps.salesplan
-            this.loadAll(plan.id)
             this.props.actions.salesreport.fetchSalesReport(plan.sale_point_id)
-            const item = this.createPlanItem(plan)
-            this.props.actions.planitems.createTurnoverItem(item)
+            if(!this.id){
+                const item = this.createPlanItem(plan)
+                this.props.actions.planitems.createTurnoverItem(item)
+                this.props.actions.salesplan.fetchSalesPlan(plan.id)
+                this.props.actions.planitems.fetchTagItems(plan.id)
+                this.props.actions.planitems.fetchProductItems(plan.id)
+            }
         }
     }
-
-     loadAll(id:string){
-        this.props.actions.salesplan.fetchSalesPlan(id)
-        this.props.actions.planitems.fetchPlanItems(id)
-        //this.props.actions.planitems.fetchTurnoverItem(id)
-     }
 
     createSalesPlan(sale_point_id): SalesPlan{
         return {
@@ -106,20 +107,22 @@ export default class MainScreen extends React.Component<Props, State> {
         const {salesplan, salepointlist} = this.props
         if(!salesplan || !salepointlist) return null
         return (
-            <div className={styles.container}>
-                <Header 
-                    salesplan={this.props.salesplan}
-                    salepointlist={this.props.salepointlist}
-                    planitems={this.props.planitems}
-                    actions={this.props.actions}
-                />
-                <TurnoverPlan/>
-                <ProductsPlan/>
-                <Footer
-                    salesplan={this.props.salesplan}
-                    planitems={this.props.planitems}
-                    actions={this.props.actions}
-                />
+            <div className="main-content">
+                <div className="main-content__center">
+                    <Header 
+                        salesplan={this.props.salesplan}
+                        salepointlist={this.props.salepointlist}
+                        planitems={this.props.planitems}
+                        actions={this.props.actions}
+                    />
+                    <TurnoverPlan/>
+                    <ProductsPlan/>
+                    <Footer
+                        salesplan={this.props.salesplan}
+                        planitems={this.props.planitems}
+                        actions={this.props.actions}
+                    />
+                </div>
             </div>
         )
     }

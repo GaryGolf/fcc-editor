@@ -65,12 +65,13 @@ export default class NewItemModal extends React.Component <Props, State> {
     submitHandler(){
        
         const product = this.props.products.find(item => item.id == this.id)
+        console.log(product.type)
         const item: PlanItem = {
             id: uuid(),
             item_id: this.id,
             planning_document_id: this.props.salesplan.id,
             plan: Number(this.amount),
-            type: 'product',
+            type: product.type, //'product',
             percent: 0,
             days: createDays(this.props.salesplan.period,this.state.arrange, this.amount)
         }
