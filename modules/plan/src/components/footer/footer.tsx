@@ -4,6 +4,8 @@ import * as Actions from '../../actions'
 import * as CONST from '../../constants'
 import {createDays} from '../utils'
 
+import Loader from './loader'
+
 interface Props {
     salesplan: SalesPlan
     planitems: Array<PlanItem>
@@ -52,6 +54,7 @@ export default class Footer extends React.Component<Props, State> {
         <div className="content-footer" style={{width: '1200px', left:'40px'}}>
                 <div className="row">
                   <div className="col-xs-6">
+                    <Loader/>&nbsp;
                     <button 
                         className="btn btn-danger"
                         onClick={this.props.actions.planitems.cleanPlanItems}>
