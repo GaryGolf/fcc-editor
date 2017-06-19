@@ -38,6 +38,7 @@ export default class RightTable extends React.Component <Props, State> {
         const daysCount = getDaysCount(salesplan.period)
         const plangoods = planitems.filter(v=>v.type!='sale-point')
         const turnoverItem = planitems.filter(v=>v.type=='sale-point')[0] // ToDo: Check errors
+        if(!turnoverItem) return null
         const dayHeaders= turnoverItem.days
             .map(d=><th key={d.day}><DayHead value={d.day}/></th>)
         const productItems = plangoods.map((item,idx)=>(
