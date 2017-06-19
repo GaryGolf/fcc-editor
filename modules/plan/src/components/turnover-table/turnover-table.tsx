@@ -47,15 +47,15 @@ export default class ProductsTable extends React.Component <Props, State> {
         const turnoverItem = this.props.planitems
             .find(item=>item.type=='sale-point') || newPlan
             
-        const productItems = this.props.planitems.filter(item=>item.type!='sale-point')
+        // const productItems = this.props.planitems.filter(item=>item.type!='sale-point')
 
-        if(productItems.length){
-            const days = productItems
-                .map(item=> item.days)
-                .reduce((acc,item) => acc.map((ac,i)=>({...ac, plan:Number(ac.plan)+Number(item[i].plan)})))
-            const plan = productItems.reduce((acc,item)=>acc+=Number(item.plan),0)
-            return {...turnoverItem, days, plan}
-        } 
+        // if(productItems.length){
+        //     const days = productItems
+        //         .map(item=> item.days)
+        //         .reduce((acc,item) => acc.map((ac,i)=>({...ac, plan:Number(ac.plan)+Number(item[i].plan)})))
+        //     const plan = productItems.reduce((acc,item)=>acc+=Number(item.plan),0)
+        //     return {...turnoverItem, days, plan}
+        // } 
         return turnoverItem
     }
 
