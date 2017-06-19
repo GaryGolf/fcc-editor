@@ -128,17 +128,17 @@ export default class Loader extends React.Component <Props, State> {
             : <span className={"glyphicon glyphicon-refresh "+styles.spinner}/> 
         return (
             <span className={styles.container}>
-                <button className="btn btn-default btn-sm"
-                    onClick={()=>this.setState({showMenu: true})}>
-                    {spinner}&nbsp;{CONST.TXT.LOAD}&nbsp; 
-                    <span className="caret"/>
-                </button>
                 <Menu
                     visible={this.state.showMenu}
                     onClose={()=>this.setState({showMenu:false, menu:this.mainMenu})}
                     onSelect={this.handleMenuSelect.bind(this)}
                     menu={this.state.menu}
                 />
+                <button className="btn btn-primary"
+                    onClick={()=>this.setState({showMenu: true})}>
+                    {spinner}&nbsp;{CONST.TXT.LOAD}&nbsp; 
+                    {/*<span className="caret"/>*/}
+                </button>
             </span>
         )
     }

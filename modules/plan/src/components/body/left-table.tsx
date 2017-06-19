@@ -88,8 +88,7 @@ export default class LeftTable extends React.Component <Props, State> {
                                 onClick={this.props.onAddNew}>
                                 <span className="glyphicon glyphicon-plus"/>&nbsp;
                                 {CONST.TXT.ADD_PRODUCT}
-                            </button>&nbsp;
-                            {/*<Loader/>*/}
+                            </button>
                         </th>
                     </tr>
                     <tr>

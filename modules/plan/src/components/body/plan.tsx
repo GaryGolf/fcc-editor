@@ -6,6 +6,7 @@ import EditProductItem from '../modals/edit-product-item'
 // import ProductsTable from '../products-table'
 import Menu from '../modals/menu'
 import LeftTable from './left-table'
+import RightTable from './right-table'
 // import Loader from './loader'
 
 interface Props {}
@@ -48,6 +49,9 @@ export default class Plan extends React.Component <Props, State> {
                             onEdit={this.editProductItemHandler.bind(this)}
                             onAddNew={()=>this.setState({showNewItemModal: true})}
                         />
+                    </div>
+                     <div className="col-xs-6 p-l-none p-r-none overflow-auto plan_interval">
+                        <RightTable/>
                     </div>
                 </div>
 

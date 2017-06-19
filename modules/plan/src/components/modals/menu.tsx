@@ -25,8 +25,7 @@ export default class Menu extends React.Component <Props, State> {
                     onClick={this.props.onClose}
                 />
                 <ul className={"dropdown-menu "+styles.menu}
-                    onClick={e=>e.stopPropagation()}
-                    aria-labelledby="dropdownMenu1">
+                    onClick={e=>e.stopPropagation()}>
                     {menu}
                 </ul>
             </div>
