@@ -28,20 +28,19 @@ interface State {}
     }),
     dispatch => ({
         actions: {
-            salesplan: bindActionCreators(Actions.salesplan as any, dispatch),
-            planitems: bindActionCreators(Actions.planitems as any, dispatch),
-            products: bindActionCreators(Actions.products as any, dispatch),
-            salesreport: bindActionCreators(Actions.salesreport as any, dispatch)
+            planitems: bindActionCreators(Actions.planitems as any, dispatch)
         } 
     })
 )
 
 export default class LeftTable extends React.Component <Props, State> {
     render(){
-        const {planitems, products, salesplan, actions} =this.props
-        if(!planitems || !products.length || !salesplan) return null
+        const {planitems, products,  actions} =this.props
+        if(!planitems || !products.length ) return null
         const plangoods = planitems.filter(v=>v.type!='sale-point')
        
+        const turnoverItem = planitems.filter(v=>v.type=='sale-point')[0] // ToDo: Check errors
+
         const rows = !plangoods.length ? null : plangoods.map((item, idx) => {
             const product = products.find(v=>v.id == item.item_id)
             if(!product) return null
@@ -58,6 +57,28 @@ export default class LeftTable extends React.Component <Props, State> {
         return (
             <table className="table table-transparent">
                 <tbody>
+                     <tr className="vertical-middle">
+                        <th className="col-xs-12" colSpan={3}>
+                            <h2>{CONST.TXT.TURNOVER_PLAN}</h2>
+                        </th>
+                    </tr>
+                     <tr>
+                        <th className="col-xs-10" colSpan={2}>
+                            <div className="text-default text-uppercase">{CONST.TXT.SALE_POINT}</div>
+                        </th>
+                        <th className="col-xs-2">
+                            <div className="text-default text-uppercase">{CONST.TXT.AMOUNT}</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td className="col-xs-10" colSpan={2}>{this.props.salesplan.sale_point_name}</td>
+                        <td className="col-xs-2">
+                            <Cell 
+                                planItem={turnoverItem}
+                                onSubmit={this.props.actions.planitems.updatePlanItem}
+                            />
+                        </td>
+                    </tr>
                     <tr className="vertical-middle">
                         <th className="col-xs-10" colSpan={2}>
                             <h2>{CONST.TXT.PRODUCT_PLAN}</h2>

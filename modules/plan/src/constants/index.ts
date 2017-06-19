@@ -62,5 +62,6 @@ export const TXT = {
     NOT_REG: 'Не проведен',
     PLAN: 'План',
     PERIOD: 'Период',
-    PRODUCT_PLAN: 'План по товарам'
+    PRODUCT_PLAN: 'План по товарам',
+    TURNOVER_PLAN: 'План по выручке'
 }
