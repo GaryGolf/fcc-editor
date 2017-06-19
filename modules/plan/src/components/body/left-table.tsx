@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux'
 import {createDays, getDaysCount} from '../utils'
 const {connect} = require('react-redux')
 
-import Loader from '../products-plan/loader'
 import ProductRow from './product-row'
 import Cell from '../common/cell'
 

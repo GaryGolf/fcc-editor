@@ -4,7 +4,7 @@ import * as Actions from '../../actions'
 import * as CONST from '../../constants'
 import {createDays} from '../utils'
 
-import Loader from '../products-plan/loader'
+import Loader from './loader'
 
 interface Props {
     salesplan: SalesPlan

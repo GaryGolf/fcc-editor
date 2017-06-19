@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux'
 import {createDays, getDaysCount} from '../utils'
 const {connect} = require('react-redux')
 
-import Loader from '../products-plan/loader'
 import TurnoverRow from './turnover-row'
 import Cell from '../common/cell'
 import DayHead from '../common/dayhead'
