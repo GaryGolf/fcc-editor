@@ -11,7 +11,7 @@ export default function products (state = initialState, action: Action): Array<P
             const products = action.payload.child_categories
                 .map(item => item.products)
                 .reduce((acc, item) => [...acc, ...item]) 
-                .map(({id,name})=>({id, name, type:'product'})) as Array<Product>
+                .map(({id,name, price})=>({id, name, price, type:'product'})) as Array<Product>
             return [...tags, ...products]
     }
     return state

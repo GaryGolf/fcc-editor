@@ -41,6 +41,7 @@ export default class RightTable extends React.Component <Props, State> {
         if(!turnoverItem) return null
         const dayHeaders= turnoverItem.days
             .map(d=><th key={d.day}><DayHead value={d.day}/></th>)
+        
         const productItems = plangoods.map((item,idx)=>(
             <TurnoverRow key={idx} item={item} onSubmit={console.log}/>
         ))
@@ -58,7 +59,7 @@ export default class RightTable extends React.Component <Props, State> {
                     <tr>{dayHeaders}</tr>
                     <TurnoverRow 
                         item={turnoverItem} 
-                        onSubmit={console.log}
+                        onSubmit={this.props.actions.planitems.updatePlanItem}
                     />
                     <tr className="vertical-middle">
                         <th className="col-xs-10" colSpan={daysCount}>

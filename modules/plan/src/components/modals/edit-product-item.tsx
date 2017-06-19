@@ -60,7 +60,7 @@ export default class EditProductItem extends React.Component <Props, State> {
         }
     }
    
-   handleKeyPress(e){
+    handleKeyPress(e){
         switch(e.key){
             case 'Enter' :
                 this.submitHandler()
@@ -69,7 +69,7 @@ export default class EditProductItem extends React.Component <Props, State> {
                 this.props.onClose()
                 break
         }
-   }
+    }
    
     submitHandler(){
        
