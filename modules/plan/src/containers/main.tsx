@@ -11,6 +11,7 @@ import TurnoverPlan from '../components/turnover-plan'
 import ProductsPlan from '../components/products-plan'
 import Header from '../components/header'
 import Footer from '../components/footer'
+import Plan from '../components/body/plan'
 
 interface Props {
     salesplan?: SalesPlan
@@ -115,8 +116,9 @@ export default class MainScreen extends React.Component<Props, State> {
                         planitems={this.props.planitems}
                         actions={this.props.actions}
                     />
-                    <TurnoverPlan/>
-                    <ProductsPlan/>
+                    {/*<TurnoverPlan/>
+                    <ProductsPlan/>*/}
+                    <Plan/>
                     <Footer
                         salesplan={this.props.salesplan}
                         planitems={this.props.planitems}
