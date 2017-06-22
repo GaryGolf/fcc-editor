@@ -11,20 +11,27 @@ interface Props{
 }
 interface State{
     showInput: boolean
+    value: number
 }
 
 export default class Cell extends React.Component <Props, State> {
-    private input:HTMLInputElement
-    private value:number
+    
     constructor(props:Props){
         super(props)
         this.state = {
-            showInput: false
+            showInput: false,
+            value: 0
         }
-        this.value = this.getValue(props.planItem, props.date)
     }
+
+    componentDidMount(){
+        const value = this.getValue(this.props.planItem, this.props.date)
+        this.setState({value})
+    }
+
     componentWillReceiveProps(nextProps){
-        this.value = this.getValue(nextProps.planItem, nextProps.date)
+        const value = this.getValue(nextProps.planItem, nextProps.date)
+        this.setState({value})
     }
 
     getValue(planItem:PlanItem,date?:number): number{
@@ -44,11 +51,15 @@ export default class Cell extends React.Component <Props, State> {
         return item
     }
 
+    handleCange(e){
+        const value = e.target.value
+        this.setState({value})
+    }
+
     handleInput(e){
-        this.value = Number(this.input.value)
         switch(e.key){
             case 'Enter' :
-                this.props.onSubmit(this.setValue(this.value))
+                this.props.onSubmit(this.setValue(this.state.value))
             case 'Escape' :
                 this.setState({showInput:false})
             break
@@ -57,13 +68,14 @@ export default class Cell extends React.Component <Props, State> {
 
     render(){
         const {planItem} = this.props
+        const {value} = this.state
         if(this.state.showInput) return (
             <input type="number"
                 className={styles.input}
-                ref={element=>this.input=element}
                 onBlur={()=>this.setState({showInput:false})}
                 onKeyUp={this.handleInput.bind(this)}
-                defaultValue={this.value.toFixed(2)}
+                onChange={this.handleCange.bind(this)}
+                defaultValue={''+value} 
                 autoFocus
             />
         )
@@ -71,7 +83,7 @@ export default class Cell extends React.Component <Props, State> {
         return (
             <div className={[styles['plan-item'], styles.hand].join(' ')}
                 onClick={()=>this.setState({showInput:true})}>
-                <Money>{this.value}</Money>
+                <Money>{value}</Money>
             </div>
         )
     }

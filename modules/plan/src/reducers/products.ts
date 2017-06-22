@@ -6,6 +6,7 @@ export default function products (state = initialState, action: Action): Array<P
 
     switch(action.type){
         case Actions.FETCH_PRODUCTS :
+            if(!action.payload.child_categories) break
             const tags = action.payload.child_categories
                 .map(({id,name})=>({id,name, type: 'product-tag'})) as Array<Product>
             const products = action.payload.child_categories

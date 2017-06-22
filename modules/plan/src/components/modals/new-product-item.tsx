@@ -67,7 +67,6 @@ export default class NewItemModal extends React.Component <Props, State> {
     submitHandler(){
        
         const product = this.props.products.find(item => item.id == this.id)
-        console.log(product.type)
         const item: PlanItem = {
             id: uuid(),
             item_id: this.id,

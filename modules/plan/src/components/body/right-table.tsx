@@ -13,7 +13,6 @@ import DayHead from '../common/dayhead'
 interface Props {
     salesplan?: SalesPlan
     planitems?: PlanItem[]
-    // products?: Product[]
     actions?: Actions.Interface
 }
 interface State {}
@@ -22,7 +21,6 @@ interface State {}
     state => ({
         salesplan: state.salesplan as SalesPlan,
         planitems: state.planitems as PlanItem[]
-        // products: state.products as Product[]
     }),
     dispatch => ({
         actions: {
@@ -43,7 +41,7 @@ export default class RightTable extends React.Component <Props, State> {
             .map(d=><th key={d.day}><DayHead value={d.day}/></th>)
         
         const productItems = plangoods.map((item,idx)=>(
-            <TurnoverRow key={idx} item={item} onSubmit={console.log}/>
+            <TurnoverRow key={idx} item={item} onSubmit={actions.planitems.updatePlanItem}/>
         ))
         
 
