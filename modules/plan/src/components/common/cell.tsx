@@ -35,6 +35,7 @@ export default class Cell extends React.Component <Props, State> {
     }
 
     getValue(planItem:PlanItem,date?:number): number{
+        if(!planItem) return 0
         return !date ? Number(planItem.plan) : Number(planItem.days.find(d=>d.day==date).plan)
     }
 
@@ -49,11 +50,6 @@ export default class Cell extends React.Component <Props, State> {
             item.plan = item.days.reduce((acc,d)=>acc+=Number(d.plan),0)
         }
         return item
-    }
-
-    handleCange(e){
-        const value = e.target.value
-        this.setState({value})
     }
 
     handleInput(e){
@@ -74,7 +70,7 @@ export default class Cell extends React.Component <Props, State> {
                 className={styles.input}
                 onBlur={()=>this.setState({showInput:false})}
                 onKeyUp={this.handleInput.bind(this)}
-                onChange={this.handleCange.bind(this)}
+                onChange={e=>this.setState({value:Number(e.target.value)})}
                 defaultValue={''+value} 
                 autoFocus
             />
