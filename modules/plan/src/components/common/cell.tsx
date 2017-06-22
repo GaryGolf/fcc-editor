@@ -20,13 +20,8 @@ export default class Cell extends React.Component <Props, State> {
         super(props)
         this.state = {
             showInput: false,
-            value: 0
+            value: this.getValue(props.planItem, props.date)
         }
-    }
-
-    componentDidMount(){
-        const value = this.getValue(this.props.planItem, this.props.date)
-        this.setState({value})
     }
 
     componentWillReceiveProps(nextProps){
