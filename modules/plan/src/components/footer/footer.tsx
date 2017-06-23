@@ -26,6 +26,14 @@ export default class Footer extends React.Component<Props, State> {
     }
     
      componentWillReceiveProps(nextProps){
+        if(nextProps.planitems && nextProps.salesplan){
+            if(nextProps.planitems[0] 
+                && nextProps.planitems[0].planning_document_id
+                && !this.props.planitems[0].planning_document_id){
+                const id = nextProps.planitems[0].planning_document_id
+                this.props.actions.salesplan.fetchSalesPlan(id)
+            }
+        }
         if(this.state.showSaveSpinner) this.setState({showSaveSpinner:false})
     }
    
@@ -33,16 +41,20 @@ export default class Footer extends React.Component<Props, State> {
         
         this.setState({showSaveSpinner: true}, ()=>{
             const {actions, salesplan, planitems} = this.props
-            const newPlan = {
-                item_id: salesplan.sale_point_id,
-                planning_document_id: this.props.salesplan.id,
-                plan: 0, type: 'sale-point', percent: 0,
-                days: createDays(this.props.salesplan.period,false, 0)
-            } as PlanItem
-            const turnover = planitems.find(item=>item.type=='sale-point')
-            const items = !turnover ? [...planitems, newPlan]:planitems
+            const items = this.checkPlanItems(planitems)
             actions.planitems.saveDocument(salesplan,items)
         })
+    }
+
+    checkPlanItems(items: PlanItem[]):PlanItem[]{
+        const newPlan = {
+            item_id: this.props.salesplan.sale_point_id,
+            planning_document_id: this.props.salesplan.id,
+            plan: 0, type: 'sale-point', percent: 0,
+            days: createDays(this.props.salesplan.period,false, 0)
+        } as PlanItem
+        const turnover = items.find(item=>item.type=='sale-point')
+        return !turnover ? [...items, newPlan]:items
     }
 
     render(){

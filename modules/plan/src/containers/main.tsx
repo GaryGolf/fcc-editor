@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import {createDays, toSeconds} from '../components/utils'
 import * as API from '../api'
 const {connect} = require('react-redux')
+const uuid = require('uuid')
 
 import Header from '../components/header'
 import Footer from '../components/footer'
@@ -67,24 +68,26 @@ export default class MainScreen extends React.Component<Props, State> {
             if(!sale_point) return
             const plan = this.createSalesPlan(sale_point.id)
             this.props.actions.salesplan.createSalesPlan(plan)
+            const item = this.createPlanItem(plan)
+            this.props.actions.planitems.createTurnoverItem(item)
         }
-        if(!!nextProps.salesplan && !this.props.salesplan) {
-            const plan = nextProps.salesplan
-            this.props.actions.salesreport.fetchSalesReport(plan.sale_point_id)
-            if(!this.id){
-                const item = this.createPlanItem(plan)
-                this.props.actions.planitems.createTurnoverItem(item)
-                this.props.actions.salesplan.fetchSalesPlan(plan.id)
-                this.props.actions.planitems.fetchTagItems(plan.id)
-                this.props.actions.planitems.fetchProductItems(plan.id)
-            }
-        }
+        // if(!!nextProps.salesplan && !this.props.salesplan) {
+        //     const plan = nextProps.salesplan
+        //     this.props.actions.salesreport.fetchSalesReport(plan.sale_point_id)
+        //     if(!this.id){
+        //         const item = this.createPlanItem(plan)
+        //         this.props.actions.planitems.createTurnoverItem(item)
+        //         this.props.actions.salesplan.fetchSalesPlan(plan.id)
+        //         this.props.actions.planitems.fetchTagItems(plan.id)
+        //         this.props.actions.planitems.fetchProductItems(plan.id)
+        //     }
+        // }
     }
 
     createSalesPlan(sale_point_id): SalesPlan{
         return {
             id:'',
-            number: '00000',
+            number: '00',
             sale_point_id,
             period: toSeconds(Date.now()),
             comment: ''
@@ -93,6 +96,7 @@ export default class MainScreen extends React.Component<Props, State> {
 
     createPlanItem(plan:SalesPlan): PlanItem{
         return {
+            id: uuid(),
             item_id: plan.sale_point_id,
             planning_document_id: plan.id,
             plan: 0,

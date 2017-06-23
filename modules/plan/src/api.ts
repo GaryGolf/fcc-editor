@@ -186,7 +186,7 @@ export function removeDocumentItem(item: PlanItem){
 
 export function getDocumentList(){
     const options = {
-        url: `${CONST.DOMAIN}api/v1/planning/document/list`,
+        url: `${CONST.DOMAIN}api/v1/planning/document/list?per-page=10000`,
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -216,7 +216,7 @@ export function getSalePointList(){
 
 
 export function clearDocumentItems(id:string){
-    if(!id) return new Promise(resolve=>resolve([]))
+    if(!id) return Promise.resolve([])
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/clear/${id}`,
         method: 'GET',
@@ -231,9 +231,8 @@ export function clearDocumentItems(id:string){
         .catch(error => { throw error})
 }
 
-export function batchCreateDocumentItem(items: PlanItem[]){
+export function batchCreateDocumentItems(items: PlanItem[]){
 
-    const id = !items.length ? '':items[0].planning_document_id
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document-item/batch-create`,
         method: 'POST',
@@ -244,23 +243,39 @@ export function batchCreateDocumentItem(items: PlanItem[]){
         },
         data: JSON.stringify({items})
     }
-    return clearDocumentItems(id)
-        .then(_=>axios(options))
+    return axios(options)
         .then(response => response.data)
         .catch(error => { throw error})
 }
 
 
 export function saveDocument(plan:SalesPlan, items:PlanItem[]){
+    if(!plan.id){
+        return createDocumentView(plan)
+            .then(response=>{
+                const planning_document_id = response.id
+                const planItems = items.map(item=>({...item, planning_document_id}))
+                return batchCreateDocumentItems(planItems)
+            })
+    }
     updateDocumentView(plan)
-    return batchCreateDocumentItem(items)
+    return clearDocumentItems(plan.id)
+        .then(_=>batchCreateDocumentItems(items))
 }
 
 export function createTurnoverItem(item: PlanItem){
     return getDocumentItems(item.planning_document_id, 'sale-point')
-        .then(result=>!result.length ? createDocumentItem(item) : new Promise(r=>r(result)))
+        .then(result=>!result.length ? createDocumentItem(item) : Promise.resolve(result))
         .then(result=>result)
         .catch(error => {throw error})
 
             
+}
+
+export function saveDocumentItems(items:PlanItem[]){
+
+    const id = !items.length ? '':items[0].planning_document_id
+    return clearDocumentItems(id)
+        .then(_=>batchCreateDocumentItems(items))
+
 }
