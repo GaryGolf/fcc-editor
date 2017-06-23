@@ -31,9 +31,8 @@ export default class Header extends React.Component <Props, State> {
 
     handleRegister(){
         this.setState({showRegSpinner: true}, ()=>{
-       
-            this.props.actions.salesplan.registerSalesPlan(this.props.salesplan)
-
+            const {salesplan, planitems, actions} = this.props
+            actions.salesplan.registerSalesPlan(salesplan, planitems)
         })
     }
 

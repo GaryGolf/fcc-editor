@@ -4,16 +4,17 @@ import axios from 'axios'
 
 const accessToken = document.querySelector('meta[name=access-token]').getAttribute('content')
 const tenantDomain = document.querySelector('meta[name=tenant-domain]').getAttribute('content')
+const headers = {
+    'Content-Type': 'application/json',
+    'Tenant-Domain': tenantDomain,
+    'Access-Token': accessToken
+}
 
 export function getDocumentView(id: string){
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/view/${id}`,
         method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }
+        headers
     }
     return axios(options)
         .then(response => response.data)
@@ -23,12 +24,8 @@ export function getDocumentView(id: string){
 export function createDocumentView(plan: SalesPlan){
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/create`,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }, data: JSON.stringify(plan)
+        method: 'POST', headers, 
+        data: JSON.stringify(plan)
     }
     return axios(options)
         .then(response => response.data)
@@ -39,12 +36,8 @@ export function updateDocumentView(plan: SalesPlan){
     const id = plan.id
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/update/${id}`,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }, data: JSON.stringify(plan)
+        method: 'POST', headers,
+        data: JSON.stringify(plan)
     }
     return axios(options)
         .then(response => response.data)
@@ -55,12 +48,7 @@ export function registerDocumentView(plan: SalesPlan){
     const id = plan.id
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/register/${id}`,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }
+        method: 'POST', headers
     }
     return axios(options)
         .then(response => ({...plan, is_register: true}))
@@ -71,12 +59,7 @@ export function unregisterDocumentView(plan: SalesPlan){
     const id = plan.id
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/un-register/${id}`,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }
+        method: 'POST', headers
     }
     return axios(options)
         .then(response => ({...plan, is_register: false}))
@@ -87,12 +70,7 @@ export function unregisterDocumentView(plan: SalesPlan){
 export function getDocumentItems(id:string, type:string){
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/${id}/document-item/${type}?per-page=10000`,
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }
+        method: 'GET', headers
     }
     return axios(options)
         .then(response => response.data)
@@ -103,12 +81,7 @@ export function getNomenclature(){
 
     const options = {
         url: `${CONST.DOMAIN}api/v1/nomenclature/category/info`,
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }
+        method: 'GET', headers
     }
     return axios(options)
         .then(response => response.data)
@@ -124,12 +97,7 @@ export function getSalesReport(sale_point_id: string){
     const dateTo = new Date(y,m+1,0).toISOString().substr(0,10)
     const options = {
         url: `${CONST.DOMAIN}api/v1/sales/report/sale-point?date_accepted_from=${dateFrom}&date_accepted_to=${dateTo}&sale_point_ids[]=${sale_point_id}`,
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }
+        method: 'GET', headers
     }
     return axios(options)
         .then(response => response.data[sale_point_id])
@@ -139,12 +107,7 @@ export function getSalesReport(sale_point_id: string){
 export function getDocumentList(){
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/list?per-page=10000`,
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }
+        method: 'GET', headers
     }
     return axios(options)
         .then(response=>response.data)
@@ -154,12 +117,7 @@ export function getDocumentList(){
 export function getSalePointList(){
     const options = {
         url: `${CONST.DOMAIN}api/v1/structure/sale-point/list`,
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }
+        method: 'GET', headers
     }
     return axios(options)
         .then(response=>response.data)
@@ -171,12 +129,7 @@ function clearDocumentItems(id:string){
     if(!id) return Promise.resolve([])
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/clear/${id}`,
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }
+        method: 'GET', headers
     }
     return axios(options)
         .then(response => [])
@@ -187,12 +140,7 @@ function batchCreateDocumentItems(items: PlanItem[]){
 
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document-item/batch-create`,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        },
+        method: 'POST', headers,
         data: JSON.stringify({items})
     }
     return axios(options)
@@ -214,6 +162,12 @@ export function saveDocument(plan:SalesPlan, items:PlanItem[]){
     return clearDocumentItems(plan.id)
         .then(_=>batchCreateDocumentItems(items))
 }
+
+export function registerDocument(plan:SalesPlan, items:PlanItem[]){
+    return saveDocument(plan,items)
+        .then(_=>registerDocumentView(plan))
+}
+
 
 // export function createTurnoverItem(item: PlanItem){
 //     return getDocumentItems(item.planning_document_id, 'sale-point')

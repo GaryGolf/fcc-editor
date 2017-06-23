@@ -103,6 +103,11 @@ export default class MainScreen extends React.Component<Props, State> {
     render(){    
         const {salesplan, salepointlist} = this.props
         if(!salesplan || !salepointlist) return null
+        if(salesplan.is_register) return (
+            <div className="main-content">
+                документ {salesplan.number} проведен
+            </div>
+        )
         return (
             <div className="main-content">
                 <div className="main-content__center">
