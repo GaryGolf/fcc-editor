@@ -25,7 +25,6 @@ export default function planitems (state = initialState, action: Action): Array<
         case Actions.FETCH_PLAN_ITEMS :
         case Actions.FETCH_PRODUCT_ITEMS :
         case Actions.FETCH_TURNOVER_ITEM :
-        case Actions.CREATE_TURNOVER_ITEM :
             return [...state,...action.payload]
             //return Array.isArray(action.payload)?[...state,...action.payload]:[...state,action.payload]
 

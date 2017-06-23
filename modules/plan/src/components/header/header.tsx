@@ -26,7 +26,6 @@ export default class Header extends React.Component <Props, State> {
     }
 
     componentWillReceiveProps(nextProps){
-        console.log(nextProps.salesplan)
         if(this.state.showRegSpinner) this.setState({showRegSpinner:false})
     }
 

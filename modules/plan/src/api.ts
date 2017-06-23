@@ -136,54 +136,6 @@ export function getSalesReport(sale_point_id: string){
         .catch(error => { throw error})
 }
 
-export function createDocumentItem(item: PlanItem){
-    const options = {
-        url: `${CONST.DOMAIN}api/v1/planning/document-item/create`,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        },
-        data: JSON.stringify(item)
-    }
-    return axios(options)
-        .then(response => response.data)
-        .catch(error => { throw error})
-}
-
-export function updateDocumentItem(item: PlanItem){
-    const options = {
-        url: `${CONST.DOMAIN}api/v1/planning/document-item/update/${item.id}`,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        },
-        data: JSON.stringify(item)
-    }
-    return axios(options)
-        .then(response => response.data)
-        .catch(error => { throw error})
-}
-
-export function removeDocumentItem(item: PlanItem){
-    const options = {
-        url: `${CONST.DOMAIN}api/v1/planning/document-item/delete/${item.id}`,
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Tenant-Domain': tenantDomain,
-            'Access-Token': accessToken
-        }
-    }
-    return axios(options)
-        .then(_=>item)
-        .catch(error => { throw error})
-}
-
-
 export function getDocumentList(){
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/list?per-page=10000`,
@@ -215,7 +167,7 @@ export function getSalePointList(){
 }
 
 
-export function clearDocumentItems(id:string){
+function clearDocumentItems(id:string){
     if(!id) return Promise.resolve([])
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document/clear/${id}`,
@@ -231,7 +183,7 @@ export function clearDocumentItems(id:string){
         .catch(error => { throw error})
 }
 
-export function batchCreateDocumentItems(items: PlanItem[]){
+function batchCreateDocumentItems(items: PlanItem[]){
 
     const options = {
         url: `${CONST.DOMAIN}api/v1/planning/document-item/batch-create`,
@@ -263,19 +215,57 @@ export function saveDocument(plan:SalesPlan, items:PlanItem[]){
         .then(_=>batchCreateDocumentItems(items))
 }
 
-export function createTurnoverItem(item: PlanItem){
-    return getDocumentItems(item.planning_document_id, 'sale-point')
-        .then(result=>!result.length ? createDocumentItem(item) : Promise.resolve(result))
-        .then(result=>result)
-        .catch(error => {throw error})
+// export function createTurnoverItem(item: PlanItem){
+//     return getDocumentItems(item.planning_document_id, 'sale-point')
+//         .then(result=>!result.length ? createDocumentItem(item) : Promise.resolve(result))
+//         .then(result=>result)
+//         .catch(error => {throw error})
 
+// export function createDocumentItem(item: PlanItem){
+//     const options = {
+//         url: `${CONST.DOMAIN}api/v1/planning/document-item/create`,
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Tenant-Domain': tenantDomain,
+//             'Access-Token': accessToken
+//         },
+//         data: JSON.stringify(item)
+//     }
+//     return axios(options)
+//         .then(response => response.data)
+//         .catch(error => { throw error})
+// }
+
+// export function updateDocumentItem(item: PlanItem){
+//     const options = {
+//         url: `${CONST.DOMAIN}api/v1/planning/document-item/update/${item.id}`,
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Tenant-Domain': tenantDomain,
+//             'Access-Token': accessToken
+//         },
+//         data: JSON.stringify(item)
+//     }
+//     return axios(options)
+//         .then(response => response.data)
+//         .catch(error => { throw error})
+// }
+
+// export function removeDocumentItem(item: PlanItem){
+//     const options = {
+//         url: `${CONST.DOMAIN}api/v1/planning/document-item/delete/${item.id}`,
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Tenant-Domain': tenantDomain,
+//             'Access-Token': accessToken
+//         }
+//     }
+//     return axios(options)
+//         .then(_=>item)
+//         .catch(error => { throw error})
+// }
             
-}
-
-export function saveDocumentItems(items:PlanItem[]){
-
-    const id = !items.length ? '':items[0].planning_document_id
-    return clearDocumentItems(id)
-        .then(_=>batchCreateDocumentItems(items))
-
-}
+// }

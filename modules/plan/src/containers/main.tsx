@@ -66,29 +66,23 @@ export default class MainScreen extends React.Component<Props, State> {
         if(!!nextProps.salepointlist && !this.props.salepointlist.length && !this.id){
             const sale_point = nextProps.salepointlist[0]
             if(!sale_point) return
-            const plan = this.createSalesPlan(sale_point.id)
+            const plan = this.createSalesPlan(sale_point)
             this.props.actions.salesplan.createSalesPlan(plan)
             const item = this.createPlanItem(plan)
-            this.props.actions.planitems.createTurnoverItem(item)
+            this.props.actions.planitems.createPlanItem(item)
         }
-        // if(!!nextProps.salesplan && !this.props.salesplan) {
-        //     const plan = nextProps.salesplan
-        //     this.props.actions.salesreport.fetchSalesReport(plan.sale_point_id)
-        //     if(!this.id){
-        //         const item = this.createPlanItem(plan)
-        //         this.props.actions.planitems.createTurnoverItem(item)
-        //         this.props.actions.salesplan.fetchSalesPlan(plan.id)
-        //         this.props.actions.planitems.fetchTagItems(plan.id)
-        //         this.props.actions.planitems.fetchProductItems(plan.id)
-        //     }
-        // }
+        if(!!nextProps.salesplan && !this.props.salesplan) {
+            const plan = nextProps.salesplan
+            this.props.actions.salesreport.fetchSalesReport(plan.sale_point_id)
+        }
     }
 
-    createSalesPlan(sale_point_id): SalesPlan{
+    createSalesPlan(sale_point:SalePoint): SalesPlan{
         return {
             id:'',
-            number: '00',
-            sale_point_id,
+            number: '',
+            sale_point_id: sale_point.id,
+            sale_point_name: sale_point.name,
             period: toSeconds(Date.now()),
             comment: ''
         }
