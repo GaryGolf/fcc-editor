@@ -137,7 +137,8 @@ export default class Header extends React.Component <Props, State> {
                 </div>
                 <div className="col-xs-3">
                     <button className="btn btn-default pull-right"
-                        onClick={this.handleRegister.bind(this)}>
+                        onClick={this.handleRegister.bind(this)}
+                        disabled={!id}>
                         {this.state.showRegSpinner? sprinner:<span className="glyphicon glyphicon-warning-sign"/>}&nbsp;
                         {CONST.TXT.REGISTER}
                     </button>
