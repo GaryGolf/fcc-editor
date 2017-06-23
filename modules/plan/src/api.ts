@@ -163,6 +163,12 @@ export function saveDocument(plan:SalesPlan, items:PlanItem[]){
         .then(_=>batchCreateDocumentItems(items))
 }
 
+export function registerDocument(plan:SalesPlan, items:PlanItem[]){
+    return saveDocument(plan,items)
+        .then(_=>registerDocumentView(plan))
+}
+
+
 // export function createTurnoverItem(item: PlanItem){
 //     return getDocumentItems(item.planning_document_id, 'sale-point')
 //         .then(result=>!result.length ? createDocumentItem(item) : Promise.resolve(result))
