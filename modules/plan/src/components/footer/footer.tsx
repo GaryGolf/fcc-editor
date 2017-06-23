@@ -77,7 +77,10 @@ export default class Footer extends React.Component<Props, State> {
                         {this.state.showSaveSpinner? sprinner:<span className="glyphicon glyphicon-ok"/>}&nbsp;
                         {CONST.TXT.SAVE}
                     </button>
-                    <button className="btn btn-default sprite_delete pull-right m-r-sm">{CONST.TXT.CANCEL}</button>
+                    <button className="btn btn-default sprite_delete pull-right m-r-sm"
+                        onClick={e=>{if(history.length) window.history.back()}}>
+                        {CONST.TXT.CANCEL}
+                    </button>
                   </div>
                 </div>
               </div>
