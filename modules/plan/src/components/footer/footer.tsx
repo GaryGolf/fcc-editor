@@ -26,13 +26,10 @@ export default class Footer extends React.Component<Props, State> {
     }
     
      componentWillReceiveProps(nextProps){
-        if(nextProps.planitems && nextProps.salesplan){
-            if(nextProps.planitems[0] 
-                && nextProps.planitems[0].planning_document_id
-                && !this.props.planitems[0].planning_document_id){
-                const id = nextProps.planitems[0].planning_document_id
-                this.props.actions.salesplan.fetchSalesPlan(id)
-            }
+        if(!nextProps.salesplan.id){
+            const id = nextProps.planitems[0].planning_document_id
+            if(!id) return
+            this.props.actions.salesplan.fetchSalesPlan(id)
         }
         if(this.state.showSaveSpinner) this.setState({showSaveSpinner:false})
     }

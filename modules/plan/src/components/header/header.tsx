@@ -26,6 +26,7 @@ export default class Header extends React.Component <Props, State> {
     }
 
     componentWillReceiveProps(nextProps){
+        console.log(nextProps.salesplan)
         if(this.state.showRegSpinner) this.setState({showRegSpinner:false})
     }
 
@@ -82,7 +83,7 @@ export default class Header extends React.Component <Props, State> {
 
     render(){
         if(!this.props.salesplan || !this.props.salepointlist) return null
-        const {id, period, sale_point_id, number, comment, is_register} = this.props.salesplan
+        const {id, period, sale_point_id, number, user_fio, comment, is_register} = this.props.salesplan
         
         const salePointOptions = this.props.salepointlist.map(item => (
             <option key={item.id} value={item.id}>{item.address}</option>
@@ -120,8 +121,7 @@ export default class Header extends React.Component <Props, State> {
                         <input type="text" 
                             className="form-control" 
                             placeholder="" 
-                            defaultValue={this.props.salesplan.user_fio}
-                            onChange={_=>null}
+                            value={user_fio || ''}
                             disabled
                         />
                     </div>
