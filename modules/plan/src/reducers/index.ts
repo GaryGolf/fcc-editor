@@ -8,7 +8,6 @@ import salesreport from './salesreport'
 import salesplanlist from './salesplanlist'
 import salepointlist from './salepointlist'
 
-
 export interface RootState {
     salesplan: SalesPlan
     planitems: Array<PlanItem>

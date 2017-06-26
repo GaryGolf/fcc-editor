@@ -124,6 +124,16 @@ export function getSalePointList(){
         .catch(error => { throw error})
 }
 
+export function getProductTagList(){
+    const options = {
+        url: `${CONST.DOMAIN}api/v1/nomenclature/product-tag/list`,
+        method: 'GET', headers
+    }
+    return axios(options)
+        .then(response=>response.data)
+        .catch(error => { throw error})
+}
+
 
 function clearDocumentItems(id:string){
     if(!id) return Promise.resolve([])

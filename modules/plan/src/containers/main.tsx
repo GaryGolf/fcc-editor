@@ -52,6 +52,7 @@ export default class MainScreen extends React.Component<Props, State> {
         this.id = document.querySelector("#planning-document-wrapper").getAttribute('data-id')
         
         this.props.actions.products.fetchProducts()
+        this.props.actions.products.fetchProductTags()
         this.props.actions.salesplanlist.fetchSalesPlanList()
         this.props.actions.salepointlist.fetchSalesPointList()
 

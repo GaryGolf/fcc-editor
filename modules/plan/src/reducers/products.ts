@@ -7,13 +7,22 @@ export default function products (state = initialState, action: Action): Array<P
     switch(action.type){
         case Actions.FETCH_PRODUCTS :
             if(!action.payload.child_categories) break
-            const tags = action.payload.child_categories
-                .map(({id,name})=>({id,name, type: 'product-tag'})) as Array<Product>
             const products = action.payload.child_categories
                 .map(item => item.products)
                 .reduce((acc, item) => [...acc, ...item]) 
-                .map(({id,name, price})=>({id, name, price, type:'product'})) as Array<Product>
-            return [...tags, ...products]
+                .map(({id,name, price, cost_price})=>({id, name, price, cost_price, type:'product'})) as Array<Product>
+            return [...state, ...products]
+        case Actions.FETCH_PRODUCT_TAGS :
+            const tags = action.payload.map((item:ProductTag)=>(
+                {
+                    id: item.id,
+                    name: item.name,
+                    price: item.productsPrice,
+                    cost_price: item.productsCostPrice,
+                    type: 'product-tag'
+                } as Product 
+            ))
+            return [...state, ...tags]
     }
     return state
 }
