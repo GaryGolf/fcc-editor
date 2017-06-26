@@ -84,7 +84,7 @@ export default class Header extends React.Component <Props, State> {
         const {id, period, sale_point_id, number, user_fio, comment, is_register} = this.props.salesplan
         
         const salePointOptions = this.props.salepointlist.map(item => (
-            <option key={item.id} value={item.id}>{item.address}</option>
+            <option key={item.id} value={item.id}>{item.name}</option>
         ))
         const periodOptions = this.getPeriodOptions()
 
