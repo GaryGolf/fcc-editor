@@ -64,5 +64,6 @@ export const TXT = {
     PERIOD: 'Период',
     PRODUCT_PLAN: 'План по товарам',
     TURNOVER_PLAN: 'План по выручке',
-    CATEGORY: 'Категория'
+    CATEGORY: 'Категория',
+    BACK: 'Назад'
 }

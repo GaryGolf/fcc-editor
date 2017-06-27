@@ -78,8 +78,9 @@ export default class Footer extends React.Component<Props, State> {
                         {CONST.TXT.SAVE}
                     </button>
                     <button className="btn btn-default sprite_delete pull-right m-r-sm"
-                        onClick={e=>{if(history.length) window.history.back()}}>
-                        {CONST.TXT.CANCEL}
+                        onClick={e=>{document.location.href=document.location.origin+'/planning/document'}}>
+                        <span className="glyphicon glyphicon-arrow-left"/>&nbsp;
+                        {CONST.TXT.BACK}
                     </button>
                   </div>
                 </div>
