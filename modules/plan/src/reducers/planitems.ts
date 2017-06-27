@@ -35,6 +35,10 @@ export default function planitems (state = initialState, action: Action): Array<
                 .filter(payload=>!state.some(item=>item.item_id==payload.item_id))
             return [...state, ...items]
         }
+
+        case Actions.UPDATE_SALES_PLAN :
+            return state.map(item=>item.type!='sale-point'?item:{...item,item_id:action.payload.sale_point_id})
+
     }
     return state
 }
