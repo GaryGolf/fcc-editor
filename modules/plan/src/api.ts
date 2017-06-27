@@ -54,7 +54,6 @@ export function registerDocumentView(plan: SalesPlan){
         // .then(response => ({...plan, is_register: true}))
         .then(_=> document.location.href=document.location.origin+'/planning/document')
         .catch(error => { 
-            console.log(error)
             return ({...plan, is_register: false})
             // throw error
         }) //({...plan, is_register: true}))
