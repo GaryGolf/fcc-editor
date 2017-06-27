@@ -79,12 +79,16 @@ export default class MainScreen extends React.Component<Props, State> {
     }
 
     createSalesPlan(sale_point:SalePoint): SalesPlan{
+        const today = new Date()
+        const year = today.getFullYear()
+        const month = today.getMonth()
+        const date = new Date(year,month,1)
         return {
             id:'',
             number: '',
             sale_point_id: sale_point.id,
             sale_point_name: sale_point.name,
-            period: toSeconds(Date.now()),
+            period: toSeconds(date.getTime()),
             comment: ''
         }
     }
