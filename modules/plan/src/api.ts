@@ -51,8 +51,12 @@ export function registerDocumentView(plan: SalesPlan){
         method: 'POST', headers
     }
     return axios(options)
-        .then(response => ({...plan, is_register: true}))
-        .catch(error => { throw error}) //({...plan, is_register: true}))
+        // .then(response => ({...plan, is_register: true}))
+        .then(_=> document.location.href=document.location.origin+'/planning/document')
+        .catch(error => { 
+            console.log(error)
+            throw error
+        }) //({...plan, is_register: true}))
 }
 
 export function unregisterDocumentView(plan: SalesPlan){
