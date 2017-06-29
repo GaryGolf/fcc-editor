@@ -60,7 +60,7 @@ export default class Footer extends React.Component<Props, State> {
         const sprinner = <span className={"glyphicon glyphicon-refresh "+styles.spinner}/>
         return (
 
-        <div className="content-footer" style={{width: '1200px', left:'40px'}}>
+        <div className="main-content__footer">
                 <div className="row">
                   <div className="col-xs-6">
                     <Loader/>&nbsp;

@@ -123,12 +123,12 @@ export default class MainScreen extends React.Component<Props, State> {
                         actions={this.props.actions}
                     />
                     <Plan/>
-                    <Footer
-                        salesplan={this.props.salesplan}
-                        planitems={this.props.planitems}
-                        actions={this.props.actions}
-                    />
                 </div>
+                <Footer
+                    salesplan={this.props.salesplan}
+                    planitems={this.props.planitems}
+                    actions={this.props.actions}
+                />
             </div>
         )
     }
