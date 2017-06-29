@@ -115,13 +115,13 @@ export default class MainScreen extends React.Component<Props, State> {
         )
         return (
             <div className="main-content">
+                <Header 
+                    salesplan={this.props.salesplan}
+                    salepointlist={this.props.salepointlist}
+                    planitems={this.props.planitems}
+                    actions={this.props.actions}
+                />
                 <div className="main-content__center">
-                    <Header 
-                        salesplan={this.props.salesplan}
-                        salepointlist={this.props.salepointlist}
-                        planitems={this.props.planitems}
-                        actions={this.props.actions}
-                    />
                     <Plan/>
                 </div>
                 <Footer

@@ -91,8 +91,8 @@ export default class Header extends React.Component <Props, State> {
         const sprinner = <span className={"glyphicon glyphicon-refresh "+styles.spinner}/>
 
         return (
-    <div>
-        <div className="content-header">
+    <div className="main-content__header">
+        <div>
             <div className="row">
                 <div className="col-xs-3">
                     <div className="row">
