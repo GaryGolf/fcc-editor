@@ -113,7 +113,7 @@ export default class EditProductItem extends React.Component <Props, State> {
                     </div>
                     <div className="modal-body">
                         <div className="form-group">
-                            <div className="radio">
+                            <div className="radio" onClick={e=>e.stopPropagation()}>
                                 <label className="js-radio">
                                     <input type="radio" 
                                         name="item-type"
