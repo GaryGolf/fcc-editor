@@ -112,7 +112,7 @@ export default class TagInput extends React.Component <Props, State> {
 
         const menu =  this.getMenu()
         if(!this.state.active || !menu.length) return null
-        
+
         return  (
         <div>
             <div className={styles.overlay}
@@ -149,7 +149,9 @@ export default class TagInput extends React.Component <Props, State> {
             this.state.active ? styles.active : null
         ].join(' ')
 
-        const tags = this.state.selected.map(tag => ( 
+        const tags = this.state.selected
+        .filter(tag=>this.menu.some(item=>item.key==tag)) // temprorary filter tags whichone removed from nomenclature
+        .map(tag => ( 
             <span 
                 key={tag}
                 className={tagStyle}
