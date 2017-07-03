@@ -6,11 +6,11 @@ import { bindActionCreators } from 'redux'
 import {createDays, toSeconds} from '../components/utils'
 import * as API from '../api'
 const {connect} = require('react-redux')
+const uuid = require('uuid')
 
-import TurnoverPlan from '../components/turnover-plan'
-import ProductsPlan from '../components/products-plan'
 import Header from '../components/header'
 import Footer from '../components/footer'
+import Plan from '../components/body/plan'
 
 interface Props {
     salesplan?: SalesPlan
@@ -51,48 +51,51 @@ export default class MainScreen extends React.Component<Props, State> {
 
         this.id = document.querySelector("#planning-document-wrapper").getAttribute('data-id')
         
-        if(!!this.id) this.loadAll(this.id)
-        
         this.props.actions.products.fetchProducts()
+        this.props.actions.products.fetchProductTags()
         this.props.actions.salesplanlist.fetchSalesPlanList()
         this.props.actions.salepointlist.fetchSalesPointList()
-        
+
+        if(!this.id) return
+        this.props.actions.planitems.fetchTurnoverItem(this.id)
+        this.props.actions.salesplan.fetchSalesPlan(this.id)
+        this.props.actions.planitems.fetchTagItems(this.id)
+        this.props.actions.planitems.fetchProductItems(this.id)
     }
 
     componentWillReceiveProps(nextProps){
         if(!!nextProps.salepointlist && !this.props.salepointlist.length && !this.id){
             const sale_point = nextProps.salepointlist[0]
             if(!sale_point) return
-            const plan = this.createSalesPlan(sale_point.id)
+            const plan = this.createSalesPlan(sale_point)
             this.props.actions.salesplan.createSalesPlan(plan)
+            const item = this.createPlanItem(plan)
+            this.props.actions.planitems.createPlanItem(item)
         }
         if(!!nextProps.salesplan && !this.props.salesplan) {
             const plan = nextProps.salesplan
-            this.loadAll(plan.id)
             this.props.actions.salesreport.fetchSalesReport(plan.sale_point_id)
-            const item = this.createPlanItem(plan)
-            this.props.actions.planitems.createTurnoverItem(item)
         }
     }
 
-     loadAll(id:string){
-        this.props.actions.salesplan.fetchSalesPlan(id)
-        this.props.actions.planitems.fetchPlanItems(id)
-        //this.props.actions.planitems.fetchTurnoverItem(id)
-     }
-
-    createSalesPlan(sale_point_id): SalesPlan{
+    createSalesPlan(sale_point:SalePoint): SalesPlan{
+        const today = new Date()
+        const year = today.getFullYear()
+        const month = today.getMonth()
+        const date = new Date(year,month,1)
         return {
             id:'',
-            number: '00000',
-            sale_point_id,
-            period: toSeconds(Date.now()),
+            number: '',
+            sale_point_id: sale_point.id,
+            sale_point_name: sale_point.name,
+            period: toSeconds(date.getTime()),
             comment: ''
         }
     }
 
     createPlanItem(plan:SalesPlan): PlanItem{
         return {
+            id: uuid(),
             item_id: plan.sale_point_id,
             planning_document_id: plan.id,
             plan: 0,
@@ -105,16 +108,22 @@ export default class MainScreen extends React.Component<Props, State> {
     render(){    
         const {salesplan, salepointlist} = this.props
         if(!salesplan || !salepointlist) return null
+        if(salesplan.is_register) return (
+            <div className="main-content">
+                документ {salesplan.number} проведен
+            </div>
+        )
         return (
-            <div className={styles.container}>
+            <div className="main-content">
                 <Header 
                     salesplan={this.props.salesplan}
                     salepointlist={this.props.salepointlist}
                     planitems={this.props.planitems}
                     actions={this.props.actions}
                 />
-                <TurnoverPlan/>
-                <ProductsPlan/>
+                <div className="main-content__center">
+                    <Plan/>
+                </div>
                 <Footer
                     salesplan={this.props.salesplan}
                     planitems={this.props.planitems}

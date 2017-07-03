@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as Actions from '../../Actions'
+import * as Actions from '../../actions'
 import { bindActionCreators } from 'redux'
 import TagInput from '../TagInput'
 

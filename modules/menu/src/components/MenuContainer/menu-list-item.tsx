@@ -59,13 +59,15 @@ export default class MenuListItem extends React.Component <Props, State> {
 
     state = {opened:false}
 
-    shouldComponentUpdate = (nextProps, nextState) => (
-        nextProps.menuItem != this.props.menuItem ||
-        nextProps.isOver != this.props.isOver ||
-        nextProps.canDrop != this.props.canDrop ||
-        nextState.opened != this.state.opened 
-    )
-
+    shouldComponentUpdate(nextProps, nextState){
+        return (
+            nextProps.menuItem != this.props.menuItem ||
+            nextProps.isOver != this.props.isOver ||
+            nextProps.canDrop != this.props.canDrop ||
+            nextState.opened != this.state.opened 
+        )
+    }
+    
     render(){
         const {opened} = this.state
         const {menuItem, isOver, canDrop} = this.props

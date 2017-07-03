@@ -5,7 +5,7 @@
 
 // API
 function getDomain(){
-    const proxy = PRODUCTION ? '' :  'localhost:1337/'
+    const proxy = PRODUCTION ? '' : ''//'localhost:1337/'
     const tenant = document.querySelector('meta[name=tenant-domain]').getAttribute('content')
     const domain = document.querySelector("#planning-document-wrapper").getAttribute('data-api-host')
     return `http://${proxy}${tenant}.${domain}`
@@ -47,7 +47,7 @@ export const TXT = {
     NAME: 'Наименование',
     PLANNING_PERIOD: 'Период планирования',
     SALE_POINT: 'Торговая точка',
-    EMPLOYEE: 'Сотрудник создавший документ',
+    EMPLOYEE: 'Создатель',
     COMMENT: 'Комментарий',
     STATUS: 'Статус документа',
     ACTIVATE: 'Активировать',
@@ -59,5 +59,11 @@ export const TXT = {
     CLEAN: 'Очистить',
     ADD_TURNOVER_ITEM: 'Добавить план по обороту',
     NUMBER: '№',
-    NOT_REG: 'Не проведен'
+    NOT_REG: 'Не проведен',
+    PLAN: 'План',
+    PERIOD: 'Период',
+    PRODUCT_PLAN: 'План по товарам',
+    TURNOVER_PLAN: 'План по выручке',
+    CATEGORY: 'Категория',
+    BACK: 'Назад'
 }

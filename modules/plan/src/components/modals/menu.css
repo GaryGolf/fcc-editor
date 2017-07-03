@@ -7,11 +7,14 @@
 }
 .menu{
     position: absolute;
-    top:0;
-    left:30px;
     display: block;
-    max-height: 250px;
+    max-height: 300px;
+    min-width: 200px;
     overflow: auto;
+    bottom: 100%;
+    top: auto;
+    margin-bottom: 3px;
+    
 }
 
 .container{

@@ -4,6 +4,8 @@ import * as Actions from '../../actions'
 import * as CONST from '../../constants'
 import {createDays} from '../utils'
 
+import Loader from './loader'
+
 interface Props {
     salesplan: SalesPlan
     planitems: Array<PlanItem>
@@ -11,7 +13,6 @@ interface Props {
 }
 interface State {
     showSaveSpinner: boolean
-    showRegisterSpinner: boolean
 }
 
 export default class Footer extends React.Component<Props, State> {
@@ -20,75 +21,70 @@ export default class Footer extends React.Component<Props, State> {
         super(props)
 
         this.state = {
-            showSaveSpinner: false,
-            showRegisterSpinner: false
+            showSaveSpinner: false
         }
     }
     
      componentWillReceiveProps(nextProps){
+        if(!nextProps.salesplan.id){
+            const id = nextProps.planitems[0].planning_document_id
+            if(!id) return
+            this.props.actions.salesplan.fetchSalesPlan(id)
+        }
         if(this.state.showSaveSpinner) this.setState({showSaveSpinner:false})
-        if(this.state.showRegisterSpinner) this.setState({showRegisterSpinner:false})
-    }
-
-    handleRegister(){
-        this.setState({showRegisterSpinner: true}, ()=>{
-            if(this.props.salesplan.is_register) {
-                this.props.actions.salesplan.unregisterSalesPlan(this.props.salesplan)
-            } else {
-                this.props.actions.salesplan.registerSalesPlan(this.props.salesplan)
-            }
-        })
     }
    
     handleSubmit() {
         
         this.setState({showSaveSpinner: true}, ()=>{
             const {actions, salesplan, planitems} = this.props
-            const newPlan = {
-                item_id: salesplan.sale_point_id,
-                planning_document_id: this.props.salesplan.id,
-                plan: 0, type: 'sale-point', percent: 0,
-                days: createDays(this.props.salesplan.period,false, 0)
-            } as PlanItem
-            const turnover = planitems.find(item=>item.type=='sale-point')
-            const items = !turnover ? [...planitems, newPlan]:planitems
+            const items = this.checkPlanItems(planitems)
             actions.planitems.saveDocument(salesplan,items)
         })
+    }
+
+    checkPlanItems(items: PlanItem[]):PlanItem[]{
+        const newPlan = {
+            item_id: this.props.salesplan.sale_point_id,
+            planning_document_id: this.props.salesplan.id,
+            plan: 0, type: 'sale-point', percent: 0,
+            days: createDays(this.props.salesplan.period,false, 0)
+        } as PlanItem
+        const turnover = items.find(item=>item.type=='sale-point')
+        return !turnover ? [...items, newPlan]:items
     }
 
     render(){
         if(!this.props.salesplan || !this.props.planitems) return null
         const{is_register} = this.props.salesplan
         const sprinner = <span className={"glyphicon glyphicon-refresh "+styles.spinner}/>
-        const regButtonStyle = !is_register? "btn btn-primary btn-sm" : styles.invisible 
         return (
-            <div className={styles.container}>
+
+        <div className="main-content__footer">
                 <div className="row">
-                    <div className="col-md-2">
-                        <button className="btn btn-danger btn-sm"
-                            onClick={this.props.actions.planitems.cleanPlanItems}>
-                            <span className="glyphicon glyphicon-remove"/>&nbsp;
-                            {CONST.TXT.CLEAN}
-                        </button>
-                    </div>
-                    <div className="col-md-6" />
-                    <div className="col-md-4">
-                         <div className="form-group"> 
-                              <button className={regButtonStyle}
-                                onClick={this.handleRegister.bind(this)}>
-                                {this.state.showRegisterSpinner? sprinner:<span className="glyphicon glyphicon-check"/>}&nbsp;
-                                {is_register?CONST.TXT.RESTORE:CONST.TXT.REGISTER}
-                            </button>
-                            &nbsp;
-                            <button className="btn btn-primary btn-sm"
-                                onClick={this.handleSubmit.bind(this)}>
-                                {this.state.showSaveSpinner? sprinner:<span className="glyphicon glyphicon-ok"/>}&nbsp;
-                                {CONST.TXT.SAVE}
-                            </button>
-                        </div>
-                    </div>
+                  <div className="col-xs-6">
+                    <Loader/>&nbsp;
+                    <button 
+                        className="btn btn-danger"
+                        onClick={this.props.actions.planitems.cleanPlanItems}>
+                        <span className="glyphicon glyphicon-trash"/>&nbsp;
+                        {CONST.TXT.CLEAN}
+                    </button>
+                  </div>
+                  <div className="col-xs-6">
+                    <button className="btn btn-primary pull-right"
+                        onClick={this.handleSubmit.bind(this)}>
+                        {this.state.showSaveSpinner? sprinner:<span className="glyphicon glyphicon-ok"/>}&nbsp;
+                        {CONST.TXT.SAVE}
+                    </button>
+                    <button className="btn btn-default sprite_delete pull-right m-r-sm"
+                        onClick={e=>{document.location.href=document.location.origin+'/planning/document'}}>
+                        <span className="glyphicon glyphicon-arrow-left"/>&nbsp;
+                        {CONST.TXT.BACK}
+                    </button>
+                  </div>
                 </div>
-            </div>
+              </div>
         )
     }
 

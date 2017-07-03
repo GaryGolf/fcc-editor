@@ -17,6 +17,7 @@ interface Props {
 }
 interface State {
     arrange: boolean
+    productRadio
 }
 
 @connect(
@@ -44,16 +45,22 @@ export default class EditProductItem extends React.Component <Props, State> {
         super(props)
         this.state = {
             arrange: true,
+            productRadio: true
         }
     }
     componentWillReceiveProps(nextProps:Props){
         if(!!nextProps.planItem) {
             this.id = nextProps.planItem.item_id
             this.amount = nextProps.planItem.plan
+
+            if(!nextProps.products.length) return
+            const product = nextProps.products.find(item=>item.id==this.id)
+            if(!product) return
+            this.setState({productRadio: product.type=='product'})
         }
     }
    
-   handleKeyPress(e){
+    handleKeyPress(e){
         switch(e.key){
             case 'Enter' :
                 this.submitHandler()
@@ -62,7 +69,7 @@ export default class EditProductItem extends React.Component <Props, State> {
                 this.props.onClose()
                 break
         }
-   }
+    }
    
     submitHandler(){
        
@@ -86,6 +93,7 @@ export default class EditProductItem extends React.Component <Props, State> {
         if(!visible || !planItem || !planitems.length || !products.length) return null
         const options  = this.props.products
             .filter(p=>!planitems.some(v=>v.item_id==p.id && v.item_id!=this.id))
+            .filter(item=>item.type==(this.state.productRadio?'product':'product-tag'))
             .map(item=>(<option key={item.id} value={item.id}>{item.name}</option>))
         return (
             <div className={styles.overlay} onClick={this.props.onClose}>
@@ -104,17 +112,31 @@ export default class EditProductItem extends React.Component <Props, State> {
                         <h2 className="modal-title">{CONST.TXT.EDIT_PRODUCT}</h2>
                     </div>
                     <div className="modal-body">
-                        <div className="checkbox">
-                            <label>
-                                <input type="checkbox"
-                                    checked={this.state.arrange}
-                                    onChange={()=>this.setState(state=>({arrange:!state.arrange}))}
-                                />
-                                {CONST.TXT.ARRANGE_PRODUCTS}
-                            </label>
+                        <div className="form-group">
+                            <div className="radio" onClick={e=>e.stopPropagation()}>
+                                <label className="js-radio">
+                                    <input type="radio" 
+                                        name="item-type"
+                                        checked={this.state.productRadio}
+                                        onChange={()=>this.setState({productRadio: true})}
+                                    />
+                                    {CONST.TXT.PRODUCT}
+                                    <span className="cr"><span className="cr-icon"></span></span>
+                                </label>&nbsp;&nbsp;
+                                <label className="js-radio">
+                                    <input type="radio" 
+                                        name="item-type"
+                                        checked={!this.state.productRadio}
+                                        onChange={()=>this.setState({productRadio: false})}
+                                    />
+                                    {CONST.TXT.CATEGORY}
+                                    <span className="cr"><span className="cr-icon"></span></span>
+                                </label>
+                                <p className="help-block help-block-error"></p>
+                            </div>
+                           
                         </div>
                         <div className="form-group">
-                            <label>{CONST.TXT.PRODUCT}</label>
                             <select className="form-control"
                                 defaultValue={this.id}
                                 onChange={e=>this.id=e.target.value}>
@@ -129,6 +151,16 @@ export default class EditProductItem extends React.Component <Props, State> {
                                 defaultValue={this.amount.toString()}
                                 onKeyUp={this.handleKeyPress.bind(this)}
                                 onChange={e=>this.amount=Number(e.target.value)}/>
+                        </div>
+                         <div className="checkbox">
+                            <label className="js-checkbox">
+                                <input type="checkbox"
+                                    checked={this.state.arrange}
+                                    onChange={()=>this.setState(state=>({arrange:!state.arrange}))}
+                                />
+                                {CONST.TXT.ARRANGE_PRODUCTS}
+                                 <span className="cr"><span className="cr-icon glyphicon glyphicon-ok"></span></span>
+                            </label>
                         </div>
                     </div>
                     <div className="modal-footer">
